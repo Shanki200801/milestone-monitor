@@ -4,6 +4,11 @@ import Link from 'next/link'
 import LogoutButton from '../components/LogoutButton'
 import SupabaseLogo from '../components/SupabaseLogo'
 import NextJsLogo from '../components/NextJsLogo'
+import { getAllStaff } from './database'
+
+//TODO: Make this a protected route (see example)
+//TODO: Make this the dashboard
+
 
 export const dynamic = 'force-dynamic'
 
@@ -95,6 +100,7 @@ export default async function Index() {
           <h2 className="text-lg font-bold text-center">
             Everything you need to get started
           </h2>
+          <h3 className='text-lg text-white' ></h3>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
             {resources.map(({ title, subtitle, url, icon }) => (
               <a
