@@ -5,11 +5,28 @@ import LogoutButton from "../components/LogoutButton";
 import SupabaseLogo from "../components/SupabaseLogo";
 import NextJsLogo from "../components/NextJsLogo";
 import { getAllStaff } from "./database";
-
+import Image from "next/image";
+import { Inter, Poppins } from "next/font/google";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
+import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
+import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
+import WorkOutlineOutlinedIcon from "@mui/icons-material/WorkOutlineOutlined";
+import Groups2OutlinedIcon from "@mui/icons-material/Groups2Outlined";
+import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined";
+import BiotechOutlinedIcon from "@mui/icons-material/BiotechOutlined";
+import LocalPoliceIcon from "@mui/icons-material/LocalPolice";
+import logoImg from "../public/logo.webp";
+import sjuLogo from "../public/sju-logo.webp";
 //TODO: Make this a protected route (see example)
 //TODO: Make this the dashboard
 
 export const dynamic = "force-dynamic";
+
+// const bodyText = Inter({ subsets: ["latin"] });
+const bodyText = Poppins({
+  subsets: ["latin"],
+  weight: "400",
+});
 
 const resources = [
   {
@@ -52,59 +69,113 @@ export default async function Index() {
   } = await supabase.auth.getUser();
 
   return (
-    <div className="w-full flex flex-col bg-emerald-100 bg-cover">
+    <div
+      className={`w-full flex flex-col bg-emerald-100 bg-cover ${bodyText.className}`}
+    >
       <section>
-        <ul className="flex flex-row justify-between p-4">
+        <ul className={`flex flex-row justify-between`}>
           <ul>
-            <li className="border border-cyan-800">logo</li>
+            <li className={`text-3xl pl-5`}>
+              <Image src={logoImg} width={60} height={60} alt="Logo Image" />
+            </li>
           </ul>
-          <h1 className="text-center">Welcome back! [user.name]</h1>
-          <ul className="flex flex-row gap-4">
-            <li className="border border-cyan-800">Account</li>
-            <li className="border border-cyan-800">Settings</li>
+          <h1 className={`text-emerald-900 text-center text-2xl font-semibold self-center`}>
+            Welcome back! [user.name]
+          </h1>
+          <ul className={`flex flex-row gap-4 `}>
+            <li className={`self-center`}>
+              <AccountCircleOutlinedIcon fontSize="large" />
+            </li>
+            <li className={`self-center pr-5`}>
+              <SettingsOutlinedIcon fontSize="large" />
+            </li>
           </ul>
         </ul>
       </section>
-      <section className="flex flex-row gap-3">
-        <ul className="flex flex-col justify-start bg-teal-400 w-1/12 gap-16 items-center py-6">
-          <li>Dashboard</li>
-          <li>Workshops</li>
-          <li>Conferences</li>
-          <li>Journal</li>
-          <li>Patents</li>
-          <li>Modify</li>
+      <section className={`flex flex-row gap-3`}>
+        <ul
+          className={`text-emerald-950 border border-transparent rounded-t flex flex-col justify-start bg-emerald-400 w-1/12 gap-4 items-center py-6 ${bodyText.className}`}
+        >
+          <ul>
+            <li className={`text-center`}>
+              <DashboardOutlinedIcon sx={{ fontSize: 40 }} />
+            </li>
+            <li className={`text-md`}>Dashboard</li>
+          </ul>
+          <ul>
+            <li className={`text-center`}>
+              <WorkOutlineOutlinedIcon sx={{ fontSize: 40 }} />
+            </li>
+            <li className={`text-md`}>Workshops</li>
+          </ul>
+          <ul>
+            <li className={`text-center`}>
+              <Groups2OutlinedIcon sx={{ fontSize: 40 }} />
+            </li>
+            <li className={`text-md`}>Conferences</li>
+          </ul>
+          <ul>
+            <li className={`text-center`}>
+              <MenuBookOutlinedIcon sx={{ fontSize: 40 }} />
+            </li>
+            <li className={`text-md`}>Journal</li>
+          </ul>
+          <ul>
+            <li className={`text-center`}>
+              <BiotechOutlinedIcon sx={{ fontSize: 40 }} />
+            </li>
+            <li className={`text-md`}>Patents</li>
+          </ul>
+          <ul>
+            <li className={`text-center`}>
+              <LocalPoliceIcon sx={{ fontSize: 40 }} />
+            </li>
+            <li className={`text-md`}>Modify</li>
+          </ul>
         </ul>
 
-        <div className="flex flex-col gap-8">
-          <div className="flex flex-row gap-10 justify-evenly">
-            <ul className="h-6/8 p-4 bg-teal-300">
-              <li className="px-12 py-20 border border-cyan-800">Account Image</li>
-              <div className="border border-cyan-700 p-4">
+        <div className={`flex flex-col gap-8`}>
+          <div className={`flex flex-row gap-10 justify-evenly`}>
+            <ul
+              className={`text-emerald-900 h-6/8 p-4 bg-emerald-200 border border-transparent rounded`}
+            >
+              <li className={`px-12 py-20 border border-cyan-800`}>
+                Account Image
+              </li>
+              <div className={`border border-cyan-700 p-4`}>
                 <li>Name</li>
                 <li>Designation</li>
                 <li>Contact</li>
               </div>
             </ul>
-            <ul className="bg-teal-300 flex flex-row gap-3 p-4 h-6/8">
-              <ul className="border border-cyan-700 h-6/8 p-4 bg-teal-600">
-                <li className="px-12 py-20">Recent Conferences</li>
-                <div className="border border-cyan-800 p-4 bg-teal-300">
+            <ul
+              className={`bg-emerald-200 flex flex-row gap-3 p-4 h-6/8 border border-transparent rounded`}
+            >
+              <ul className={`border border-cyan-700 h-6/8 p-4 bg-emerald-600`}>
+                <li className={`px-12 py-20 text-emerald-100`}>Recent Conferences</li>
+                <div
+                  className={`text-emerald-900 border border-cyan-800 p-4 bg-emerald-200 rounded`}
+                >
                   <li>Title</li>
                   <li>Location</li>
                   <li>Date</li>
                 </div>
               </ul>
-              <ul className="border border-cyan-700 h-6/8 p-4 bg-teal-600">
-                <li className="px-12 py-20">Recent Journals</li>
-                <div className="border border-cyan-800 p-4 bg-teal-300">
+              <ul className={`border border-cyan-700 h-6/8 p-4 bg-emerald-600`}>
+                <li className={`px-12 py-20 text-emerald-100`}>Recent Journals</li>
+                <div
+                  className={`text-emerald-900 border border-cyan-800 p-4 bg-emerald-200 rounded`}
+                >
                   <li>Title</li>
                   <li>Location</li>
                   <li>Date</li>
                 </div>
               </ul>
-              <ul className="border border-cyan-700 h-6/8 p-4 bg-teal-600">
-                <li className="px-12 py-20">Recent Workshops</li>
-                <div className="border border-cyan-800 p-4 bg-teal-300">
+              <ul className={`border border-cyan-700 h-6/8 p-4 bg-emerald-600`}>
+                <li className={`px-12 py-20 text-emerald-100`}>Recent Workshops</li>
+                <div
+                  className={`border border-cyan-800 p-4 bg-emerald-200 rounded`}
+                >
                   <li>Title</li>
                   <li>Location</li>
                   <li>Date</li>
@@ -113,19 +184,37 @@ export default async function Index() {
             </ul>
           </div>
 
-          <ul className="flex flex-row gap-12  justify-around py-6 bg-teal-200 text-white">
-            <li className="bg-teal-800 p-4 px-6 border border-transparent rounded">Workshops</li>
-            <li className="bg-teal-800 p-4 border border-transparent rounded">Conferences</li>
-            <li className="bg-teal-800 p-4 px-8 border border-transparent rounded">Journals</li>
-            <li className="bg-teal-800 p-4 px-8 border border-transparent rounded">Patents</li>
+          <ul
+            className={`flex flex-row gap-12 justify-around py-6 bg-emerald-200 border border-transparent rounded text-emerald-100 font-semibold`}
+          >
+            <li
+              className={`shadow-lg shadow-emerald-600 bg-emerald-800 p-4 px-6 border border-transparent rounded`}
+            >
+              Workshops
+            </li>
+            <li className={`shadow-lg shadow-emerald-600 bg-emerald-800 p-4 border border-transparent rounded`}>
+              Conferences
+            </li>
+            <li
+              className={`shadow-lg shadow-emerald-600 bg-emerald-800 p-4 px-8 border border-transparent rounded`}
+            >
+              Journals
+            </li>
+            <li
+              className={`shadow-lg shadow-emerald-600 bg-emerald-800 p-4 px-8 border border-transparent rounded`}
+            >
+              Patents
+            </li>
           </ul>
         </div>
       </section>
-      <section className="bg-teal-700">
-        <ul className="flex flex-row gap-6 justify-between p-4">
-          <li>logo</li>
-          <li>contact details</li>
-          <li>copyright</li>
+      <section className={`bg-emerald-700`}>
+        <ul className={`flex flex-row gap-6 justify-between p-2 text-emerald-200`}>
+          <li className={`font-bold`}>
+            <Image src={sjuLogo} width={50} height={50} alt="SJU Logo"/>
+          </li>
+          <li className={`font-bold self-center`}>contact details</li>
+          <li className={`font-bold self-center`}>copyright</li>
         </ul>
       </section>
     </div>
