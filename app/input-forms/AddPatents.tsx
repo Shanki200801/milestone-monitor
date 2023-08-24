@@ -16,6 +16,7 @@ const AddPatents = () => {
     <div className="">
       <form>
         <div className="grid gap-6 mb-6 ">
+          {/* Lock the faculty ID to user.id */}
           <InputCard
             input_name="Faculty ID"
             input_type="text"
@@ -47,19 +48,19 @@ const AddPatents = () => {
             set_input={setStatus}
           />
           <InputCard
-            input_name="Published as proceedings"
+            input_name="Image link"
             input_type="checkbox"
             input_value={image}
             set_input={setImage}
           />
           <InputCard
-            input_name="Proceedings front page"
+            input_name="Patent link"
             input_type="text"
             input_value={patentLink}
             set_input={setPatentLink}
           />
           <InputCard
-            input_name="Certificate"
+            input_name="Patent date"
             input_type="text"
             input_value={patentDate}
             set_input={setPatentDate}

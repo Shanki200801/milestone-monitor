@@ -20,31 +20,31 @@ const AddWorkshops = () => {
             set_input={setFacultyID}
           />
           <InputCard
-            input_name="Patent name"
+            input_name="Workshop date"
             input_type="text"
             input_value={date}
             set_input={setDate}
           />
           <InputCard
-            input_name="Patent Type"
+            input_name="Workshop type"
             input_type="text"
             input_value={type}
             set_input={setType}
           />
           <InputCard
-            input_name="Application number"
+            input_name="Workshop title"
             input_type="date"
             input_value={title}
             set_input={setTitle}
           />
           <InputCard
-            input_name="Status"
+            input_name="Number of days"
             input_type="text"
             input_value={noDays}
             set_input={setNoDays}
           />
           <InputCard
-            input_name="Published as proceedings"
+            input_name="Organized by"
             input_type="checkbox"
             input_value={organisedBy}
             set_input={setOrganisedBy}
