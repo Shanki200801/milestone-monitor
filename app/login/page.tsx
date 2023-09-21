@@ -35,7 +35,8 @@ export default function Login() {
   }
 
   return (
-    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+    <div className="flex-1 flex flex-col justify-center gap-2 bg-cover h-screen w-screen py-16 px-96 bg-[#3b9b9b]">
+      <div className="bg-150%  bg-center bg-[url('../public/login-bg.svg')] h-full">
       <Link
         href="/"
         className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
@@ -121,6 +122,8 @@ export default function Login() {
           )}
         </form>
       )}
+      </div>
+      
     </div>
   )
 }

@@ -15,6 +15,9 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    backgroundSize: {
+      '150%' : '150%'
+    },
     extend: {
       keyframes: {
         "accordion-down": {
