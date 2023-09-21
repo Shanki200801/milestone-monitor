@@ -50,7 +50,7 @@ export const updateStaffPW = async(email: string, password: string) => {
 
 }
 
-export const addConference = async(type:string, paper_title:string, conf_name:string, conf_date:string, certificate:string, proceeding_fp:string, faculty_id:string) => {
+export const addConference = async(type:string, paper_title:string, conf_date:string, proceedings: boolean, conf_name:string,  proceeding_fp:boolean, certificate:string, faculty_id:string) => {
     const supabase = createServerComponentClient({cookies})
     const { data, error } = await supabase
     .from('conferences')
@@ -58,6 +58,7 @@ export const addConference = async(type:string, paper_title:string, conf_name:st
     { type: type, paper_title: paper_title, conf_name: conf_name, conf_date: conf_date, certificate: certificate, proceeding_fp: proceeding_fp, faculty_id: faculty_id},
        ])
     .select()
+    console.log(error);
 }
 
 export const addWorkshops = async(faculty_id:string, date:string, type:string, title:string, number_of_days:number, organized_by:string)=>{
@@ -70,12 +71,12 @@ export const addWorkshops = async(faculty_id:string, date:string, type:string, t
     .select()
 }
 
-export const addJournals = async(faculty_id:string, paper_title:string, journal_name:string, issan_number:string, date_of_publication:string, indexed_in:string, link:string, upload_image:string)=>{
+export const addJournals = async(faculty_id:string, paper_title:string, journal_name:string, issn_number:string, date_of_publication:string, indexed_in:string, link:string, upload_image:string)=>{
     const supabase = createServerComponentClient({cookies})
     const { data, error } = await supabase
     .from('journal_publications')
     .insert([
-        {faculty_id: faculty_id, paper_title: paper_title, journal_name: journal_name, issan_number: issan_number, month_and_year_of_publication: date_of_publication, indexed_in: indexed_in, link: link, upload_image: upload_image},
+        {faculty_id: faculty_id, paper_title: paper_title, journal_name: journal_name, issn_number: issn_number, month_and_year_of_publication: date_of_publication, indexed_in: indexed_in, link: link, upload_image: upload_image},
     ])
 }
 

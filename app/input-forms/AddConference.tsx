@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import InputCard from "./InputCard.jsx";
+import { addConference } from "../api/dbfunctions.tsx";
 
 const AddConference = () => {
   const [paperTitle, setPaperTitle] = useState("");
@@ -10,6 +11,11 @@ const AddConference = () => {
   const [proceedingsFP, setProceedingsFP] = useState(false);
   const [certificate, setCertificate] = useState("");
   const [type, setType] = useState("");
+
+  const addConferenceWrapper = async(e: React.MouseEvent, args: [string, string, string, boolean, string, boolean, string, string]) => {
+    e.preventDefault();
+    await addConference(...args);
+  }
 
   return (
     <div className="">
@@ -40,7 +46,7 @@ const AddConference = () => {
             set_input={setConferenceDate}
           />
           <InputCard
-            input_name="Conference type"
+            input_name="Conference Type"
             input_type="text"
             input_value={type}
             set_input={setType}
@@ -63,7 +69,7 @@ const AddConference = () => {
             input_value={certificate}
             set_input={setCertificate}
           />
-          <input type="submit" />
+          <input type="submit" onClick={(e) => addConferenceWrapper(e, [paperTitle, conferenceName, conferenceDate, proceedings, facultyID, proceedingsFP, certificate, type])}/>
         </div>
       </form>
     </div>

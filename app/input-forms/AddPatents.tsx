@@ -35,8 +35,8 @@ const AddPatents = () => {
             set_input={setPatentType}
           />
           <InputCard
-            input_name="Application number"
-            input_type="date"
+            input_name="Application Number"
+            input_type="text"
             input_value={applicationNo}
             set_input={setApplicationNo}
           />
@@ -47,20 +47,20 @@ const AddPatents = () => {
             set_input={setStatus}
           />
           <InputCard
-            input_name="Published as proceedings"
-            input_type="checkbox"
+            input_name="Image"
+            input_type="text"
             input_value={image}
             set_input={setImage}
           />
           <InputCard
-            input_name="Proceedings front page"
+            input_name="Patent Link"
             input_type="text"
             input_value={patentLink}
             set_input={setPatentLink}
           />
           <InputCard
-            input_name="Certificate"
-            input_type="text"
+            input_name="Patent Date"
+            input_type="date"
             input_value={patentDate}
             set_input={setPatentDate}
           />
