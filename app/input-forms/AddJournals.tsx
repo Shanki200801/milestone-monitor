@@ -41,7 +41,7 @@ const AddJournals = () => {
           />
           <InputCard
             input_name="Date published"
-            input_type="text"
+            input_type="date"
             input_value={date}
             set_input={setDate}
           />

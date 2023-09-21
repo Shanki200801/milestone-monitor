@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import InputCard from "./InputCard";
+import { addPatent } from "../api/dbfunctions.tsx";
 
 const AddPatents = () => {
   const [facultyID, setFacultyID] = useState("");
@@ -10,8 +11,11 @@ const AddPatents = () => {
   const [image, setImage] = useState("");
   const [patentLink, setPatentLink] = useState("");
   const [patentDate, setPatentDate] = useState("");
-  const [isVerified, setIsVerified] = useState(false);
 
+  const addPatentWrapper = async(e: React.MouseEvent, args: [string, string, string, string, string, string, string, string]) => {
+    e.preventDefault();
+    await addPatent(...args);
+  }
   return (
     <div className="">
       <form>
@@ -65,7 +69,7 @@ const AddPatents = () => {
             input_value={patentDate}
             set_input={setPatentDate}
           />
-          <input type="submit" />
+          <input type="submit" onClick={(e) => addPatentWrapper(e, [facultyID, patentName, patentDate, applicationNo, image, status, patentType, patentLink])} />
         </div>
       </form>
     </div>

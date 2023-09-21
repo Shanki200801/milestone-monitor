@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 import InputCard from "./InputCard";
+import { addWorkshops } from "../api/dbfunctions.tsx";
+
 const AddWorkshops = () => {
   const [facultyID, setFacultyID] = useState("");
   const [date, setDate] = useState("");
   const [type, setType] = useState("");
   const [title, setTitle] = useState("");
-  const [noDays, setNoDays] = useState("");
+  const [noDays, setNoDays] = useState(0);
   const [organisedBy, setOrganisedBy] = useState("");
   const [isVerified, setIsVerified] = useState(false);
 
   const addWorkshopsWrapper = async(e: React.MouseEvent, args: [string, string, string, string, number, string]) => {
-
+    e.preventDefault();
+    await addWorkshops(...args);
   } 
 
   return (
@@ -43,7 +46,7 @@ const AddWorkshops = () => {
           />
           <InputCard
             input_name="Number of days"
-            input_type="text"
+            input_type="number"
             input_value={noDays}
             set_input={setNoDays}
           />
@@ -54,7 +57,7 @@ const AddWorkshops = () => {
             set_input={setOrganisedBy}
           />
 
-          <input type="submit" />
+          <input type="submit" onClick={(e) => addWorkshopsWrapper(e, [facultyID, date, type, title, noDays, organisedBy])} />
         </div>
       </form>
     </div>
