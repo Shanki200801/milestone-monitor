@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import InputCard from "./InputCard.jsx";
 import { addConference } from "../api/dbfunctions.tsx";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const AddConference = () => {
   const [paperTitle, setPaperTitle] = useState("");
@@ -12,9 +13,24 @@ const AddConference = () => {
   const [certificate, setCertificate] = useState("");
   const [type, setType] = useState("");
 
-  const addConferenceWrapper = async(e: React.MouseEvent, args: [string, string, string, boolean, string, boolean, string, string]) => {
+  const addConferenceWrapper = async (
+    e: React.MouseEvent,
+    args: [string, string, string, boolean, string, boolean, string, string]
+  ) => {
     e.preventDefault();
     await addConference(...args);
+  };
+
+  const supabase = createClientComponentClient();
+
+  async function uploadImage(e: any) {
+    let file = e.target.files[0];
+
+    const { data, error } = await supabase.storage
+      .from("staff-media")
+      .upload("patentsMedia/" + facultyID + file.name, file);
+    console.log(data);
+    console.log(error);
   }
 
   return (
@@ -69,7 +85,25 @@ const AddConference = () => {
             input_value={certificate}
             set_input={setCertificate}
           />
-          <input type="submit" onClick={(e) => addConferenceWrapper(e, [paperTitle, conferenceName, conferenceDate, proceedings, facultyID, proceedingsFP, certificate, type])}/>
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Upload image
+          </label>
+          <input type="file" onChange={(e) => uploadImage(e)} />
+          <input
+            type="submit"
+            onClick={(e) =>
+              addConferenceWrapper(e, [
+                paperTitle,
+                conferenceName,
+                conferenceDate,
+                proceedings,
+                facultyID,
+                proceedingsFP,
+                certificate,
+                type,
+              ])
+            }
+          />
         </div>
       </form>
     </div>

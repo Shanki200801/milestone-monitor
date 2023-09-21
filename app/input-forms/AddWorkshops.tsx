@@ -6,12 +6,14 @@ const AddWorkshops = () => {
   const [type, setType] = useState("");
   const [title, setTitle] = useState("");
   const [noDays, setNoDays] = useState("");
+  const [heldOrAttended, setHeldorAttended] = useState("Attended");
   const [organisedBy, setOrganisedBy] = useState("");
   const [isVerified, setIsVerified] = useState(false);
 
-  const addWorkshopsWrapper = async(e: React.MouseEvent, args: [string, string, string, string, number, string]) => {
-
-  } 
+  const addWorkshopsWrapper = async (
+    e: React.MouseEvent,
+    args: [string, string, string, string, number, string]
+  ) => {};
 
   return (
     <div className="">
@@ -47,13 +49,37 @@ const AddWorkshops = () => {
             input_value={noDays}
             set_input={setNoDays}
           />
-          <InputCard
-            input_name="Organised by"
-            input_type="text"
-            input_value={organisedBy}
-            set_input={setOrganisedBy}
-          />
+          <label>Select if you held or attended the workshop</label>
+          <div className="flex">
+            <input
+              type="radio"
+              name="heldOrAttended"
+              className="mx-4"
+              value="Attended"
+              checked={heldOrAttended === "Attended"}
+              onChange={(e) => setHeldorAttended(e.target.value)}
+            />
+            Attended
+            <input
+              type="radio"
+              name="heldOrAttended"
+              value="Held"
+              className="mx-4"
+              checked={heldOrAttended === "Held"}
+              onChange={(e) => setHeldorAttended(e.target.value)}
+            />
+            Organized
+          </div>
 
+          {heldOrAttended === "Attended" && (
+            <InputCard
+              input_name="Organized by"
+              input_type="text"
+              input_value={organisedBy}
+              set_input={setOrganisedBy}
+            />
+          )}
+          {heldOrAttended === "Held" && <></>}
           <input type="submit" />
         </div>
       </form>

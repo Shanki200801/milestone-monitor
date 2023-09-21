@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import InputCard from "./InputCard";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const AddPatents = () => {
+  const [userId, setUserId] = useState("");
   const [facultyID, setFacultyID] = useState("");
   const [patentName, setPatentName] = useState("");
   const [patentType, setPatentType] = useState("");
@@ -11,6 +13,31 @@ const AddPatents = () => {
   const [patentLink, setPatentLink] = useState("");
   const [patentDate, setPatentDate] = useState("");
   const [isVerified, setIsVerified] = useState(false);
+
+  const supabase = createClientComponentClient();
+
+  const getUser = async () => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user !== null) {
+        setUserId(user.id);
+      } else {
+        setUserId("");
+      }
+    } catch (e) {}
+  };
+
+  async function uploadImage(e: any) {
+    let file = e.target.files[0];
+
+    const { data, error } = await supabase.storage
+      .from("staff-media")
+      .upload("patentsMedia/" + userId + file.name, file);
+    console.log(data);
+    console.log(error);
+  }
 
   return (
     <div className="">
@@ -48,11 +75,15 @@ const AddPatents = () => {
             set_input={setStatus}
           />
           <InputCard
-            input_name="Image"
+            input_name="Image link"
             input_type="text"
             input_value={image}
             set_input={setImage}
           />
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Upload image
+          </label>
+          <input type="file" onChange={(e) => uploadImage(e)} />
           <InputCard
             input_name="Patent Link"
             input_type="text"
