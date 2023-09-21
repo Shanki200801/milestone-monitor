@@ -28,9 +28,10 @@ const AddConference = () => {
 
     const { data, error } = await supabase.storage
       .from("staff-media")
-      .upload("patentsMedia/" + facultyID + file.name, file);
-    console.log(data);
-    console.log(error);
+      .upload("conferenceMedia/" + facultyID + file.name, file);
+    setCertificate("conferenceMedia/" + facultyID + file.name);
+    console.log("file upload logs " + data);
+    console.log("Error logs " + error?.message);
   }
 
   return (
@@ -79,14 +80,14 @@ const AddConference = () => {
             input_value={proceedingsFP}
             set_input={setProceedingsFP}
           />
-          <InputCard
+          {/* <InputCard
             input_name="Certificate"
             input_type="text"
             input_value={certificate}
             set_input={setCertificate}
-          />
+          /> */}
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            Upload image
+            Upload certificate image
           </label>
           <input type="file" onChange={(e) => uploadImage(e)} />
           <input

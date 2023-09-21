@@ -31,7 +31,7 @@ const AddPatents = () => {
 
   async function uploadImage(e: any) {
     let file = e.target.files[0];
-
+    setImage("patentsMedia/" + userId + file.name);
     const { data, error } = await supabase.storage
       .from("staff-media")
       .upload("patentsMedia/" + userId + file.name, file);
@@ -74,12 +74,12 @@ const AddPatents = () => {
             input_value={status}
             set_input={setStatus}
           />
-          <InputCard
+          {/* <InputCard
             input_name="Image link"
             input_type="text"
             input_value={image}
             set_input={setImage}
-          />
+          /> */}
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Upload image
           </label>
