@@ -16,6 +16,7 @@ const AddPatents = () => {
     <div className="">
       <form>
         <div className="grid gap-6 mb-6 ">
+          {/* Lock the faculty ID to user.id */}
           <InputCard
             input_name="Faculty ID"
             input_type="text"
