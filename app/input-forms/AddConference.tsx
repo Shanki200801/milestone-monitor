@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import InputCard from "./InputCard.jsx";
+import { addConference } from "../api/dbfunctions.tsx";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const AddConference = () => {
   const [paperTitle, setPaperTitle] = useState("");
@@ -10,6 +12,27 @@ const AddConference = () => {
   const [proceedingsFP, setProceedingsFP] = useState(false);
   const [certificate, setCertificate] = useState("");
   const [type, setType] = useState("");
+
+  const addConferenceWrapper = async (
+    e: React.MouseEvent,
+    args: [string, string, string, boolean, string, boolean, string, string]
+  ) => {
+    e.preventDefault();
+    await addConference(...args);
+  };
+
+  const supabase = createClientComponentClient();
+
+  async function uploadImage(e: any) {
+    let file = e.target.files[0];
+
+    const { data, error } = await supabase.storage
+      .from("staff-media")
+      .upload("conferenceMedia/" + facultyID + file.name, file);
+    setCertificate("conferenceMedia/" + facultyID + file.name);
+    console.log("file upload logs " + data);
+    console.log("Error logs " + error?.message);
+  }
 
   return (
     <div className="">
@@ -40,7 +63,7 @@ const AddConference = () => {
             set_input={setConferenceDate}
           />
           <InputCard
-            input_name="Conference type"
+            input_name="Conference Type"
             input_type="text"
             input_value={type}
             set_input={setType}
@@ -57,13 +80,31 @@ const AddConference = () => {
             input_value={proceedingsFP}
             set_input={setProceedingsFP}
           />
-          <InputCard
+          {/* <InputCard
             input_name="Certificate"
             input_type="text"
             input_value={certificate}
             set_input={setCertificate}
+          /> */}
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Upload certificate image
+          </label>
+          <input type="file" onChange={(e) => uploadImage(e)} />
+          <input
+            type="submit"
+            onClick={(e) =>
+              addConferenceWrapper(e, [
+                paperTitle,
+                conferenceName,
+                conferenceDate,
+                proceedings,
+                facultyID,
+                proceedingsFP,
+                certificate,
+                type,
+              ])
+            }
           />
-          <input type="submit" />
         </div>
       </form>
     </div>

@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import InputCard from "./InputCard";
+import { addPatent } from "../api/dbfunctions.tsx";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const AddPatents = () => {
+  const [userId, setUserId] = useState("");
   const [facultyID, setFacultyID] = useState("");
   const [patentName, setPatentName] = useState("");
   const [patentType, setPatentType] = useState("");
@@ -10,8 +13,36 @@ const AddPatents = () => {
   const [image, setImage] = useState("");
   const [patentLink, setPatentLink] = useState("");
   const [patentDate, setPatentDate] = useState("");
-  const [isVerified, setIsVerified] = useState(false);
 
+  const supabase = createClientComponentClient();
+
+  const getUser = async () => {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (user !== null) {
+        setUserId(user.id);
+      } else {
+        setUserId("");
+      }
+    } catch (e) {}
+  };
+
+  async function uploadImage(e: any) {
+    let file = e.target.files[0];
+    setImage("patentsMedia/" + userId + file.name);
+    const { data, error } = await supabase.storage
+      .from("staff-media")
+      .upload("patentsMedia/" + userId + file.name, file);
+    console.log(data);
+    console.log(error);
+  }
+
+  const addPatentWrapper = async(e: React.MouseEvent, args: [string, string, string, string, string, string, string, string]) => {
+    e.preventDefault();
+    await addPatent(...args);
+  }
   return (
     <div className="">
       <form>
@@ -36,8 +67,8 @@ const AddPatents = () => {
             set_input={setPatentType}
           />
           <InputCard
-            input_name="Application number"
-            input_type="date"
+            input_name="Application Number"
+            input_type="text"
             input_value={applicationNo}
             set_input={setApplicationNo}
           />
@@ -47,25 +78,29 @@ const AddPatents = () => {
             input_value={status}
             set_input={setStatus}
           />
-          <InputCard
+           <InputCard
             input_name="Image link"
-            input_type="checkbox"
+            input_type="text"
             input_value={image}
             set_input={setImage}
-          />
+          /> 
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Upload image
+          </label>
+          <input type="file" onChange={(e) => uploadImage(e)} />
           <InputCard
-            input_name="Patent link"
+            input_name="Patent Link"
             input_type="text"
             input_value={patentLink}
             set_input={setPatentLink}
           />
           <InputCard
-            input_name="Patent date"
-            input_type="text"
+            input_name="Patent Date"
+            input_type="date"
             input_value={patentDate}
             set_input={setPatentDate}
           />
-          <input type="submit" />
+          <input type="submit" onClick={(e) => addPatentWrapper(e, [facultyID, patentName, patentDate, applicationNo, image, status, patentType, patentLink])} />
         </div>
       </form>
     </div>
