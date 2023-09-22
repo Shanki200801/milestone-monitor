@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import InputCard from "./InputCard";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { addJournals } from "../api/dbfunctions.tsx";
 
 const AddJournals = () => {
@@ -12,11 +13,27 @@ const AddJournals = () => {
   const [link, setLink] = useState("");
   const [imageLink, setImageLink] = useState("");
 
-
-  const addJournalWrapper = async(e: React.MouseEvent, args: [string, string, string, string, string, string, string, string]) => {
+  const addJournalWrapper = async (
+    e: React.MouseEvent,
+    args: [string, string, string, string, string, string, string, string]
+  ) => {
     e.preventDefault();
     await addJournals(...args);
+  };
+
+  const supabase = createClientComponentClient();
+
+  async function uploadImage(e: any) {
+    let file = e.target.files[0];
+
+    const { data, error } = await supabase.storage
+      .from("staff-media")
+      .upload("journalMedia/" + facultyID + file.name, file);
+    setImageLink("journalMedia/" + facultyID + file.name);
+    console.log("file upload logs " + data);
+    console.log("Error logs " + error?.message);
   }
+
   return (
     <div className="">
       <form>
@@ -63,13 +80,31 @@ const AddJournals = () => {
             input_value={link}
             set_input={setLink}
           />
-          <InputCard
+          {/* <InputCard
             input_name="Upload Image"
             input_type="text"
             input_value={imageLink}
             set_input={setImageLink}
+          /> */}
+          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+            Upload certificate image
+          </label>
+          <input type="file" onChange={(e) => uploadImage(e)} />
+          <input
+            type="submit"
+            onClick={(e) =>
+              addJournalWrapper(e, [
+                facultyID,
+                paperTitle,
+                date,
+                journalName,
+                issn,
+                indexedIn,
+                link,
+                imageLink,
+              ])
+            }
           />
-          <input type="submit" onClick={(e) => addJournalWrapper(e, [facultyID, paperTitle, date, journalName, issn, indexedIn, link, imageLink])}/>
         </div>
       </form>
     </div>
