@@ -82,7 +82,7 @@ const AddWorkshops = () => {
             />
           )}
           {heldOrAttended === "Held" && <></>}
-          <input type="submit" />
+          <input type="submit" onClick={(e) => addWorkshopsWrapper(e, [facultyID, date, type, title, noDays, organisedBy])} />
         </div>
       </form>
     </div>

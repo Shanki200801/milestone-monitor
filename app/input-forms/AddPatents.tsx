@@ -78,12 +78,12 @@ const AddPatents = () => {
             input_value={status}
             set_input={setStatus}
           />
-          {/* <InputCard
+           <InputCard
             input_name="Image link"
             input_type="text"
             input_value={image}
             set_input={setImage}
-          /> */}
+          /> 
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Upload image
           </label>
