@@ -9,7 +9,10 @@ import AddConference from "./AddConference";
 import AddWorkshops from "./AddWorkshops";
 import AddPatents from "./AddPatents";
 import AddJournals from "./AddJournals";
+import LogoutButton from "@/components/LogoutButton";
+
 export const page = () => {
+
   return (
     <div className="flex flex-col justify-center place-content-center">
       <Popover modal={true}>
@@ -44,6 +47,7 @@ export const page = () => {
           <AddJournals />
         </PopoverContent>
       </Popover>
+      <LogoutButton/>
     </div>
   );
 };

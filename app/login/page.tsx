@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Link from 'next/link'
+import Image from 'next/image'
+import logo from '../../public/logo.webp'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -11,18 +13,6 @@ export default function Login() {
   const [view, setView] = useState('sign-in')
   const router = useRouter()
   const supabase = createClientComponentClient()
-
-  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
-      },
-    })
-    setView('check-email')
-  }
 
   const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -35,7 +25,8 @@ export default function Login() {
   }
 
   return (
-    <div className="flex-1 flex flex-col w-full px-8 sm:max-w-md justify-center gap-2">
+    <div className="flex-1 flex flex-col justify-center gap-2 bg-cover h-screen w-screen py-16 px-96 bg-[#3b9b9b]">
+      <div className="bg-150%  bg-center bg-[url('../public/login-bg.svg')] h-full flex justify-center items-center">
       <Link
         href="/"
         className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
@@ -56,6 +47,8 @@ export default function Login() {
         </svg>{' '}
         Back
       </Link>
+      <div className='flex flex-col'>
+        <Image src={logo} width={150} height={150} alt={'logo'} className='self-center'/>
       {view === 'check-email' ? (
         <p className="text-center text-foreground">
           Check <span className="font-bold">{email}</span> to continue signing
@@ -64,7 +57,7 @@ export default function Login() {
       ) : (
         <form
           className="flex-1 flex flex-col w-full justify-center gap-2 text-foreground"
-          onSubmit={view === 'sign-in' ? handleSignIn : handleSignUp}
+          onSubmit={handleSignIn}
         >
           <label className="text-md" htmlFor="email">
             Email
@@ -92,35 +85,16 @@ export default function Login() {
               <button className="bg-green-700 rounded px-4 py-2 text-white mb-6">
                 Sign In
               </button>
-              <p className="text-sm text-center">
-                Don't have an account?
-                <button
-                  className="ml-1 underline"
-                  onClick={() => setView('sign-up')}
-                >
-                  Sign Up Now
-                </button>
-              </p>
+             
             </>
           )}
-          {view === 'sign-up' && (
-            <>
-              <button className="bg-green-700 rounded px-4 py-2 text-white mb-6">
-                Sign Up
-              </button>
-              <p className="text-sm text-center">
-                Already have an account?
-                <button
-                  className="ml-1 underline"
-                  onClick={() => setView('sign-in')}
-                >
-                  Sign In Now
-                </button>
-              </p>
-            </>
-          )}
+
         </form>
-      )}
+      )}    
+      </div>
+      
+      </div>
+      
     </div>
   )
 }
