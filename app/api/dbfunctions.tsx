@@ -19,8 +19,8 @@ export const addStaff = async (
 ) => {
   //NOTE: sqiggly line can be ignored here, idk how to fix
   const supaAdmin = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.SERVICE_ROLE
+    (process.env.NEXT_PUBLIC_SUPABASE_URL as string),
+    (process.env.SERVICE_ROLE as string)
   );
   //pass a default pw in the args for this function
   const { data: d, error: e } = await supaAdmin.auth.admin.createUser({
