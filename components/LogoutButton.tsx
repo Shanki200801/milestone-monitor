@@ -9,15 +9,17 @@ export default function LogoutButton() {
   // Create a Supabase client configured to use cookies
   const supabase = createClientComponentClient()
 
-  const signOut = async () => {
+  const handleSignOut = async () => {
     await supabase.auth.signOut()
+    router.push('/login')
     router.refresh()
+    
   }
 
   return (
     <button
       className="py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
-      onClick={signOut}
+      onClick={handleSignOut}
     >
       Logout
     </button>
