@@ -6,7 +6,6 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Link from 'next/link'
 import Image from 'next/image'
 import logo from '../../public/logo.webp'
-import AuthForm from '../auth-form'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -48,7 +47,6 @@ export default function Login() {
         </svg>{' '}
         Back
       </Link>
-      <AuthForm/>
       <div className='flex flex-col'>
         <Image src={logo} width={150} height={150} alt={'logo'} className='self-center'/>
       {view === 'check-email' ? (
