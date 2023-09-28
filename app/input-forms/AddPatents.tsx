@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import InputCard from "./InputCard";
-import { addPatent } from "../api/dbfunctions.tsx";
+import { addPatent } from "../api/dbfunctions";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const AddPatents = () => {
