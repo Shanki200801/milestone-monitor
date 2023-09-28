@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InputCard from "./InputCard";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { addJournals } from "../api/dbfunctions.tsx";
+import { addJournals } from "../api/dbfunctions";
 
 const AddJournals = () => {
   const [facultyID, setFacultyID] = useState("");

@@ -11,7 +11,7 @@ import AddPatents from "./AddPatents";
 import AddJournals from "./AddJournals";
 import LogoutButton from "@/components/LogoutButton";
 
-export const page = () => {
+export default function Form() {
 
   return (
     <div className="flex flex-col justify-center place-content-center">
@@ -51,5 +51,3 @@ export const page = () => {
     </div>
   );
 };
-
-export default page;
