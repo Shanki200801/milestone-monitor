@@ -19,9 +19,10 @@ export const addStaff = async (
 ) => {
   //NOTE: sqiggly line can be ignored here, idk how to fix
   const supaAdmin = createClient(
-    (process.env.NEXT_PUBLIC_SUPABASE_URL as string),
-    (process.env.SERVICE_ROLE as string)
+    process.env.NEXT_PUBLIC_SUPABASE_URL as string,
+    process.env.SERVICE_ROLE as string
   );
+
   //pass a default pw in the args for this function
   const { data: d, error: e } = await supaAdmin.auth.admin.createUser({
     email: email,
@@ -104,22 +105,46 @@ export const addWorkshops = async (
   const { data, error } = await supabase
     .from("fdp_workshop_refresher_course")
     .insert([
-    { faculty_id: faculty_id, date: date, type: type, title: title, number_of_days: number_of_days, organized_by: organized_by},
-       ])
-    .select()
-    console.log(error);
-}
-
-export const addJournals = async(faculty_id:string, paper_title:string, date_of_publication:string, journal_name:string, issn_number:string, indexed_in:string, link:string, upload_image:string)=>{
-    const supabase = createServerComponentClient({cookies})
-    const { data, error } = await supabase
-    .from('journal_publications')
-    .insert([
-        {faculty_id: faculty_id, paper_title: paper_title, journal_name: journal_name, issn_number: issn_number, month_and_year_of_publication: date_of_publication, indexed_in: indexed_in, link: link, upload_image: upload_image},
+      {
+        faculty_id: faculty_id,
+        date: date,
+        type: type,
+        title: title,
+        number_of_days: number_of_days,
+        organized_by: organized_by,
+      },
     ])
-    .select()
-    console.log(error);
-    
+    .select();
+  console.log(error);
+};
+
+export const addJournals = async (
+  faculty_id: string,
+  paper_title: string,
+  date_of_publication: string,
+  journal_name: string,
+  issn_number: string,
+  indexed_in: string,
+  link: string,
+  upload_image: string
+) => {
+  const supabase = createServerComponentClient({ cookies });
+  const { data, error } = await supabase
+    .from("journal_publications")
+    .insert([
+      {
+        faculty_id: faculty_id,
+        paper_title: paper_title,
+        journal_name: journal_name,
+        issn_number: issn_number,
+        month_and_year_of_publication: date_of_publication,
+        indexed_in: indexed_in,
+        link: link,
+        upload_image: upload_image,
+      },
+    ])
+    .select();
+  console.log(error);
 };
 
 // export const addPatent = async(faculty_id:string, patent_name:string,patent_date:string, patent_type:string, application_no:string, status:string,image:string, patent_link:string)=>{
@@ -155,7 +180,7 @@ export const addJournals = async(faculty_id:string, paper_title:string, date_of_
 //     ])
 //     .select()
 //     console.log(error);
-    
+
 //   console.log("error:" + error?.message);
 //   console.log("data " + data);
 // };
@@ -169,7 +194,6 @@ export const addPatent = async (
   status: string,
   image: string,
   patent_link: string
-  
 ) => {
   const supabase = createServerComponentClient({ cookies });
   const { data, error } = await supabase.from("patents").insert([
@@ -182,8 +206,7 @@ export const addPatent = async (
       status: status,
       image: image,
       patent_link: patent_link,
-      
     },
   ]);
-  console.log("error is "+error?.message)
+  console.log("error is " + error?.message);
 };

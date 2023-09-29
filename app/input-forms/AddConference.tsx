@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import InputCard from "./InputCard.jsx";
-import { addConference } from "../api/dbfunctions.tsx";
+import InputCard from "./InputCard";
+import { addConference } from "../api/dbfunctions";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const AddConference = () => {
