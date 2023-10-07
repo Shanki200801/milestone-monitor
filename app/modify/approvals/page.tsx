@@ -1,10 +1,11 @@
 import { unauthenticatedRedirector } from "@/lib/unauthRedirect";
 import React from "react";
-import MyConference from "./MyConference";
+import Approval from "./Approval";
 
 const page = () => {
   unauthenticatedRedirector();
-  return <MyConference />;
+
+  return <Approval />;
 };
 
 export default page;

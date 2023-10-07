@@ -1,10 +1,10 @@
 import React from "react";
 import { unauthenticatedRedirector } from "@/lib/unauthRedirect";
-import MyWorkshops from "./MyWorkshops";
+import Profile from "./Profile";
 
 const page = () => {
   unauthenticatedRedirector();
-  return <MyWorkshops />;
+  return <Profile />;
 };
 
 export default page;
