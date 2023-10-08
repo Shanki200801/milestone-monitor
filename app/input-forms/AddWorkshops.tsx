@@ -10,12 +10,14 @@ const AddWorkshops = () => {
   const [noDays, setNoDays] = useState(0);
   const [heldOrAttended, setHeldorAttended] = useState("Attended");
   const [organisedBy, setOrganisedBy] = useState("");
-  const [isVerified, setIsVerified] = useState(false);
 
-  const addWorkshopsWrapper = async(e: React.MouseEvent, args: [string, string, string, string, number, string]) => {
+  const addWorkshopsWrapper = async (
+    e: React.MouseEvent,
+    args: [string, string, string, string, number, string]
+  ) => {
     e.preventDefault();
     await addWorkshops(...args);
-  } 
+  };
 
   return (
     <div className="">
@@ -82,7 +84,19 @@ const AddWorkshops = () => {
             />
           )}
           {heldOrAttended === "Held" && <></>}
-          <input type="submit" onClick={(e) => addWorkshopsWrapper(e, [facultyID, date, type, title, noDays, organisedBy])} />
+          <input
+            type="submit"
+            onClick={(e) =>
+              addWorkshopsWrapper(e, [
+                facultyID,
+                date,
+                type,
+                title,
+                noDays,
+                organisedBy,
+              ])
+            }
+          />
         </div>
       </form>
     </div>
