@@ -6,16 +6,12 @@
     "start": "next start"
   },
   "dependencies": {
-    "@emotion/react": "^11.11.1",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.14.3",
-    "@mui/material": "^5.14.5",
     "@radix-ui/react-popover": "^1.0.6",
     "@supabase/auth-helpers-nextjs": "latest",
     "@supabase/auth-ui-react": "^0.4.5",
     "@supabase/auth-ui-shared": "^0.1.7",
     "@supabase/supabase-js": "latest",
-    "autoprefixer": "10.4.14",
+    "autoprefixer": "10.4.16",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.263.1",

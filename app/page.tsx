@@ -1,24 +1,15 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
-// import SupabaseLogo from "../../../components/SupabaseLogo";
-// import NextJsLogo from "../../../components/NextJsLogo";
-// import { getAllStaff } from "./database";
 import Image from "next/image";
-import { Inter, Poppins } from "next/font/google";
-import logoImg from "../public/logo.webp";
-import sjuLogo from "../public/sju-logo.webp";
+import { Poppins } from "next/font/google";
 
-//TODO: Make this a protected route (see example)
-//TODO: Make this the dashboard
+const bodyText = Poppins({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 export const dynamic = "force-dynamic";
-
-// const bodyText = Inter({ subsets: ["latin"] });
-const bodyText = Poppins({
-  subsets: ["latin"],
-  weight: "400",
-});
 
 const resources = [
   {
@@ -61,10 +52,7 @@ export default async function Index() {
   } = await supabase.auth.getUser();
 
   return (
-    <div
-      id="dashboard"
-      className={`${bodyText.className} bg-teal-500/40`}
-    >
+    <div id="dashboard" className={`${bodyText.className} bg-teal-500/40`}>
       <h1>[Dashboard]</h1>
     </div>
   );
