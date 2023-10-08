@@ -3,6 +3,9 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import Image from "next/image";
 import { Poppins } from "next/font/google";
+import Account from "@/components/dashboard/account";
+import Carousel from "@/components/dashboard/carousel";
+import Events from "@/components/dashboard/events";
 
 const bodyText = Poppins({
   weight: "400",
@@ -52,8 +55,17 @@ export default async function Index() {
   } = await supabase.auth.getUser();
 
   return (
-    <div id="dashboard" className={`${bodyText.className} bg-teal-500/40`}>
-      <h1>[Dashboard]</h1>
-    </div>
+    <section
+      id="dashboard"
+      className={`invisible sm:visible ${bodyText.className} grid grid-rows-2 md:h-[85vh] bg-teal-500/40 md:p-8`}
+    >
+      <div className="flex md:flex-row gap-12 justify-evenly row-start-1 flex-col">
+        <Account />
+        <Carousel />
+      </div>
+      <div className="-mt-40 row-start-3">
+        <Events/>
+      </div>
+    </section>
   );
 }
