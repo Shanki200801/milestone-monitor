@@ -18,10 +18,7 @@ const page = async () => {
     redirect("/login");
   }
 
-  const { data: journal_publications } = await supabase
-    .from("journal_publications")
-    .select()
-    .eq("is_verified", "PENDING");
+  
   return <MyJournals />;
 };
 

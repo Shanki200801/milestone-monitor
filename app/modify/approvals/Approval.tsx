@@ -1,22 +1,50 @@
+"use client";
 import React from "react";
-import { PendingData } from "./types";
-
+import { useState } from "react";
+import ViewIcon from "./ViewIcon";
+import { ModalComponent } from "./Modal";
+import {
+  PendingConference,
+  PendingData,
+  PendingPatent,
+  PendingJournal,
+  PendingWorkshop,
+} from "./types";
 // Example usage:
 // const data: PendingData = /* Your JSON data here */;
 
 const Approval = ({ pending_data }: { pending_data: PendingData }) => {
+  //Modal states
+  const [showModal, setShowModal] = useState(false);
+  const [selectedRow, setSelectedRow] = useState<
+    PendingConference | PendingJournal | PendingWorkshop | PendingPatent | null
+  >(null);
+  const toogleModal = (
+    data: PendingConference | PendingJournal | PendingWorkshop | PendingPatent
+  ) => {
+    setShowModal(!showModal);
+    setSelectedRow(data);
+  };
+
+  //modal jsx
+
+  //data handling
   // console.log("printing data from component" + JSON.stringify(pending_data));
   for (const confs of pending_data.pending_conferences) {
     confs["entry_type"] = "Conference";
+    confs["title"] = confs["paper_title"];
   }
   for (const jour of pending_data.pending_journal) {
     jour["entry_type"] = "Journal";
+    jour["title"] = jour["paper_title"];
   }
   for (const workshops of pending_data.pending_workshop) {
     workshops["entry_type"] = "Workshop";
+    // workshops["title"] = workshops['title']
   }
   for (const patents of pending_data.pending_patent) {
     patents["entry_type"] = "Patent";
+    patents["title"] = patents["patent_name"];
   }
   const outer_display_object = [
     ...pending_data["pending_conferences"],
@@ -30,7 +58,11 @@ const Approval = ({ pending_data }: { pending_data: PendingData }) => {
   // );
   return (
     <div className="overflow-x-auto">
-      <div className="min-w-screen min-h-screen bg-gray-100 flex items-center justify-center  font-sans overflow-hidden">
+      <div className="min-w-screen min-h-screen bg-gray-100 flex flex-col items-center justify-center  font-sans overflow-hidden">
+        <span>
+          Use the following table to approve or disapprove the submissions made
+          by staff of ... department
+        </span>
         <div className="w-full lg:w-5/6">
           <div className="bg-white shadow-md rounded my-6">
             <table className="min-w-max w-full table-auto overflow-scroll h-4/5">
@@ -51,7 +83,9 @@ const Approval = ({ pending_data }: { pending_data: PendingData }) => {
                   >
                     <td className="py-3 px-6 text-left whitespace-nowrap">
                       <div className="flex items-center">
-                        <span className="font-medium">{item.created_at}</span>
+                        <span className="font-medium">
+                          {item.created_at?.substring(0, 10)}
+                        </span>
                       </div>
                     </td>
                     <td className="py-3 px-6 text-left">
@@ -68,28 +102,15 @@ const Approval = ({ pending_data }: { pending_data: PendingData }) => {
                       </span>
                     </td>
                     <td className="py-3 px-6 text-center">
-                      <div className="flex item-center justify-center">
-                        <div className="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                          >
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
-                            />
-                            <path
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              stroke-width="2"
-                              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
-                            />
-                          </svg>
-                        </div>
+                      <div
+                        className="flex item-center justify-center"
+                        onClick={() => toogleModal(item)}
+                      >
+                        <ViewIcon />
+                        <ModalComponent
+                          data={selectedRow}
+                          viewState={showModal}
+                        />
                       </div>
                     </td>
                   </tr>
