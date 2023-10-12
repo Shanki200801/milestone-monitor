@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import InputCard from "./InputCard";
-import { addWorkshops } from "../api/dbfunctions";
+import { addWorkshops } from "../../api/dbfunctions";
 
 const AddWorkshops = () => {
   const [facultyID, setFacultyID] = useState("");

@@ -1,7 +1,7 @@
-import "./globals.css";
+import "../globals.css";
 import Image from "next/image";
-import logoImg from "../public/logo.webp";
-import sjuLogo from "../public/sju-logo.webp";
+import logoImg from "../../public/logo.webp";
+import sjuLogo from "../../public/sju-logo.webp";
 import { Poppins } from "next/font/google";
 import Navbar from "@/components/nav/navbar";
 
