@@ -11,6 +11,11 @@ const bodyText = Poppins({
   subsets: ["latin"],
 });
 
+const headerText = Poppins({
+  weight: "600",
+  subsets: ["latin"],
+})
+
 export default function NavOne() {
   const router = useRouter();
 
@@ -98,13 +103,13 @@ export default function NavOne() {
             </ul> */}
         <h1
           id="home-greeting-user-header"
-          className={`${bodyText.className} text-lg sm:text-xl lg:text-2xl xl:text-3xl text-emerald-900 font-semibold text-center row-start-2 col-span-3 sm:col-span-1 sm:col-start-2 sm:row-start-1 -mt-20 sm:m-0`}
+          className={`${headerText.className} text-lg sm:text-xl lg:text-2xl xl:text-3xl text-center row-start-2 col-span-3 sm:col-span-1 sm:col-start-2 sm:row-start-1 -mt-20 lg:-mt-[1rem] sm:m-0`}
         >
           Welcome back! [user.name]
         </h1>
         <ul
           id="home-user-actions-elements"
-          className={`row-start-1 col-start-3 justify-self-end flex flex-row items-center justify-center gap-2 sm:gap-4 md:gap-6 pr-4`}
+          className={`lg:-mt-[1rem] row-start-1 col-start-3 justify-self-end flex flex-row items-center justify-center gap-2 sm:gap-4 md:gap-6 pr-4`}
         >
           <li id="home-user-profile-link" className="hidden sm:inline">
             <a href="/profile">

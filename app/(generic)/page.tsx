@@ -57,13 +57,13 @@ export default async function Index() {
   return (
     <section
       id="dashboard"
-      className={`invisible sm:visible ${bodyText.className} grid grid-rows-2 md:h-[85vh] bg-teal-500/40 md:p-8`}
+      className={`invisible sm:visible ${bodyText.className} grid grid-rows-2 md:h-[85vh] lg:h-[90vh] bg-teal-500/40 md:p-8`}
     >
       <div className="flex md:flex-row gap-12 justify-evenly row-start-1 flex-col">
         <Account />
         <Carousel />
       </div>
-      <div className="-mt-40 row-start-3">
+      <div className="row-start-3">
         <Events/>
       </div>
     </section>
