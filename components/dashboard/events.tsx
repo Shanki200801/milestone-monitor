@@ -6,22 +6,22 @@ export default function Events() {
       <li
         className={`shadow-lg shadow-emerald-600 bg-teal-800 hover:bg-teal-500 p-4 px-6 border border-transparent hover:border-cyan-800/50 rounded`}
       >
-        Workshops
+        <a href="/my-workshops">Workshops</a>
       </li>
       <li
         className={`shadow-lg shadow-emerald-600 bg-teal-800 hover:bg-teal-500 p-4 px-6 border border-transparent hover:border-cyan-800/50 rounded`}
       >
-        Conferences
+        <a href="/my-conferences">Conferences</a>
       </li>
       <li
         className={`shadow-lg shadow-emerald-600 bg-teal-800 hover:bg-teal-500 p-4 px-10 border border-transparent hover:border-cyan-800/50 rounded`}
       >
-        Journals
+        <a href="/my-journals">Journals</a>
       </li>
       <li
         className={`shadow-lg shadow-emerald-600 bg-teal-800 hover:bg-teal-500 p-4 px-10 border border-transparent hover:border-cyan-800/50 rounded`}
       >
-        Patents
+        <a href="/my-patents">Patents</a>
       </li>
     </ul>
   );
