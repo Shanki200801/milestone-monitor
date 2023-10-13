@@ -3,12 +3,14 @@ import Image from "next/image";
 import logoImg from "../../public/logo.webp";
 import sjuLogo from "../../public/sju-logo.webp";
 import { Poppins } from "next/font/google";
-import Navbar from "@/components/nav/navbar";
+import Navbar from "@/components/nav/Navbar";
 
 const bodyText = Poppins({
   weight: "400",
   subsets: ["latin"],
 });
+
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: "Milestone Monitor",

@@ -1,5 +1,5 @@
-import NavOne from "./navOne"
-import NavTwo from "./navTwo"
+import NavOne from "./NavOne"
+import NavTwo from "./NavTwo"
 
 export default function Navbar() {
     return (

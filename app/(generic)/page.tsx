@@ -3,9 +3,9 @@ import { cookies } from "next/headers";
 import Link from "next/link";
 import Image from "next/image";
 import { Poppins } from "next/font/google";
-import Account from "@/components/dashboard/account";
-import Carousel from "@/components/dashboard/carousel";
-import Events from "@/components/dashboard/events";
+import Account from "@/components/dashboard/Account";
+import Carousel from "@/components/dashboard/Carousel";
+import Events from "@/components/dashboard/Events";
 
 const bodyText = Poppins({
   weight: "400",
