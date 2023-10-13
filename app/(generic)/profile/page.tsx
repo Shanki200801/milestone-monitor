@@ -5,6 +5,8 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Poppins } from "next/font/google";
 import Account from "@/components/profile/Account";
+import Socials from "@/components/profile/Socials";
+import Settings from "@/components/profile/Settings";
 
 const bodyText = Poppins({
   weight: "400",
@@ -24,39 +26,21 @@ const page = async () => {
     redirect("/login");
   }
   return (
-    <section
-      id="profile-wrapper"
-      className={`md:p-10 ${bodyText.className} grid grid-cols-2 grid-rows-2 gap-8 md:h-[85vh] bg-teal-500/40`}
-    >
-        <h2 className="col-start-1 row-start-1 text-center pt-2 font-bold uppercase">
-          Profile Details
-        </h2>
-        <Account />
-
-      <div
-        id="socials-wrapper"
-        className="bg-teal-500/20 col-start-1 row-start-2 border border-transparent rounded md:mt-[15%]"
+    <section>
+      <section
+      id="small-profile-wrapper"
+      className="visible lg:hidden">
+        <h1 className="break-words">Please view this page on a laptop/desktop view.</h1>
+      </section>
+      <section
+        id="profile-wrapper"
+        className={`invisible lg:visible lg:p-4 ${bodyText.className} grid grid-cols-2 grid-rows-2 gap-8 lg:h-[90vh] bg-teal-500/40`}
       >
-        <ul className="flex flex-col justify-center gap-8 p-4 h-full w-full bg-teal-600/40 border border-transparent rounded">
-          <li>Socials</li>
-          <ul className="p-2 border border-transparent rounded bg-teal-600 flex flex-row gap-2">
-            <li>Name:</li>
-            <li>[user.name]</li>
-          </ul>
-          <ul className="p-2 border border-transparent rounded bg-teal-600 flex flex-row gap-2">
-            <li>Department:</li>
-            <li>[user.dept]</li>
-          </ul>
-          <ul className="p-2 border border-transparent rounded bg-teal-600 flex flex-row gap-2">
-            <li>Faculty:</li>
-            <li>[user.Faculty]</li>
-          </ul>
-        </ul>
-      </div>
-      <div
-        id="settings-wrapper"
-        className="bg-teal-500/20 col-start-2 row-span-2 border border-transparent rounded"
-      ></div>
+        <Account />
+        <Socials />
+        <Settings/>
+      </section>
+      
     </section>
   );
 };
