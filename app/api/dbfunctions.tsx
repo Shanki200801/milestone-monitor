@@ -210,3 +210,14 @@ export const addPatent = async (
   ]);
   console.log("error is " + error?.message);
 };
+
+export const fetchData =async (tableName:string, email:string) => {
+  const supabase = createServerComponentClient({ cookies });
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  const { data:userData, error:userError } = await supabase.from('faculty').select().eq('faculty_id', email);
+
+  const {data:tableData, error:tableError} = await supabase.from(tableName).select();
+
+  return tableData;
+}
