@@ -24,14 +24,14 @@ const Profile = async (user: any) => {
         id="socials-wrapper"
         className="bg-teal-500/20 col-start-1 row-start-2 border border-transparent rounded md:mt-[15%]"
       >
-        <button
+        {/* <button
           onClick={() =>
             updateUserWhenLoggedIn(user.user.email, "new name", "123123")
           }
-          className="h-12 w-18 absolute"
+          className="h-12 w-18 absolute p-8 bg-slate-400"
         >
           Test btn
-        </button>
+        </button> */}
         <ul className="flex flex-col justify-center gap-8 p-4 h-full w-full bg-teal-600/40 border border-transparent rounded">
           <li>Socials</li>
           <ul className="p-2 border border-transparent rounded bg-teal-600 flex flex-row gap-2">
