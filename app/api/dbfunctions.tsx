@@ -210,3 +210,19 @@ export const addPatent = async (
   ]);
   console.log("error is " + error?.message);
 };
+
+//have first argument as primary key ie the email which is not editable. All others update variables can go next add more args as needed
+export const updateUserWhenLoggedIn = async (
+  email: string | undefined,
+  name: string,
+  phone: string
+) => {
+  const supabase = createServerComponentClient({ cookies });
+  const { error } = await supabase
+    .from("faculty")
+    .update({ faculty_name: name, faculty_phone: phone })
+    .eq("faculty_email", email);
+  if (error) {
+    console.log("Error from update user: ", error.message);
+  }
+};
