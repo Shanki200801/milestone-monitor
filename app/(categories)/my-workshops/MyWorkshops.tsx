@@ -1,9 +1,11 @@
 import React from "react";
 import { Alata } from "next/font/google";
+import { fetchData } from "@/app/api/dbfunctions";
 
 const tableFont = Alata({weight: "400", subsets: ['latin'], })
 
-const MyWorkshops = () => {
+const MyWorkshops = (props:any) => {
+
   return (
   <div>
     <header id="section-heading" className={`${tableFont.className} text-4xl m-8 p-3 text-center`}>
@@ -51,16 +53,16 @@ const MyWorkshops = () => {
               <thead className="text-lg text-black uppercase bg-[#60fbdf]">
                   <tr>
                       <th scope="col" className="px-6 py-3">
-                          Item Name
+                          Title
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          Description
+                          Oragnizer
                       </th>
                       <th scope="col" className="px-6 py-3">
                           Date
                       </th>
                       <th scope="col" className="px-6 py-3">
-                          College
+                          Duration
                       </th>
                       <th scope="col" className="px-6 py-3">
                           Approval
@@ -68,23 +70,29 @@ const MyWorkshops = () => {
                   </tr>
               </thead>
               <tbody>
-                  <tr className="bg-[#29b7a6] border-b hover:bg-gray-50">
-                      <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
-                          
-                      </th>
-                      <td className="px-6 py-4">
-
-                      </td>
-                      <td className="px-6 py-4">
-                          
-                      </td>
-                      <td className="px-6 py-4">
-                          
-                      </td>
-                      <td className="px-6 py-4">
-                          
-                      </td>
+                {props.data.map((item:any, index:any)=>{
+                  return(
+                    <tr className="bg-[#29b7a6] border-b hover:bg-gray-50">
+                    <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
+                        {item.title}
+                    </th>
+                    <td className="px-6 py-4">
+                      {item.organized_by}
+                    </td>
+                    <td className="px-6 py-4">
+                        {item.date}
+                    </td>
+                    <td className="px-6 py-4">
+                        {item.number_of_days}
+                    </td>
+                    <td className="px-6 py-4">
+                        {item.is_verified}
+                    </td>
                   </tr>
+                  );
+                  
+                })}
+                  
               </tbody>
           </table>
       </div>
