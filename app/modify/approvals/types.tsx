@@ -66,3 +66,8 @@ export interface PendingData {
   pending_workshop: PendingWorkshop[];
   pending_patent: PendingPatent[];
 }
+
+export interface TransferedData {
+  data: PendingJournal | PendingConference | PendingPatent | PendingWorkshop;
+  view_state: boolean;
+}

@@ -107,10 +107,13 @@ const Approval = ({ pending_data }: { pending_data: PendingData }) => {
                         onClick={() => toogleModal(item)}
                       >
                         <ViewIcon />
-                        <ModalComponent
-                          data={selectedRow}
-                          viewState={showModal}
-                        />
+                        {showModal && (
+                          <ModalComponent
+                            data={selectedRow}
+                            viewState={showModal}
+                            onClose={() => setShowModal(false)}
+                          />
+                        )}
                       </div>
                     </td>
                   </tr>
