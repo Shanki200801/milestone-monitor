@@ -1,8 +1,11 @@
+"use client";
+
 import React from "react";
 import { Alata } from "next/font/google";
 import { fetchData } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
+import AddConference from "@/app/(generic)/input-forms/AddConference";
 
 const tableFont = Alata({weight: "400", subsets: ['latin'], });
 
@@ -60,7 +63,7 @@ const MyConference = (props:any) => {
           </table>
       </div>
     </section>
-    <AddNewSec name="Conference"/>
+    <AddNewSec name="Conference"><AddConference/></AddNewSec>
   </div>
   );
 };
