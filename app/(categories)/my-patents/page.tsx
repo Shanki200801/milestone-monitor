@@ -5,8 +5,9 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { MyPatents } from "./MyPatents";
+import { fetchData } from "@/app/api/dbfunctions";
 
-const page = async () => {
+const PagePatent = async () => {
   const supabase = createServerComponentClient({ cookies });
 
   const {
@@ -18,7 +19,10 @@ const page = async () => {
     // Unauthenticated users will be redirected to the `/login` route.
     redirect("/login");
   }
-  return <MyPatents />;
+
+  let tableData= await fetchData("patents", user.email as string);
+
+  return <MyPatents data={tableData}/>;
 };
 
-export default page;
+export default PagePatent;

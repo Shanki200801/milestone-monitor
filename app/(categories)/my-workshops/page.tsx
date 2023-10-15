@@ -6,7 +6,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { fetchData } from "@/app/api/dbfunctions";
 
-const page = async () => {
+const PageWorkshop = async () => {
   const supabase = createServerComponentClient({ cookies });
 
   const {
@@ -23,4 +23,4 @@ const page = async () => {
   return <MyWorkshops data={tableData}/>;
 };
 
-export default page;
+export default PageWorkshop;
