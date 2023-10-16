@@ -3,7 +3,7 @@ import Image from "next/image";
 import logoImg from "../../public/logo.webp";
 import sjuLogo from "../../public/sju-logo.webp";
 import { Poppins } from "next/font/google";
-import NavTwo from "@/components/nav/navTwo";
+import NavTwo from "@/components/nav/NavTwo";
 
 const bodyText = Poppins({
   weight: "400",
