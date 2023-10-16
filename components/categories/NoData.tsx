@@ -19,7 +19,7 @@ export default function NoData(props:any){
                     </tr>
                 </thead>
         </table>
-        <div className={`${tableFont.className} min-h-full w-full text-center text-4xl p-36`}>No entries found</div>  
+        <div className={`${tableFont.className} min-h-full w-full text-center text-4xl p-28 `}>No entries found</div>  
       </div>
     )
   }
