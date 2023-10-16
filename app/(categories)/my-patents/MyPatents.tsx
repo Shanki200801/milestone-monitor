@@ -6,33 +6,38 @@ import { fetchData } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
 import AddPatents from "@/app/(generic)/input-forms/AddPatents";
+import NoData from "@/components/categories/NoData"
 
 const tableFont = Alata({weight: "400", subsets: ['latin'], });
 
 export const MyPatents = (props:any) => {
+
+  const columns = ['Patent Name', 'Patent Type', 'Application Number', 'Status', 'Approval'];
+
   return(
     <div>
     <CategoryHeader name="My Patents"/>
     <section id="table-section" className="bg-[#cbfef8] m-3 p-5 sm:rounded min-h-[25rem]">
-      <div className="overflow-x-auto shadow-md sm:rounded">
+      {props.data.length==0? <NoData columns={columns}/>:<PatentTable data={props.data} columns={columns}/> }      
+    </section>
+    <AddNewSec name="Patent"><AddPatents/></AddNewSec>
+  </div>
+  );
+};
+
+const PatentTable = (props:any)=>{
+  return(
+    <div className="overflow-x-auto shadow-md sm:rounded">
           <table className={`${tableFont.className} w-full text-sm text-left text-black`}>
               <thead className="text-lg text-black uppercase bg-[#60fbdf]">
-                  <tr>
-                      <th scope="col" className="px-6 py-3">
-                          Patent Name
+              <tr>
+                {props.columns.map((items:any, index:any)=>{
+                  return(
+                    <th scope="col" className="px-6 py-3">
+                          {items  }
                       </th>
-                      <th scope="col" className="px-6 py-3">
-                          Patent Type
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                          Application Number
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                          Status
-                      </th>
-                      <th scope="col" className="px-6 py-3">
-                          Approval
-                      </th>
+                  );
+                })}
                   </tr>
               </thead>
               <tbody>
@@ -62,8 +67,7 @@ export const MyPatents = (props:any) => {
               </tbody>
           </table>
       </div>
-    </section>
-    <AddNewSec name="Patent"><AddPatents/></AddNewSec>
-  </div>
   );
-};
+}
+
+
