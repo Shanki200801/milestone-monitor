@@ -29,11 +29,11 @@ const page = async () => {
   
   return (
     <section>
-      {/* <section id="small-profile-wrapper" className="visible lg:hidden">
+      <section id="small-profile-wrapper" className="visible lg:hidden">
         <h1 className="break-words">
           Please view this page on a laptop/desktop view.
         </h1>
-      </section> */}
+      </section>
       <section
         id="profile-wrapper"
         className={`lg:p-4 ${bodyText.className} grid grid-cols-2 grid-rows-2 gap-8 lg:h-[90vh] bg-teal-500/40`}

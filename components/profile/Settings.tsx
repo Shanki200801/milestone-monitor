@@ -1,174 +1,134 @@
+'use client'
+
+import React, { useState } from "react";
+
+type Settings = {
+    [key: string]: string;
+};
+
+function formatFieldName(fieldName: string): string {
+    return fieldName
+      .split("_") // Split the field name by underscores
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1)) // Capitalize each part
+      .join(" "); // Join the parts with spaces
+  }
+
 export default function Settings() {
+  const [settings, setSettings] = useState<Settings>({
+    // Add more fields/values here in the same format (formatter will change appearance in UI)
+    setting_1: "[empty]",
+    setting_2: "[empty]",
+    setting_3: "[empty]",
+    setting_4: "[empty]",
+    setting_5: "[empty]",
+    setting_6: "[empty]",
+    setting_7: "[empty]",
+  });
+
+  const [isEditing, setIsEditing] = useState<Record<string, boolean>>({
+    setting_1: false,
+    setting_2: false,
+    setting_3: false,
+    setting_4: false,
+    setting_5: false,
+    setting_6: false,
+    setting_7: false,
+  });
+
+  // Handles changes in input field
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+    const { value } = e.target;
+    setSettings({ ...settings, [field]: value });
+  };
+
+  const handleEditClick = (field: string) => {
+    setIsEditing({ ...isEditing, [field]: true });
+  };
+
+  const handleSaveClick = (field: string) => {
+    // Assuming you want to save the value when the user clicks the save button.
+    // You can add your logic here to save the updated value to your backend or perform other actions.
+    // You can also add validation before saving the value.
+
+    // After saving, set the editing mode back to false for the specific field.
+    setIsEditing({ ...isEditing, [field]: false });
+  };
+
   return (
     <div
       id="settings-wrapper"
-      className="text-teal-950 flex flex-col p-4 bg-teal-500/20 col-start-2 row-start-1 row-span-2 border border-transparent rounded h-[85vh]"
+      className="text-teal-950 flex flex-col justify-center p-4 bg-teal-500/20 col-start-2 row-start-1 row-span-2 border border-transparent rounded h-[85vh]"
     >
-      <h2 className="text-center font-bold uppercase lg:text-2xl">
-        SETTINGS
-      </h2>
-      <ul className="flex flex-col justify-center gap-12 p-4  w-full border border-transparent rounded">
-        <ul className="flex items-center gap-2 ">
-          <ul className="w-full p-2 border border-transparent rounded-lg bg-teal-700/40 flex flex-row gap-2">
-            <li className="font-bold">:</li>
-            <li>[empty]</li>
-          </ul>
-          <li className="p-2 border border-transparent rounded-full bg-teal-700/40 ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 text-teal-900 hover:text-teal-600"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-              />
-            </svg>
-          </li>
-        </ul>
+      <h2 className="text-center font-bold uppercase lg:text-2xl">SETTINGS</h2>
 
-        <ul className="flex items-center gap-2 ">
-          <ul className="w-full p-2 border border-transparent rounded-lg bg-teal-700/40 flex flex-row gap-2">
-            <li className="font-bold">:</li>
-            <li>[empty]</li>
-          </ul>
-          <li className="p-2 border border-transparent rounded-full bg-teal-700/40 ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 text-teal-900 hover:text-teal-600"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-              />
-            </svg>
-          </li>
-        </ul>
+      <div
+        id="settings-items-wrapper"
+        className="flex flex-col justify-center gap-6 p-4 w-full border border-transparent rounded"
+      >
+        {Object.keys(settings).map((field) => (
+          <div
+            key={field}
+            className="w-full py-2 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80"
+          >
+            <span className="flex gap-2 items-center">
+              <p className="font-bold">{formatFieldName(field)}:</p>
+              {isEditing[field] ? (
+                <input
+                  name={field}
+                  className="w-[15vw] h-fit border-2 border-teal-900 rounded bg-teal-200 py-1 px-2"
+                  value={settings[field]}
+                  onChange={(e) => handleInputChange(e, field)}
+                />
+              ) : (
+                <span className="w-[15vw] h-fit border border-transparent rounded">
+                  {settings[field]}
+                </span>
+              )}
+            </span>
 
-        <ul className="flex items-center gap-2 ">
-          <ul className="w-full p-2 border border-transparent rounded-lg bg-teal-700/40 flex flex-row gap-2">
-            <li className="font-bold">:</li>
-            <li>[empty]</li>
-          </ul>
-          <li className="p-2 border border-transparent rounded-full bg-teal-700/40 ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 text-teal-900 hover:text-teal-600"
+            <div
+              className={`setting-edit-btn p-2 border border-transparent rounded-full bg-teal-200 hover:cursor-pointer ${isEditing[field] ? "hover:bg-teal-700" : "hover:bg-teal-700"} ${isEditing[field] ? "hover:text-teal-200" : "hover:text-teal-200"}`}
+              onClick={() => {
+                if (isEditing[field]) {
+                  handleSaveClick(field);
+                } else {
+                  handleEditClick(field);
+                }
+              }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-              />
-            </svg>
-          </li>
-        </ul>
-
-        <ul className="flex items-center gap-2 ">
-          <ul className="w-full p-2 border border-transparent rounded-lg bg-teal-700/40 flex flex-row gap-2">
-            <li className="font-bold">:</li>
-            <li>[empty]</li>
-          </ul>
-          <li className="p-2 border border-transparent rounded-full bg-teal-700/40 ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 text-teal-900 hover:text-teal-600"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-              />
-            </svg>
-          </li>
-        </ul>
-
-        <ul className="flex items-center gap-2 ">
-          <ul className="w-full p-2 border border-transparent rounded-lg bg-teal-700/40 flex flex-row gap-2">
-            <li className="font-bold">:</li>
-            <li>[empty]</li>
-          </ul>
-          <li className="p-2 border border-transparent rounded-full bg-teal-700/40 ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 text-teal-900 hover:text-teal-600"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-              />
-            </svg>
-          </li>
-        </ul>
-
-        <ul className="flex items-center gap-2 ">
-          <ul className="w-full p-2 border border-transparent rounded-lg bg-teal-700/40 flex flex-row gap-2">
-            <li className="font-bold">:</li>
-            <li>[empty]</li>
-          </ul>
-          <li className="p-2 border border-transparent rounded-full bg-teal-700/40 ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 text-teal-900 hover:text-teal-600"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-              />
-            </svg>
-          </li>
-        </ul>
-
-        <ul className="flex items-center gap-2 ">
-          <ul className="w-full p-2 border border-transparent rounded-lg bg-teal-700/40 flex flex-row gap-2">
-            <li className="font-bold">:</li>
-            <li>[empty]</li>
-          </ul>
-          <li className="p-2 border border-transparent rounded-full bg-teal-700/40 ">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6 text-teal-900 hover:text-teal-600"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
-              />
-            </svg>
-          </li>
-        </ul>
-      </ul>
+              {isEditing[field] ? (
+                // Save icon when editing
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                </svg>
+              ) : (
+                // Edit icon when not editing
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-6 h-6"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                  />
+                </svg>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
