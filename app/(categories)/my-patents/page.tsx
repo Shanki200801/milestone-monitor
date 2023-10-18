@@ -1,11 +1,13 @@
-import { unauthenticatedRedirector } from "@/lib/unauthRedirect";
 import React from "react";
-import MyJournals from "./MyJournals";
+import { unauthenticatedRedirector } from "@/lib/unauthRedirect";
+
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { MyPatents } from "./MyPatents";
+import { fetchData } from "@/app/api/dbfunctions";
 
-const page = async () => {
+const PagePatent = async () => {
   const supabase = createServerComponentClient({ cookies });
 
   const {
@@ -18,11 +20,9 @@ const page = async () => {
     redirect("/login");
   }
 
-  const { data: journal_publications } = await supabase
-    .from("journal_publications")
-    .select()
-    .eq("is_verified", "PENDING");
-  return <MyJournals />;
+  let tableData= await fetchData("patents", user.email as string);
+
+  return <MyPatents data={tableData}/>;
 };
 
-export default page;
+export default PagePatent;
