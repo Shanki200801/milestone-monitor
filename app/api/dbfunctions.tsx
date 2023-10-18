@@ -223,3 +223,19 @@ export const fetchData =async (tableName:string, email:string) => {
 
   return tableData;
 }
+
+//have first argument as primary key ie the email which is not editable. All others update variables can go next add more args as needed
+export const updateUserWhenLoggedIn = async (
+  email: string | undefined,
+  phone: string
+) => {
+  const supabase = createServerComponentClient({ cookies });
+  const { error } = await supabase
+    .from("faculty")
+    .update({faculty_phone: phone })
+    .eq("faculty_email", email);
+  if (error) {
+    console.log("Error from update user: ", error.message);
+  }
+};
+
