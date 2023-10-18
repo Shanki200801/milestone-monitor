@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import { Alata } from "next/font/google";
 import { fetchData } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
@@ -61,7 +61,7 @@ const ConferenceTable = (props:any)=>{
                         {item.is_verified}
                     </td>
                     <td className="px-6 py-4">
-                      <FormElements/>
+                      <FormElements data={item}/>
                     </td>
                   </tr>
                   );
@@ -74,51 +74,56 @@ const ConferenceTable = (props:any)=>{
   );
 }
 
-const FormElements=()=>{
+const FormElements=(props:any)=>{
   const [openModal, setOpenModal] = useState<string | undefined>();
-  const [email, setEmail] = useState("");
-  const props = { openModal, setOpenModal, email, setEmail };
+  const [title, setTitle] = useState(props.data.paper_title);
+  const [confName, setConfName] = useState(props.data.conf_name);
+  const [confDate, setConfDate] = useState(props.data.conf_date);
+  const [certificate, setCertificate] = useState(props.data.certificate);
+  const [proceedingFp, setProceedingFp] = useState(props.data.proceeding_fp);
+  const propsModal = { openModal, setOpenModal};
 
   return (
     <>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer" onClick={() => props.setOpenModal('form-elements')}>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer" onClick={() => propsModal.setOpenModal('form-elements')}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                       </svg>
-      <Modal show={props.openModal === 'form-elements'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
+      <Modal show={propsModal.openModal === 'form-elements'} size="md" popup onClose={() => propsModal.setOpenModal(undefined)} className={`${tableFont.className}`}>
         <Modal.Header />
         <Modal.Body>
           <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h3>
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white text-center">Edit submission</h3>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="email" value="Your email" />
+                <Label htmlFor="paper_title" value="Paper Title" />
               </div>
-              <TextInput id="email" placeholder="name@company.com" required />
+              <TextInput id="paper_title" type="text" onChange={(e) => setTitle(e.target.value)} value={title} required />
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="password" value="Your password" />
+                <Label htmlFor="conf_name" value="Conference Name" />
               </div>
-              <TextInput id="password" type="password" required />
+              <TextInput id="conf_name" type="text" onChange={(e) => setConfName(e.target.value)} value={confName} required />
             </div>
-            <div className="flex justify-between">
-              <div className="flex items-center gap-2">
-                <Checkbox id="remember" />
-                <Label htmlFor="remember">Remember me</Label>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="conf_date" value="Conference Date" />
               </div>
-              <a href="/modal" className="text-sm text-cyan-700 hover:underline dark:text-cyan-500">
-                Lost Password?
-              </a>
+              <TextInput id="conf_date" type="date" onChange={(e) => setConfDate(e.target.value)} value={confDate } required />
             </div>
-            <div className="w-full">
-              <Button>Log in to your account</Button>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="cert" value="Certificate" />
+              </div>
+              <TextInput id="cert" type="text" onChange={(e) => setCertificate(e.target.value)} value={certificate} required />
             </div>
-            <div className="flex justify-between text-sm font-medium text-gray-500 dark:text-gray-300">
-              Not registered?&nbsp;
-              <a href="/modal" className="text-cyan-700 hover:underline dark:text-cyan-500">
-                Create account
-              </a>
+            <div>
+              <div className="mb-2 block">
+                <Label htmlFor="proceeding_fp" value="Proceeding FP" />
+              </div>
+              <TextInput id="proceeding_fp" type="text" onChange={(e) => setProceedingFp(e.target.value)} value={proceedingFp} required />
             </div>
+            
           </div>
         </Modal.Body>
       </Modal>
