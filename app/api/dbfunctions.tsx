@@ -264,3 +264,46 @@ export const updateConf = async(
 
   
 }
+
+export const updateJournals = async(
+  paper_title: string,
+  date_of_publication: string,
+  journal_name: string,
+  issn_number: string,
+  indexed_in: string,
+  link: string,
+  is_verified: string,
+  id:number )=>{
+
+  const supabase = createServerComponentClient({ cookies });
+
+  if(is_verified.toLowerCase()=="pending"){
+    const {error} = await supabase
+  .from('journal_publications')
+  .update(
+    {
+      paper_title: paper_title,
+      journal_name: journal_name,
+      issn_number: issn_number,
+      month_and_year_of_publication: date_of_publication,
+      indexed_in: indexed_in,
+      link: link,
+    })
+  .eq('id', id);
+  }else{
+    const {error} = await supabase
+  .from('journal_publications')
+  .update(
+    {
+      paper_title: paper_title,
+      journal_name: journal_name,
+      issn_number: issn_number,
+      month_and_year_of_publication: date_of_publication,
+      indexed_in: indexed_in,
+      link: link,
+      is_verified: "Pending"})
+  .eq('id', id);
+  }
+
+  
+}
