@@ -1,4 +1,5 @@
-import "../globals.css";
+import "../../globals.css";
+import NavOne from "./NavOne";
 import NavTwo from "@/components/nav/NavTwo";
 
 export default function RootLayout({
@@ -9,9 +10,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* Navigation Bar (vertical) */}
+        {/* Navigation Bars (horizontal & vertical) */}
+        <NavOne/>
         <NavTwo/>
-        <main className="absolute inset-x-[2%] sm:right-0 sm:left-[10%] ">
+        <main className="absolute inset-x-[2%] sm:right-0 sm:left-[10%] top-[10%]">
           {children}
         </main>
       </body>

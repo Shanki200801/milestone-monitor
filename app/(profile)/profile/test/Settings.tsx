@@ -15,10 +15,10 @@ function formatFieldName(fieldName: string): string {
 
 export default function Settings() {
   const [settings, setSettings] = useState<Settings>({
+    phone_number: "[empty]",
+    google_scholar: "[empty]",
+    linkedin_link: "[empty]",
     // Add more fields/values here in the same format (formatter will change appearance in UI)
-    setting_1: "[empty]",
-    setting_2: "[empty]",
-    setting_3: "[empty]",
     setting_4: "[empty]",
     setting_5: "[empty]",
     setting_6: "[empty]",
@@ -26,13 +26,9 @@ export default function Settings() {
   });
 
   const [isEditing, setIsEditing] = useState<Record<string, boolean>>({
-    setting_1: false,
-    setting_2: false,
-    setting_3: false,
-    setting_4: false,
-    setting_5: false,
-    setting_6: false,
-    setting_7: false,
+    phone_number: false,
+    google_scholar: false,
+    linkedin_link: false,
   });
 
   // Handles changes in input field
@@ -57,7 +53,7 @@ export default function Settings() {
   return (
     <div
       id="settings-wrapper"
-      className="text-teal-950 flex flex-col justify-center p-4 bg-teal-500/20 col-start-2 row-start-1 row-span-2 border border-transparent rounded h-[85vh]"
+      className="text-teal-950 flex flex-col justify-center p-4 bg-teal-500/20 col-start-1 row-start-1 row-span-2 border border-transparent rounded h-[85vh]"
     >
       <h2 className="text-center font-bold uppercase lg:text-2xl">SETTINGS</h2>
 
