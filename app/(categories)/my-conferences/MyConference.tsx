@@ -2,18 +2,20 @@
 
 import React, { use, useState } from "react";
 import { Alata } from "next/font/google";
-import { fetchData } from "@/app/api/dbfunctions";
+import { fetchData, updateConf } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
 import AddConference from "@/app/(generic)/input-forms/AddConference";
 import NoData from "@/components/categories/NoData";
 import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
+import { useRouter } from "next/navigation";
 
 const tableFont = Alata({weight: "400", subsets: ['latin'], });
 
 const MyConference = (props:any) => {
 
-  const columns = ['Title', 'Conference Name', 'Date', 'Proceedings', 'Approval', ''];
+  const columns = ['Title', 'Conference Name', 'Date', 'Conference Type', 'Approval', ''];
+  
 
   return(
     <div>
@@ -55,7 +57,7 @@ const ConferenceTable = (props:any)=>{
                         {item.conf_date}
                     </td>
                     <td className="px-6 py-4">
-                        {item.proceedings}
+                        {item.type}
                     </td>
                     <td className="px-6 py-4">
                         {item.is_verified}
@@ -84,6 +86,12 @@ const FormElements=(props:any)=>{
   const [proceeding, setProceeding] = useState(props.data.proceedings);
   const [type, setType] = useState("");
   const propsModal = { openModal, setOpenModal};
+  const router = useRouter();
+
+  const handleConfUpdate = async ()=>{
+    await updateConf(type, title, confDate, proceeding, confName, proceedingFp, certificate, props.data.id, props.data.is_verified);
+    window.location.reload();
+  }
 
   return (
     <>
@@ -138,7 +146,7 @@ const FormElements=(props:any)=>{
               <TextInput id="proceeding_fp" type="text" onChange={(e) => setProceedingFp(e.target.value)} value={proceedingFp} required />
             </div>
             <div className="flex justify-center">
-              <Button>Update</Button>
+              <Button onClick={handleConfUpdate}>Update</Button>
             </div>
           </div>
         </Modal.Body>

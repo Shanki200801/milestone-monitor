@@ -223,3 +223,44 @@ export const fetchData =async (tableName:string, email:string) => {
 
   return tableData;
 }
+
+export const updateConf = async(
+  type: string,
+  paper_title: string,
+  conf_date: string,
+  proceedings: boolean,
+  conf_name: string,
+  proceeding_fp: boolean,
+  certificate: string,
+  id:number,
+  is_verified: string )=>{
+
+  const supabase = createServerComponentClient({ cookies });
+
+  if(is_verified.toLowerCase()=="pending"){
+    const {error} = await supabase
+  .from('conferences')
+  .update(
+    {paper_title:paper_title,
+    conf_name:conf_name,
+    conf_date:conf_date,
+    proceedings:proceedings,
+    certificate:certificate,
+    proceeding_fp:proceeding_fp,})
+  .eq('id', id);
+  }else{
+    const {error} = await supabase
+  .from('conferences')
+  .update(
+    {paper_title:paper_title,
+    conf_name:conf_name,
+    conf_date:conf_date,
+    proceedings:proceedings,
+    certificate:certificate,
+    proceeding_fp:proceeding_fp,
+    is_verified: "Pending"})
+  .eq('id', id);
+  }
+
+  
+}
