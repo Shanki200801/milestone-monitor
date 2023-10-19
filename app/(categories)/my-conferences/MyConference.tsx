@@ -81,6 +81,8 @@ const FormElements=(props:any)=>{
   const [confDate, setConfDate] = useState(props.data.conf_date);
   const [certificate, setCertificate] = useState(props.data.certificate);
   const [proceedingFp, setProceedingFp] = useState(props.data.proceeding_fp);
+  const [proceeding, setProceeding] = useState(props.data.proceedings);
+  const [type, setType] = useState("");
   const propsModal = { openModal, setOpenModal};
 
   return (
@@ -88,7 +90,7 @@ const FormElements=(props:any)=>{
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer" onClick={() => propsModal.setOpenModal('form-elements')}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
                       </svg>
-      <Modal show={propsModal.openModal === 'form-elements'} size="md" popup onClose={() => propsModal.setOpenModal(undefined)} className={`${tableFont.className}`}>
+      <Modal show={propsModal.openModal === 'form-elements'} size="xl" popup onClose={() => propsModal.setOpenModal(undefined)} className={`${tableFont.className}`}>
         <Modal.Header />
         <Modal.Body>
           <div className="space-y-6">
@@ -113,17 +115,31 @@ const FormElements=(props:any)=>{
             </div>
             <div>
               <div className="mb-2 block">
+                <Label htmlFor="conf_type" value="Conference Type" />
+              </div>
+              <TextInput id="conf_type" type="text" onChange={(e) => setType(e.target.value)} value={type} required />
+            </div>
+            <div>
+              <div className="mb-2 block">
+                <Label  value="Published as proceedings" />
+              </div>
+              <input type="checkbox" onChange={(e) => setProceeding(e.target.value)} value={proceeding} required />
+            </div>
+            <div>
+              <div className="mb-2 block">
                 <Label htmlFor="cert" value="Certificate" />
               </div>
               <TextInput id="cert" type="text" onChange={(e) => setCertificate(e.target.value)} value={certificate} required />
             </div>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="proceeding_fp" value="Proceeding FP" />
+                <Label htmlFor="proceeding_fp" value="Proceeding Front Page" />
               </div>
               <TextInput id="proceeding_fp" type="text" onChange={(e) => setProceedingFp(e.target.value)} value={proceedingFp} required />
             </div>
-            
+            <div className="flex justify-center">
+              <Button>Update</Button>
+            </div>
           </div>
         </Modal.Body>
       </Modal>
