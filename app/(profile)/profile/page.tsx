@@ -13,6 +13,8 @@ const bodyText = Poppins({
   subsets: ["latin"],
 });
 
+export const dynamic = "force-dynamic";
+
 const page = async () => {
   const supabase = createServerComponentClient({ cookies });
 
