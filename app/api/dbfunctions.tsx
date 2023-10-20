@@ -350,3 +350,43 @@ export const updatePatents = async(
 
   
 }
+
+export const updateWorkshops = async(
+  date: string,
+  type: string,
+  title: string,
+  number_of_days: number,
+  // organized_by: string,
+  is_verified: string,
+  id:number )=>{
+
+  const supabase = createServerComponentClient({ cookies });
+
+  if(is_verified.toLowerCase()=="pending"){
+    const {error} = await supabase
+  .from('fdp_workshop_refresher_course')
+  .update(
+    {
+        date: date,
+        type: type,
+        title: title,
+        number_of_days: number_of_days,
+        // organized_by: organized_by,
+    })
+  .eq('id', id);
+  }else{
+    const {error} = await supabase
+  .from('fdp_workshop_refresher_course')
+  .update(
+    {
+        date: date,
+        type: type,
+        title: title,
+        number_of_days: number_of_days,
+        // organized_by: organized_by,
+      is_verified: "Pending"})
+  .eq('id', id);
+  }
+
+  
+}
