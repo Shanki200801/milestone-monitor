@@ -307,3 +307,46 @@ export const updateJournals = async(
 
   
 }
+
+export const updatePatents = async(
+  patent_name: string,
+  patent_date: string,
+  patent_type: string,
+  application_no: string,
+  status: string,
+  patent_link: string,
+  is_verified: string,
+  id:number )=>{
+
+  const supabase = createServerComponentClient({ cookies });
+
+  if(is_verified.toLowerCase()=="pending"){
+    const {error} = await supabase
+  .from('patents')
+  .update(
+    {
+      patent_name: patent_name,
+      patent_date: patent_date,
+      patent_type: patent_type,
+      application_no: application_no,
+      status: status,
+      patent_link: patent_link,
+    })
+  .eq('id', id);
+  }else{
+    const {error} = await supabase
+  .from('patents')
+  .update(
+    {
+      patent_name: patent_name,
+      patent_date: patent_date,
+      patent_type: patent_type,
+      application_no: application_no,
+      status: status,
+      patent_link: patent_link,
+      is_verified: "Pending"})
+  .eq('id', id);
+  }
+
+  
+}
