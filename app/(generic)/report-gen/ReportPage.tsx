@@ -15,19 +15,6 @@ const ReportPage = () => {
     selectedStatus: "PENDING",
   });
   const [data, setData] = useState<any[]>([]);
-  // useEffect(() => {
-  //   console.log("data fetch attempting...");
-  //   getDataForReport(
-  //     filterState.startDate,
-  //     filterState.endDate,
-  //     filterState.selectedType,
-  //     filterState.searchQuery,
-  //     filterState.selectedStatus,
-  //     filterState.selectedStaff
-  //   ).then((data) => {
-  //     setData(data.disp_data || []);
-  //   });
-  // }, [filterState]);
   return (
     <div className="flex">
       <div className="w-4/5">
@@ -49,7 +36,7 @@ const ReportPage = () => {
         </div>
       </div>
       <Filters
-        onFiltersChange={(filters) => {
+        onFiltersChange={(filters: typeof filterState) => {
           // console.log("filters before state update", filters);
           setFilterState(filters);
           // console.log("data passed from filters to report page ", filters);
