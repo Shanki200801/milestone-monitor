@@ -1,7 +1,5 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
-import Link from "next/link";
-import Image from "next/image";
 import { Montserrat } from "next/font/google";
 import Account from "@/components/profile/Account";
 import Events from "@/components/dashboard/Events";
