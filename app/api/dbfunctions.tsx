@@ -224,6 +224,173 @@ export const fetchData =async (tableName:string, email:string) => {
   return tableData;
 }
 
+export const updateConf = async(
+  type: string,
+  paper_title: string,
+  conf_date: string,
+  proceedings: boolean,
+  conf_name: string,
+  proceeding_fp: boolean,
+  certificate: string,
+  id:number,
+  is_verified: string )=>{
+
+  const supabase = createServerComponentClient({ cookies });
+
+  if(is_verified.toLowerCase()=="pending"){
+    const {error} = await supabase
+  .from('conferences')
+  .update(
+    {paper_title:paper_title,
+    conf_name:conf_name,
+    conf_date:conf_date,
+    proceedings:proceedings,
+    certificate:certificate,
+    proceeding_fp:proceeding_fp,})
+  .eq('id', id);
+  }else{
+    const {error} = await supabase
+  .from('conferences')
+  .update(
+    {paper_title:paper_title,
+    conf_name:conf_name,
+    conf_date:conf_date,
+    proceedings:proceedings,
+    certificate:certificate,
+    proceeding_fp:proceeding_fp,
+    is_verified: "Pending"})
+  .eq('id', id);
+  }
+
+  
+}
+
+export const updateJournals = async(
+  paper_title: string,
+  date_of_publication: string,
+  journal_name: string,
+  issn_number: string,
+  indexed_in: string,
+  link: string,
+  is_verified: string,
+  id:number )=>{
+
+  const supabase = createServerComponentClient({ cookies });
+
+  if(is_verified.toLowerCase()=="pending"){
+    const {error} = await supabase
+  .from('journal_publications')
+  .update(
+    {
+      paper_title: paper_title,
+      journal_name: journal_name,
+      issn_number: issn_number,
+      month_and_year_of_publication: date_of_publication,
+      indexed_in: indexed_in,
+      link: link,
+    })
+  .eq('id', id);
+  }else{
+    const {error} = await supabase
+  .from('journal_publications')
+  .update(
+    {
+      paper_title: paper_title,
+      journal_name: journal_name,
+      issn_number: issn_number,
+      month_and_year_of_publication: date_of_publication,
+      indexed_in: indexed_in,
+      link: link,
+      is_verified: "Pending"})
+  .eq('id', id);
+  }
+
+  
+}
+
+export const updatePatents = async(
+  patent_name: string,
+  patent_date: string,
+  patent_type: string,
+  application_no: string,
+  status: string,
+  patent_link: string,
+  is_verified: string,
+  id:number )=>{
+
+  const supabase = createServerComponentClient({ cookies });
+
+  if(is_verified.toLowerCase()=="pending"){
+    const {error} = await supabase
+  .from('patents')
+  .update(
+    {
+      patent_name: patent_name,
+      patent_date: patent_date,
+      patent_type: patent_type,
+      application_no: application_no,
+      status: status,
+      patent_link: patent_link,
+    })
+  .eq('id', id);
+  }else{
+    const {error} = await supabase
+  .from('patents')
+  .update(
+    {
+      patent_name: patent_name,
+      patent_date: patent_date,
+      patent_type: patent_type,
+      application_no: application_no,
+      status: status,
+      patent_link: patent_link,
+      is_verified: "Pending"})
+  .eq('id', id);
+  }
+
+  
+}
+
+export const updateWorkshops = async(
+  date: string,
+  type: string,
+  title: string,
+  number_of_days: number,
+  // organized_by: string,
+  is_verified: string,
+  id:number )=>{
+
+  const supabase = createServerComponentClient({ cookies });
+
+  if(is_verified.toLowerCase()=="pending"){
+    const {error} = await supabase
+  .from('fdp_workshop_refresher_course')
+  .update(
+    {
+        date: date,
+        type: type,
+        title: title,
+        number_of_days: number_of_days,
+        // organized_by: organized_by,
+    })
+  .eq('id', id);
+  }else{
+    const {error} = await supabase
+  .from('fdp_workshop_refresher_course')
+  .update(
+    {
+        date: date,
+        type: type,
+        title: title,
+        number_of_days: number_of_days,
+        // organized_by: organized_by,
+      is_verified: "Pending"})
+  .eq('id', id);
+  }
+
+  
+}
+  
 //have first argument as primary key ie the email which is not editable. All others update variables can go next add more args as needed
 export const updateUserWhenLoggedIn = async (
   email: string | undefined,
@@ -238,4 +405,3 @@ export const updateUserWhenLoggedIn = async (
     console.log("Error from update user: ", error.message);
   }
 };
-
