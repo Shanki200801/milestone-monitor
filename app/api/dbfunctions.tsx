@@ -226,3 +226,180 @@ export const updateUserWhenLoggedIn = async (
     console.log("Error from update user: ", error.message);
   }
 };
+
+export const updateUserPhone = async (
+  email: string | undefined,
+  phone: string
+) => {
+  const supabase = createServerComponentClient({ cookies });
+  const { error } = await supabase
+    .from("faculty")
+    .update({ faculty_phone: phone })
+    .eq("faculty_email", email);
+  if (error) {
+    console.log("Error from update user: ", error.message);
+  }
+};
+
+export const getDataForReport = async (
+  start_date: string = "2001-01-01",
+  end_date: string = new Date().toJSON().slice(0, 10),
+  filterType: string = "all",
+  title: string = "",
+  status: string = "PENDING",
+  faculty_id: string | null = "",
+  faculty_name: string | null = ""
+) => {
+  interface TableName {
+    [key: string]: string;
+    Conferences: string;
+    Patents: string;
+    Workshops: string;
+    Journals: string;
+  }
+  const table_name: TableName = {
+    Conferences: "conferences",
+    Patents: "patents",
+    Workshops: "fdp_workshop_refresher_course",
+    Journals: "journal_publications",
+  };
+  const supabase = createServerComponentClient({ cookies });
+  // console.log("Control inside getDataForReport");
+  const { data: conference, error: e_conf } = await supabase
+    .from("conferences")
+    .select(`*`)
+    .filter("conf_date", "gte", start_date)
+    .filter("conf_date", "lte", end_date)
+    .filter("paper_title", "ilike", `%${title}%`)
+    .filter("is_verified", "ilike", `%${status}%`)
+    .filter("faculty_id", "ilike", `%${faculty_id}%`);
+
+  if (e_conf) {
+    console.log("Error from conferences: ", e_conf.message);
+  }
+
+  const { data: patents, error: e_pat } = await supabase
+    .from("patents")
+    .select(`*`)
+    .filter("patent_date", "gte", start_date)
+    .filter("patent_date", "lte", end_date)
+    .filter("patent_name", "ilike", `%${title}%`)
+    .filter("is_verified", "ilike", `%${status}%`)
+    .filter("faculty_id", "ilike", `%${faculty_id}%`);
+  if (e_pat) {
+    console.log("Pat error ", e_pat);
+  }
+
+  const { data: workshops, error: e_work } = await supabase
+    .from("fdp_workshop_refresher_course")
+    .select(`*`)
+    .filter("date", "gte", start_date)
+    .filter("date", "lte", end_date)
+    .filter("title", "ilike", `%${title}%`)
+    .filter("is_verified", "ilike", `%${status}%`)
+    .filter("faculty_id", "ilike", `%${faculty_id}%`);
+  if (e_work) {
+    console.log("Work error ", e_work);
+  }
+
+  const { data: journals, error: e_journal } = await supabase
+    .from("journal_publications")
+    .select(`*`)
+    .filter("month_and_year_of_publication", "gte", start_date)
+    .filter("month_and_year_of_publication", "lte", end_date)
+    .filter("paper_title", "ilike", `%${title}%`)
+    .filter("is_verified", "ilike", `%${status}%`)
+    .filter("faculty_id", "ilike", `%${faculty_id}%`);
+
+  if (e_journal) {
+    console.log("Journal error ", e_journal);
+  }
+
+  let conference_smolData: any[] | undefined = [];
+  let patents_smolData: any[] | undefined = [];
+  let workshops_smolData: any[] | undefined = [];
+  let journals_smolData: any[] | undefined = [];
+
+  conference_smolData = conference?.map((obj) => {
+    return {
+      title: obj["paper_title"],
+      faculty_id: obj["faculty_id"],
+      faculty_name: obj["faculty_name"],
+      entry_type: "conference",
+      date: obj["conf_date"],
+      status: obj["is_verified"],
+    };
+  });
+  patents_smolData = patents?.map((obj) => {
+    return {
+      title: obj["patent_name"],
+      faculty_id: obj["faculty_id"],
+      faculty_name: obj["faculty_name"],
+      entry_type: "patent",
+      date: obj["patent_date"],
+      status: obj["is_verified"],
+    };
+  });
+  workshops_smolData = workshops?.map((obj) => {
+    return {
+      title: obj["title"],
+      faculty_id: obj["faculty_id"],
+      faculty_name: obj["faculty_name"],
+      entry_type: "workshop",
+      date: obj["date"],
+      status: obj["is_verified"],
+    };
+  });
+  journals_smolData = journals?.map((obj) => {
+    return {
+      title: obj["paper_title"],
+      faculty_id: obj["faculty_id"],
+      faculty_name: obj["faculty_name"],
+      entry_type: "journal",
+      date: obj["month_and_year_of_publication"],
+      status: obj["is_verified"],
+    };
+  });
+
+  if (filterType == "Conferences") {
+    return { full_data: conference, disp_data: conference_smolData };
+  } else if (filterType == "Patents") {
+    return { full_data: patents, disp_data: patents_smolData };
+  } else if (filterType == "Workshops") {
+    return { full_data: workshops, disp_data: workshops_smolData };
+  } else if (filterType == "Journals") {
+    return { full_data: journals, disp_data: journals_smolData };
+  } else {
+    // console.log("conference", conference);
+    // console.log("papents", patents);
+    // console.log("workshops", workshops);
+    // console.log("journals", journals);
+    console.log(conference_smolData, "this is conference_smolData");
+    const smolData = [
+      ...(conference_smolData || []),
+      ...(patents_smolData || []),
+      ...(workshops_smolData || []),
+      ...(journals_smolData || []),
+    ];
+
+    const fullDisplayData = [
+      ...(conference || []),
+      ...(patents || []),
+      ...(workshops || []),
+      ...(journals || []),
+    ];
+
+    // console.log(
+    //   smolData + " is small data",
+    //   "and it's type is ",
+    //   typeof smolData
+    // );
+
+    // console.log("fullDisplayData", fullDisplayData);
+    // console.log("smolData for all", smolData);
+    return {
+      full_data: fullDisplayData,
+      disp_data: smolData,
+    };
+  }
+};
