@@ -2,12 +2,11 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import Image from "next/image";
-import { Poppins } from "next/font/google";
-import Account from "@/components/dashboard/Account";
-import Carousel from "@/components/dashboard/Carousel";
+import { Montserrat } from "next/font/google";
+import Account from "@/components/profile/Account";
 import Events from "@/components/dashboard/Events";
 
-const bodyText = Poppins({
+const bodyText = Montserrat({
   weight: "400",
   subsets: ["latin"],
 });
@@ -57,15 +56,10 @@ export default async function Index() {
   return (
     <section
       id="dashboard"
-      className={`invisible sm:visible ${bodyText.className} grid grid-rows-2 md:h-[85vh] lg:h-[90vh] bg-teal-500/40 md:p-8`}
+      className={`invisible lg:visible ${bodyText.className} grid grid-cols-2 grid-rows-2 gap-8 md:h-[85vh] lg:h-[90vh] bg-teal-500/40 lg:p-8`}
     >
-      <div className="flex md:flex-row gap-12 justify-evenly row-start-1 flex-col">
-        <Account />
-        <Carousel />
-      </div>
-      <div className="row-start-3">
-        <Events/>
-      </div>
+      <Account />
+      <Events/>
     </section>
   );
 }
