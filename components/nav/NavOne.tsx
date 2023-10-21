@@ -2,16 +2,16 @@
 
 import Image from "next/image";
 import logoImg from "../../public/logo.webp";
-import { Poppins } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { useRouter } from "next/navigation";
 
-const bodyText = Poppins({
+const bodyText = Montserrat({
   weight: "400",
   subsets: ["latin"],
 });
 
-const headerText = Poppins({
+const headerText = Montserrat({
   weight: "600",
   subsets: ["latin"],
 })

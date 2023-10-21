@@ -1,7 +1,7 @@
 "use client";
 
 import React, { use, useState } from "react";
-import { Alata } from "next/font/google";
+import { Montserrat, Inter } from "next/font/google";
 import { fetchData, updateConf } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
@@ -10,7 +10,8 @@ import NoData from "@/components/categories/NoData";
 import { Button, Checkbox, Label, Modal, TextInput } from 'flowbite-react';
 import { useRouter } from "next/navigation";
 
-const tableFont = Alata({weight: "400", subsets: ['latin'], });
+const tableFont = Montserrat({weight: "400", subsets: ['latin'], });
+const tableBodyFont = Inter({weight: "400", subsets: ['latin'], });
 
 const MyConference = (props:any) => {
 
@@ -32,7 +33,7 @@ const ConferenceTable = (props:any)=>{
   return(
     <div className="overflow-x-auto shadow-md sm:rounded">
           <table className={`${tableFont.className} w-full text-sm text-left text-black`}>
-              <thead className="text-lg text-black uppercase bg-[#60fbdf]">
+              <thead className="text-lg text-black uppercase bg-[#60fbdf] tracking-wider ">
               <tr>
                 {props.columns.map((items:any, index:any)=>{
                   return(
@@ -46,7 +47,7 @@ const ConferenceTable = (props:any)=>{
               <tbody>
                 {props.data.map((item:any, index:any)=>{
                   return(
-                    <tr className="bg-[#29b7a6] border-b hover:bg-gray-50">
+                    <tr className={`${tableBodyFont.className} bg-[#29b7a6] border-b hover:bg-gray-50 tracking-normal`}>
                     <th scope="row" className="px-6 py-4 font-medium whitespace-nowrap">
                         {item.paper_title}
                     </th>

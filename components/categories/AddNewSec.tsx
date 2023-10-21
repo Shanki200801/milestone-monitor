@@ -1,11 +1,11 @@
-import { Alata } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
   } from "@/components/ui/popover";
 
-const tableFont = Alata({weight: "400", subsets: ['latin'], })
+const tableFont = Montserrat({weight: "400", subsets: ['latin'], })
 
 export default function AddNewSec(props:any){
     return(
