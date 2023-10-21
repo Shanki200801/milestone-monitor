@@ -1,12 +1,12 @@
 import React from "react";
 import { unauthenticatedRedirector } from "@/lib/unauthRedirect";
-
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { MyPatents } from "./MyPatents";
+import { fetchData } from "@/app/api/dbfunctions";
+import MyConference from "./MyConference";
 
-const page = async () => {
+const PageConference = async () => {
   const supabase = createServerComponentClient({ cookies });
 
   const {
@@ -18,7 +18,9 @@ const page = async () => {
     // Unauthenticated users will be redirected to the `/login` route.
     redirect("/login");
   }
-  return <MyPatents />;
+  let tableData= await fetchData("conferences", user.email as string);
+
+  return <MyConference data={tableData}/>;
 };
 
-export default page;
+export default PageConference;
