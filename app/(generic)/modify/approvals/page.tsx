@@ -10,6 +10,7 @@ import {
   PendingWorkshop,
   PendingPatent,
 } from "./types";
+import { fetchRole } from "@/app/api/dbfunctions";
 const page = async () => {
   const supabase = createServerComponentClient({ cookies });
 
@@ -21,6 +22,11 @@ const page = async () => {
     // This route can only be accessed by authenticated users.
     // Unauthenticated users will be redirected to the `/login` route.
     redirect("/login");
+  }else{
+    let userData = await fetchRole(user.email as string);
+    if(userData.faculty_role!="hod" && userData.faculty_role!="editor"){
+      redirect("/404");
+    }
   }
 
   //get all pending conferences

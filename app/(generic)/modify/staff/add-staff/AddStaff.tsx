@@ -27,11 +27,6 @@ const AddStaff = () => {
   };
   return (
     <div className="h-screen bg-[#3b9b9b] flex justify-center items-center">
-      <div
-        className={`${bodyText.className} bg-[#c2fafa] hover:bg-[#9bf6f6] p-1 rounded-lg text-lg absolute top-9 right-9`}
-      >
-        <LogoutButton />
-      </div>
       <div className="flex justify-center items-center bg-[#c2fafa] py-5 px-96 rounded-3xl">
         <form
           className={`flex flex-col ${bodyText.className} text-lg`}
