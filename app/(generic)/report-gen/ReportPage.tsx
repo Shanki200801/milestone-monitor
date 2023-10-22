@@ -5,7 +5,7 @@ import GeneralTable from "./GeneralTable";
 import { useState, useEffect } from "react";
 import { getDataForReport } from "@/app/api/dbfunctions";
 
-const ReportPage = () => {
+const ReportPage = ({ staff_details }) => {
   const [filterState, setFilterState] = useState({
     searchQuery: "",
     startDate: undefined,
@@ -15,15 +15,16 @@ const ReportPage = () => {
     selectedStatus: "PENDING",
   });
   const [data, setData] = useState<any[]>([]);
+
   return (
-    <div className="flex">
+    <div className="flex bg-[#cbfef8] ">
       <div className="w-4/5">
-        <h1 className="text-3xl font-semibold mb-6 text-center">
+        <h1 className="text-3xl font-semibold my-4 text-center">
           Report Geneartion
         </h1>
-        <GeneralTable data={data} />
+        <GeneralTable data={data} staffDetails={staff_details} />
 
-        <div className="flex place-content-evenly mt-16">
+        <div className="flex place-content-evenly ">
           <button className=" text-white px-4 py-2 rounded bg-lime-700">
             Download full report
           </button>

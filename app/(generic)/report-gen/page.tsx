@@ -12,12 +12,30 @@ const page = async () => {
     data: { user },
   } = await supabase.auth.getUser();
 
+  //get current user detals
+  const { data: curr_user, error: user_err } = await supabase
+    .from("faculty")
+    .select("*")
+    .eq("faculty_email", user?.email);
+  if (user_err) {
+    console.log("user_err", user_err);
+  }
+  // get all staff details who belong to same department as current user
+  let staff_details: any[] | null = [];
+  if (curr_user) {
+    const { data: staff, error: staff_err } = await supabase
+      .from("faculty")
+      .select("*")
+      .eq("faculty_department", curr_user[0].faculty_department);
+    staff_details = staff;
+  }
+
   if (!user) {
     // This route can only be accessed by authenticated users.
     // Unauthenticated users will be redirected to the `/login` route.
     redirect("/login");
   }
-  return <ReportPage />;
+  return <ReportPage staff_details={staff_details} />;
 };
 
 export default page;

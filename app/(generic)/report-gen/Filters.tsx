@@ -37,9 +37,9 @@ const Filters = ({ onFiltersChange }) => {
   ]);
 
   return (
-    <div className="bg-light-green-100 min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-xl font-semibold mb-6 text-center">Filters</h1>
+    <div className="bg-light-green-100 min-h-screen flex items-center justify-center bg-white">
+      <div className=" p-4 rounded-lg shadow-lg w-full bg-[#cbfef8] mx-2  max-w-xs">
+        <h1 className="text-xl font-semibold my-2 text-center  ">Filters</h1>
         <div className="mb-4 relative">
           <input
             type="text"
@@ -123,11 +123,6 @@ const Filters = ({ onFiltersChange }) => {
 
             {/* Populate entry type options dynamically */}
           </select>
-        </div>
-        <div className="flex justify-center">
-          <button className="bg-light-green-500 text-white py-2 px-6 rounded hover:bg-light-green-600 transition duration-300">
-            Search
-          </button>
         </div>
       </div>
     </div>
