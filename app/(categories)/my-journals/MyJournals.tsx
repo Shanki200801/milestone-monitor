@@ -23,22 +23,24 @@ const MyJournals = (props: any) => {
   ];
 
   return (
-    <div>
+    <section>
       <CategoryHeader name="My Journals" />
-      <section
-        id="table-section"
-        className="bg-[#cbfef8] m-3 p-5 sm:rounded min-h-[25rem]"
-      >
-        {props.data.length == 0 ? (
-          <NoData columns={columns} />
-        ) : (
-          <JournalTable data={props.data} columns={columns} />
-        )}
+      <section className="grid grid-rows-2 lg:h-[80vh] gap-24">
+        <section
+          id="table-section"
+          className="bg-[#cbfef8] m-3 mt-0 p-5 sm:rounded h-[45vh]"
+        >
+          {props.data.length == 0 ? (
+            <NoData columns={columns} />
+          ) : (
+            <JournalTable data={props.data} columns={columns} />
+          )}
+        </section>
+        <AddNewSec name="Journal">
+          <AddJournals />
+        </AddNewSec>
       </section>
-      <AddNewSec name="Journal">
-        <AddJournals />
-      </AddNewSec>
-    </div>
+    </section>
   );
 };
 
