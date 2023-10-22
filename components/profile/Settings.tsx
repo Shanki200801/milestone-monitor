@@ -57,18 +57,17 @@ export default function Settings() {
   return (
     <div
       id="settings-wrapper"
-      className="text-teal-950 flex flex-col justify-center p-4 bg-teal-500/20 col-start-2 row-start-1 row-span-2 border border-transparent rounded h-[85vh]"
+      className="text-teal-950 flex flex-col justify-center items-center px-4 bg-teal-500/20 col-start-2 col-span-2 border border-transparent rounded h-[85vh]"
     >
-      <h2 className="text-center font-bold uppercase lg:text-2xl">SETTINGS</h2>
 
       <div
         id="settings-items-wrapper"
-        className="flex flex-col justify-center gap-6 p-4 w-full border border-transparent rounded"
+        className="flex flex-col justify-center gap-6 w-full border border-transparent rounded"
       >
         {Object.keys(settings).map((field) => (
           <div
             key={field}
-            className="w-full py-2 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80"
+            className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80"
           >
             <span className="flex gap-2 items-center">
               <p className="font-bold">{formatFieldName(field)}:</p>
