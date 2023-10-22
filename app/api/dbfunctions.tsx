@@ -431,8 +431,6 @@ export const fetchData = async (tableName: string, email: string) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  
-
   // fetches the user data of the user in session
   const { data: userData, error: userError } = await supabase
     .from("faculty")
@@ -444,11 +442,9 @@ export const fetchData = async (tableName: string, email: string) => {
     .from(tableName)
     .select()
     .eq("faculty_id", userData ? userData[0].faculty_id : "");
- 
 
   return tableData;
 };
-
 
 export const updateConf = async (
   type: string,
@@ -460,7 +456,7 @@ export const updateConf = async (
   certificate: string,
   id: number,
   is_verified: string
-) =>  {
+) => {
   const supabase = createServerComponentClient({ cookies });
 
   if (is_verified.toLowerCase() == "pending") {
@@ -488,37 +484,36 @@ export const updateConf = async (
         is_verified: "Pending",
       })
       .eq("id", id);
-  if (is_verified.toLowerCase() == "pending") {
-    const { error } = await supabase
-      .from("conferences")
-      .update({
-        paper_title: paper_title,
-        conf_name: conf_name,
-        conf_date: conf_date,
-        proceedings: proceedings,
-        certificate: certificate,
-        proceeding_fp: proceeding_fp,
-      })
-      .eq("id", id);
-  } else {
-    const { error } = await supabase
-      .from("conferences")
-      .update({
-        paper_title: paper_title,
-        conf_name: conf_name,
-        conf_date: conf_date,
-        proceedings: proceedings,
-        certificate: certificate,
-        proceeding_fp: proceeding_fp,
-        is_verified: "Pending",
-      })
-      .eq("id", id);
+    if (is_verified.toLowerCase() == "pending") {
+      const { error } = await supabase
+        .from("conferences")
+        .update({
+          paper_title: paper_title,
+          conf_name: conf_name,
+          conf_date: conf_date,
+          proceedings: proceedings,
+          certificate: certificate,
+          proceeding_fp: proceeding_fp,
+        })
+        .eq("id", id);
+    } else {
+      const { error } = await supabase
+        .from("conferences")
+        .update({
+          paper_title: paper_title,
+          conf_name: conf_name,
+          conf_date: conf_date,
+          proceedings: proceedings,
+          certificate: certificate,
+          proceeding_fp: proceeding_fp,
+          is_verified: "Pending",
+        })
+        .eq("id", id);
+    }
   }
-};
 };
 
 export const updateJournals = async (
-
   paper_title: string,
   date_of_publication: string,
   journal_name: string,
@@ -527,7 +522,7 @@ export const updateJournals = async (
   link: string,
   is_verified: string,
   id: number
-) =>  {
+) => {
   const supabase = createServerComponentClient({ cookies });
 
   if (is_verified.toLowerCase() == "pending") {
@@ -555,35 +550,8 @@ export const updateJournals = async (
         is_verified: "Pending",
       })
       .eq("id", id);
-  if (is_verified.toLowerCase() == "pending") {
-    const { error } = await supabase
-      .from("journal_publications")
-      .update({
-        paper_title: paper_title,
-        journal_name: journal_name,
-        issn_number: issn_number,
-        month_and_year_of_publication: date_of_publication,
-        indexed_in: indexed_in,
-        link: link,
-      })
-      .eq("id", id);
-  } else {
-    const { error } = await supabase
-      .from("journal_publications")
-      .update({
-        paper_title: paper_title,
-        journal_name: journal_name,
-        issn_number: issn_number,
-        month_and_year_of_publication: date_of_publication,
-        indexed_in: indexed_in,
-        link: link,
-        is_verified: "Pending",
-      })
-      .eq("id", id);
   }
 };
-
-
 
 export const updatePatents = async (
   patent_name: string,
@@ -595,34 +563,8 @@ export const updatePatents = async (
   is_verified: string,
   id: number
 ) => {
-  
   const supabase = createServerComponentClient({ cookies });
 
-  if (is_verified.toLowerCase() == "pending") {
-    const { error } = await supabase
-      .from("patents")
-      .update({
-        patent_name: patent_name,
-        patent_date: patent_date,
-        patent_type: patent_type,
-        application_no: application_no,
-        status: status,
-        patent_link: patent_link,
-      })
-      .eq("id", id);
-  } else {
-    const { error } = await supabase
-      .from("patents")
-      .update({
-        patent_name: patent_name,
-        patent_date: patent_date,
-        patent_type: patent_type,
-        application_no: application_no,
-        status: status,
-        patent_link: patent_link,
-        is_verified: "Pending",
-      })
-      .eq("id", id);
   if (is_verified.toLowerCase() == "pending") {
     const { error } = await supabase
       .from("patents")
@@ -660,9 +602,7 @@ export const updateWorkshops = async (
   is_verified: string,
   id: number
 ) => {
- 
   const supabase = createServerComponentClient({ cookies });
-
 
   if (is_verified.toLowerCase() == "pending") {
     const { error } = await supabase
