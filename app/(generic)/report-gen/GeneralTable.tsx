@@ -4,7 +4,7 @@ import NoData from "@/components/categories/NoData";
 
 const tableFont = Alata({ weight: "400", subsets: ["latin"] });
 
-const GenralTable = ({ data, staffDetails }) => {
+const GeneralTable = ({ data, staffDetails }) => {
   // console.log("data from table component", data);
   // console.log("Staff details ->", staffDetails);
   return (
@@ -74,4 +74,4 @@ const DisplayTable = (props: any, staffDetails: any) => {
   );
 };
 
-export default GenralTable;
+export default GeneralTable;

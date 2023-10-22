@@ -2,7 +2,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-const Filters = ({ onFiltersChange }) => {
+const Filters = ({ staffDetails, onFiltersChange }) => {
+  console.log("loggin from filters ", staffDetails);
   const [searchQuery, setSearchQuery] = useState("");
   const [startDate, setStartDate] = useState(undefined);
   const [endDate, setEndDate] = useState(undefined);
@@ -83,8 +84,13 @@ const Filters = ({ onFiltersChange }) => {
             value={selectedStaff}
             onChange={(e) => setSelectedStaff(e.target.value)}
           >
-            <option value="">Select Staff</option>
-            {/* Populate employee options dynamically */}
+            <option value="">All</option>
+            {staffDetails.map((f) => (
+              <option key={f.faculty_id} value={f.faculty_id}>
+                {f.faculty_name}
+              </option>
+            ))}
+            {/* Populate entry type options dynamically */}
           </select>
         </div>
         <div className="mb-6">

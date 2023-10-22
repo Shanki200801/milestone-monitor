@@ -15,7 +15,7 @@ const ReportPage = ({ staff_details }) => {
     selectedStatus: "PENDING",
   });
   const [data, setData] = useState<any[]>([]);
-
+  console.log("logging from reportpage ", staff_details);
   return (
     <div className="flex bg-[#cbfef8] ">
       <div className="w-4/5">
@@ -37,6 +37,7 @@ const ReportPage = ({ staff_details }) => {
         </div>
       </div>
       <Filters
+        staffDetails={staff_details}
         onFiltersChange={(filters: typeof filterState) => {
           // console.log("filters before state update", filters);
           setFilterState(filters);
