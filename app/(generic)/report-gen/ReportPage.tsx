@@ -2,8 +2,11 @@
 import React from "react";
 import Filters from "./Filters";
 import GeneralTable from "./GeneralTable";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { getDataForReport } from "@/app/api/dbfunctions";
+import { CSVLink, CSVDownload } from "react-csv";
+import { saveAs } from "file-saver";
+import { smolDataHeadersCSV } from "./CSVHeaders";
 
 const ReportPage = ({ staff_details }) => {
   const [filterState, setFilterState] = useState({
@@ -15,7 +18,47 @@ const ReportPage = ({ staff_details }) => {
     selectedStatus: "PENDING",
   });
   const [data, setData] = useState<any[]>([]);
-  console.log("logging from reportpage ", staff_details);
+  // console.log("logging from reportpage ", staff_details);
+  const [fullData, setFullData] = useState<any[]>([]);
+
+  const convertToCSV = (data: any[]) => {
+    const csvRows = [];
+    const headers = Object.keys(data[0]);
+    csvRows.push(headers.join(","));
+
+    for (const row of data) {
+      const values = headers.map((header) => {
+        const fieldValue = row[header];
+        const csvValue =
+          typeof fieldValue === "string" ? `"${fieldValue}"` : fieldValue;
+        return csvValue;
+      });
+      csvRows.push(values.join(","));
+    }
+
+    return csvRows.join("\n");
+  };
+  const downloadCSV = (data: any[], filename: string) => {
+    const csvData = convertToCSV(data);
+    const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
+    saveAs(blob, filename);
+  };
+
+  const handleFirstLinkClick = () => {
+    const conferenceData = fullData.filter(
+      (d: any) => d.entry_type === "conference"
+    );
+    const journalData = fullData.filter((d: any) => d.entry_type === "journal");
+    const workshopData = fullData.filter(
+      (d: any) => d.entry_type === "workshop"
+    );
+    const patentData = fullData.filter((d: any) => d.entry_type === "patent");
+    downloadCSV(conferenceData, "confdata.csv");
+    downloadCSV(journalData, "journaldata.csv");
+    downloadCSV(workshopData, "workshopdata.csv");
+    downloadCSV(patentData, "patentdata.csv");
+  };
+
   return (
     <div className="flex bg-[#cbfef8] ">
       <div className="w-4/5">
@@ -25,15 +68,21 @@ const ReportPage = ({ staff_details }) => {
         <GeneralTable data={data} staffDetails={staff_details} />
 
         <div className="flex place-content-evenly ">
-          <button className=" text-white px-4 py-2 rounded bg-lime-700">
+          <button
+            onClick={handleFirstLinkClick}
+            className="text-white px-4 py-2 rounded bg-lime-700"
+          >
             Download full report
           </button>
-          <button
-            className="bg-lime-700 text-white px-4 py-2 rounded"
-            onClick={() => getDataForReport(undefined, undefined, "all")}
+
+          <CSVLink
+            data={data}
+            headers={smolDataHeadersCSV}
+            filename="light-report.csv"
+            className="text-white px-4 py-2 rounded bg-lime-700"
           >
-            Download smol report
-          </button>
+            Download light report
+          </CSVLink>
         </div>
       </div>
       <Filters
@@ -52,6 +101,7 @@ const ReportPage = ({ staff_details }) => {
             filters.selectedStaff
           ).then((data) => {
             setData(data.disp_data || []);
+            setFullData(data.full_data || []);
             console.log("data being sent to table ie data in report ", data);
           });
         }}

@@ -315,6 +315,27 @@ export const getDataForReport = async (
     console.log("Journal error ", e_journal);
   }
 
+  //adding entry types to each objects
+  if (conference) {
+    for (let i = 0; i < conference.length; i++) {
+      conference[i]["entry_type"] = "conference";
+    }
+  }
+  if (patents) {
+    for (let i = 0; i < patents.length; i++) {
+      patents[i]["entry_type"] = "patent";
+    }
+  }
+  if (workshops) {
+    for (let i = 0; i < workshops.length; i++) {
+      workshops[i]["entry_type"] = "workshop";
+    }
+  }
+  if (journals) {
+    for (let i = 0; i < journals.length; i++) {
+      journals[i]["entry_type"] = "journal";
+    }
+  }
   let conference_smolData: any[] | undefined = [];
   let patents_smolData: any[] | undefined = [];
   let workshops_smolData: any[] | undefined = [];

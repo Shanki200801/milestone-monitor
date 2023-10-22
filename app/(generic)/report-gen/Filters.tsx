@@ -85,7 +85,7 @@ const Filters = ({ staffDetails, onFiltersChange }) => {
             onChange={(e) => setSelectedStaff(e.target.value)}
           >
             <option value="">All</option>
-            {staffDetails.map((f) => (
+            {staffDetails.map((f: any) => (
               <option key={f.faculty_id} value={f.faculty_id}>
                 {f.faculty_name}
               </option>

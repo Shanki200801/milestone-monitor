@@ -20,6 +20,7 @@ const page = async () => {
   if (user_err) {
     console.log("user_err", user_err);
   }
+  console.log("curr_user", curr_user);
   // get all staff details who belong to same department as current user
   let staff_details: any[] | null = [];
   if (curr_user) {
@@ -28,6 +29,9 @@ const page = async () => {
       .select("*")
       .eq("faculty_department", curr_user[0].faculty_department);
     staff_details = staff;
+    if (staff_err) {
+      console.log("staff_err", staff_err);
+    }
   }
 
   if (!user) {
