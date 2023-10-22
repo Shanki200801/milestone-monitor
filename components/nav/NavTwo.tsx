@@ -1,8 +1,8 @@
 import Image from "next/image";
 import logoImg from "../../public/logo.webp";
-import { Poppins } from "next/font/google";
+import { Montserrat } from "next/font/google";
 
-const bodyText = Poppins({
+const bodyText = Montserrat({
   weight: "500",
   subsets: ["latin"],
 });
@@ -16,7 +16,7 @@ export default function NavTwo() {
       {/* Navigation Bar - 2 */}
       <ul
         id="navbar-2-elements"
-        className="h-full lg:text-sm sm:text-[0.60rem] grid grid-cols-1 grid-rows-6 sm:gap-2 lg:gap-[1.5rem] items-center justify-between text-center"
+        className="uppercase tracking-wider h-full lg:text-sm sm:text-[0.60rem] grid grid-cols-1 grid-rows-6 sm:gap-2 lg:gap-[1.5rem] items-center justify-between text-center"
       >
         <li>
           <a href="/">
