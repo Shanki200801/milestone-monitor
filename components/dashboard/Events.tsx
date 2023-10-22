@@ -1,14 +1,19 @@
-import { Montserrat } from "next/font/google";
+import { Montserrat, Urbanist } from "next/font/google";
 
-const bodyText = Montserrat({
+const headerText = Urbanist({
   weight: "500",
+  subsets: ["latin"],
+});
+
+const bodyText = Urbanist({
+  weight: "400",
   subsets: ["latin"],
 });
 
 export default function Events() {
   return (
     <div className="h-fit bg-teal-500/20 lg:p-8 lg:mt-6 col-span-2 row-start-2 border border-transparent rounded">
-      <h2 className="text-center font-bold uppercase lg:text-2xl text-teal-950 pb-6">
+      <h2 className={`${headerText.className} tracking-wide text-center font-bold uppercase lg:text-2xl text-teal-950 pb-6`}>
         Your Activity
       </h2>
 

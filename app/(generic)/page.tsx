@@ -1,7 +1,7 @@
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { Montserrat } from "next/font/google";
-import Account from "@/components/profile/Account";
+import Account from "@/components/dashboard/Account";
 import Events from "@/components/dashboard/Events";
 
 const bodyText = Montserrat({
