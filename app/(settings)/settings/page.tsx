@@ -3,15 +3,19 @@ import { unauthenticatedRedirector } from "@/lib/unauthRedirect";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { Poppins } from "next/font/google";
-import Account from "@/components/profile/Account";
-import Socials from "@/components/profile/Socials";
+import { Urbanist } from "next/font/google";
+// import Socials from "@/components/profile/Socials";
 import Settings from "@/components/profile/Settings";
 
-const bodyText = Poppins({
+const bodyText = Urbanist({
   weight: "400",
   subsets: ["latin"],
 });
+
+const headerText = Urbanist({
+  weight: "600",
+  subsets: ["latin"],
+})
 
 export const dynamic = "force-dynamic";
 
@@ -29,20 +33,17 @@ const page = async () => {
   }
   return (
     <section>
-      <section
-      id="small-profile-wrapper"
-      className="visible lg:hidden">
-        <h1 className="break-words">Please view this page on a laptop/desktop view.</h1>
+      <section id="small-settings-wrapper" className="lg:hidden text-center">
+        <h1 className="break-words">
+          Please view this page on a laptop/desktop view.
+        </h1>
       </section>
       <section
-        id="profile-wrapper"
-        className={`invisible lg:visible lg:p-4 ${bodyText.className} grid grid-cols-2 grid-rows-2 gap-8 lg:h-[90vh] bg-teal-500/40`}
+        id="settings-wrapper"
+        className={`invisible lg:visible lg:p-4 ${bodyText.className} grid grid-cols-4 justify-center items-center lg:h-[90vh] bg-teal-500/40`}
       >
-        <Account />
-        <Socials />
-        <Settings/>
+        <Settings />
       </section>
-      
     </section>
   );
 };
