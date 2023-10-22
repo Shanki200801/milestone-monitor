@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Alata } from "next/font/google";
+import { Montserrat, Inter } from "next/font/google";
 import { fetchData, updateWorkshops } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
@@ -9,28 +9,31 @@ import AddWorkshops from "@/app/(generic)/input-forms/AddWorkshops";
 import NoData from "@/components/categories/NoData";
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 
-const tableFont = Alata({ weight: "400", subsets: ["latin"] });
+const tableFont = Montserrat({ weight: "400", subsets: ["latin"] });
+const tableBodyFont = Inter({ weight: "400", subsets: ["latin"] });
 
 const MyWorkshops = (props: any) => {
   const columns = ["Title", "Organizer", "Date", "Duration", "Approval", ""];
 
   return (
-    <div>
+    <section>
       <CategoryHeader name="My Workshops" />
-      <section
-        id="table-section"
-        className="bg-[#cbfef8] m-3 p-5 sm:rounded min-h-[25rem]"
-      >
-        {props.data.length == 0 ? (
-          <NoData columns={columns} />
-        ) : (
-          <WorkshopTable data={props.data} columns={columns} />
-        )}
+      <section className="grid grid-rows-2 lg:h-[80vh] gap-24">
+        <section
+          id="table-section"
+          className="bg-[#cbfef8] m-3 mt-0 p-5 sm:rounded h-[45vh]"
+          >
+          {props.data.length == 0 ? (
+            <NoData columns={columns} />
+          ) : (
+            <WorkshopTable data={props.data} columns={columns} />
+          )}
+        </section>
+        <AddNewSec name="Workshop">
+          <AddWorkshops />
+        </AddNewSec>
       </section>
-      <AddNewSec name="Workshop">
-        <AddWorkshops />
-      </AddNewSec>
-    </div>
+    </section>
   );
 };
 
@@ -40,7 +43,7 @@ const WorkshopTable = (props: any) => {
       <table
         className={`${tableFont.className} w-full text-sm text-left text-black`}
       >
-        <thead className="text-lg text-black uppercase bg-[#60fbdf]">
+        <thead className="text-lg text-black uppercase bg-[#60fbdf] tracking-wider">
           <tr>
             {props.columns.map((items: any, index: any) => {
               return (
@@ -54,7 +57,9 @@ const WorkshopTable = (props: any) => {
         <tbody>
           {props.data.map((item: any, index: any) => {
             return (
-              <tr className="bg-[#29b7a6] border-b hover:bg-gray-50">
+              <tr
+                className={`${tableBodyFont.className} bg-[#29b7a6] border-b hover:bg-gray-50 tracking-normal`}
+              >
                 <th
                   scope="row"
                   className="px-6 py-4 font-medium whitespace-nowrap"

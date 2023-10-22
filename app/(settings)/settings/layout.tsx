@@ -11,9 +11,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {/* Navigation Bars (horizontal & vertical) */}
-        <NavOne/>
-        <NavTwo/>
-        <main className="absolute inset-x-[2%] sm:right-0 sm:left-[10%] top-[10%]">
+        <header>
+          <NavOne />
+          <NavTwo />
+        </header>
+        <main className="absolute inset-x-[2%] sm:right-0 sm:left-[10%] top-[25%] sm:top-[10%]">
           {children}
         </main>
       </body>
