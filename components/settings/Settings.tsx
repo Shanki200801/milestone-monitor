@@ -16,23 +16,21 @@ function formatFieldName(fieldName: string): string {
 export default function Settings() {
   const [settings, setSettings] = useState<Settings>({
     // Add more fields/values here in the same format (formatter will change appearance in UI)
-    setting_1: "[empty]",
-    setting_2: "[empty]",
-    setting_3: "[empty]",
-    setting_4: "[empty]",
-    setting_5: "[empty]",
-    setting_6: "[empty]",
-    setting_7: "[empty]",
+    name: "[empty]",
+    phone_number: "[empty]",
+    linkedIn_url: "[empty]",
+    google_scholar: "[empty]",
+    password: "[empty]",
+    profile_picture: "[empty]", //media file so might have to handle differently
   });
 
   const [isEditing, setIsEditing] = useState<Record<string, boolean>>({
-    setting_1: false,
-    setting_2: false,
-    setting_3: false,
-    setting_4: false,
-    setting_5: false,
-    setting_6: false,
-    setting_7: false,
+    name: false,
+    phone_number: false,
+    linkedIn_url: false,
+    google_scholar: false,
+    password: false,
+    profile_picture: false, //media file so might have to handle differently
   });
 
   // Handles changes in input field
@@ -62,7 +60,7 @@ export default function Settings() {
 
       <div
         id="settings-items-wrapper"
-        className="flex flex-col justify-center gap-6 w-full border border-transparent rounded"
+        className="flex flex-col justify-center gap-10 w-full border border-transparent rounded"
       >
         {Object.keys(settings).map((field) => (
           <div

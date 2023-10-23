@@ -4,8 +4,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Urbanist } from "next/font/google";
-// import Socials from "@/components/profile/Socials";
-import Settings from "@/components/profile/Settings";
+import Settings from "@/components/settings/Settings";
 
 const bodyText = Urbanist({
   weight: "400",

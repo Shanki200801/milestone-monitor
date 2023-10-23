@@ -2,7 +2,6 @@
 
 import React from "react";
 import { Poppins } from "next/font/google";
-import Account from "@/components/dashboard/Account";
 import { updateUserWhenLoggedIn } from "@/app/api/dbfunctions";
 
 const bodyText = Poppins({
@@ -10,29 +9,28 @@ const bodyText = Poppins({
   subsets: ["latin"],
 });
 
-const Test = async (user: any) => {
+// NOTE: Separate async functions like done below.
+// DO NOT USE async when creating client components.
+
+const Test = (user: any) => {
+
+  // async function handled here, separated from component
+  const handleUpdateUser = () => {
+    updateUserWhenLoggedIn(user.user.email, "Ady", "4206969");
+    // updateUserWhenLoggedIn(user.user.email, "Shashank", "4206969"); // uncomment and test
+  };
+
   return (
     <section
       id="profile-wrapper"
       className={`md:p-10 ${bodyText.className} md:h-[85vh] bg-teal-500/40`}
     >
-      {/* <Account /> */}
-
-      {/* 
-      - Below function needs to take in variety of arguments 
-      - Also this component throws errors: 
-        " async/await functions not supported by Client components "
-         So do not use them in client components thenks (will cause production/deployment headaches later)
-         
-      */}
 
       <div>Test button to update faculty details (email, name, phone_no):</div>
       <div>Email is derived from login (primary key)</div>
       <button
-        onClick={() =>
-          // updateUserWhenLoggedIn(user.user.email, "new name", "123123")
-          updateUserWhenLoggedIn(user.user.email, "Shashank", "4206969")
-        }
+        // pass function w ease and no errors 😼
+        onClick={handleUpdateUser}
         className="h-fit w-fit p-4 bg-teal-400"
       >
         Update Details
