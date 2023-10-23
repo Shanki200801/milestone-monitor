@@ -10,7 +10,7 @@ const bodyText = Urbanist({
   subsets: ["latin"],
 });
 
-export default function Events() {
+export default function Events(props:any) {
   return (
     <div className="h-fit bg-teal-500/20 lg:p-8 lg:mt-10 col-span-2 row-start-2 border border-transparent rounded">
       <h2 className={`${headerText.className} tracking-wide text-center font-bold uppercase lg:text-2xl text-teal-950 pb-6`}>
@@ -46,28 +46,47 @@ export default function Events() {
             Patents
           </li>
         </a>
-        <a href="/modify/staff/add-staff">
+        {props.is_hod && <><AddStaffSubEvent/>
+        <ApprovalSubEvent/>
+        <ReportGenSubEvent/></>}
+        {props.is_editor && <ReportGenSubEvent/>}
+      </ul>
+    </div>
+  );
+}
+
+const AddStaffSubEvent = ()=>{
+  return(
+    <a href="/modify/staff/add-staff">
           <li
             className={`bg-teal-300 w-[9vw] py-4 text-center shadow-lg shadow-teal-600/60 border-[2.5px] border-transparent hover:border-cyan-800 rounded-tl-md rounded-tr-xl rounded-bl-xl rounded-br-md`}
           >
             Add Staff
           </li>
         </a>
-        <a href="/modify/approvals">
+  );
+}
+
+const ApprovalSubEvent = ()=>{
+  return(
+    <a href="/modify/approvals">
           <li
             className={`bg-teal-300 w-[9vw] py-4 text-center shadow-lg shadow-teal-600/60 border-[2.5px] border-transparent hover:border-cyan-800 rounded-tl-md rounded-tr-xl rounded-bl-xl rounded-br-md`}
           >
             Approvals
           </li>
         </a>
-        <a href="/report-gen">
+  );
+}
+
+const ReportGenSubEvent = ()=>{
+  return(
+    <a href="/report-gen">
           <li
             className={`bg-teal-300 w-[9vw] py-4 text-center shadow-lg shadow-teal-600/60 border-[2.5px] border-transparent hover:border-cyan-800 rounded-tl-md rounded-tr-xl rounded-bl-xl rounded-br-md`}
           >
             Reports
           </li>
         </a>
-      </ul>
-    </div>
   );
 }

@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import { Montserrat } from "next/font/google";
 import Account from "@/components/dashboard/Account";
 import Events from "@/components/dashboard/Events";
+import { redirect } from "next/navigation";
+import { fetchRole } from "../api/dbfunctions";
 
 const bodyText = Montserrat({
   weight: "400",
@@ -46,10 +48,27 @@ const examples = [
 
 export default async function Index() {
   const supabase = createServerComponentClient({ cookies });
+  let hodBool =true
+  let editorBool = true;
 
   const {
     data: { user },
   } = await supabase.auth.getUser();
+
+  if (!user) {
+    // This route can only be accessed by authenticated users.
+    // Unauthenticated users will be redirected to the `/login` route.
+    redirect("/login");
+  }else{
+    let userData = await fetchRole(user.email as string);
+    if(userData.faculty_role!="hod"){
+      hodBool = false;
+      
+    }
+    if(userData.faculty_role!="editor"){
+      editorBool = false;
+    }
+  }
 
   return (
     <section
@@ -57,7 +76,7 @@ export default async function Index() {
       className={`invisible lg:visible ${bodyText.className} grid grid-cols-2 grid-rows-2 gap-8 md:h-[85vh] lg:h-[90vh] bg-teal-500/40 lg:p-8`}
     >
       <Account />
-      <Events/>
+      <Events is_hod={hodBool} is_editor={editorBool}/>
     </section>
   );
 }
