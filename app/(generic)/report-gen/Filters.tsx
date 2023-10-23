@@ -2,11 +2,11 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-const Filters = ({ staffDetails, onFiltersChange }) => {
+const Filters = ({ staffDetails, onFiltersChange }: any) => {
   console.log("loggin from filters ", staffDetails);
   const [searchQuery, setSearchQuery] = useState("");
-  const [startDate, setStartDate] = useState(undefined);
-  const [endDate, setEndDate] = useState(undefined);
+  const [startDate, setStartDate] = useState<string | undefined>(undefined);
+  const [endDate, setEndDate] = useState<string | undefined>(undefined);
   const [selectedStaff, setSelectedStaff] = useState("");
   const [selectedType, setSelectedType] = useState("all");
   const [selectedStatus, setSelectedStatus] = useState("PENDING");
