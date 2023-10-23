@@ -2,7 +2,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-const Filters = ({ staffDetails, onFiltersChange }) => {
+const Filters = ({ staffDetails, onFiltersChange }: any) => {
   console.log("loggin from filters ", staffDetails);
   const [searchQuery, setSearchQuery] = useState("");
   const [startDate, setStartDate] = useState(undefined);

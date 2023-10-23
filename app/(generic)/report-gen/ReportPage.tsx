@@ -8,7 +8,7 @@ import { CSVLink, CSVDownload } from "react-csv";
 import { saveAs } from "file-saver";
 import { smolDataHeadersCSV } from "./CSVHeaders";
 
-const ReportPage = ({ staff_details }) => {
+const ReportPage = ({ staff_details }:any) => {
   const [filterState, setFilterState] = useState({
     searchQuery: "",
     startDate: undefined,
