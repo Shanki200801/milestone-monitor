@@ -5,7 +5,7 @@ import {
 } from "@supabase/auth-helpers-nextjs";
 import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
-
+import Image from "next/image";
 //TODO: Test all the functions in this file
 
 export const addStaff = async (
@@ -210,3 +210,677 @@ export const addPatent = async (
   ]);
   console.log("error is " + error?.message);
 };
+
+//have first argument as primary key ie the email which is not editable. All others update variables can go next add more args as needed
+export const updateUserWhenLoggedIn = async (
+  email: string | undefined,
+  name: string,
+  phone: string
+) => {
+  const supabase = createServerComponentClient({ cookies });
+  const { error } = await supabase
+    .from("faculty")
+    .update({ faculty_name: name, faculty_phone: phone })
+    .eq("faculty_email", email);
+  if (error) {
+    console.log("Error from update user: ", error.message);
+  }
+};
+
+export const updateUserPhone = async (
+  email: string | undefined,
+  phone: string
+) => {
+  const supabase = createServerComponentClient({ cookies });
+  const { error } = await supabase
+    .from("faculty")
+    .update({ faculty_phone: phone })
+    .eq("faculty_email", email);
+  if (error) {
+    console.log("Error from update user: ", error.message);
+  }
+};
+
+export const getDataForReport = async (
+  start_date: string = "2001-01-01",
+  end_date: string = new Date().toJSON().slice(0, 10),
+  filterType: string = "all",
+  title: string = "",
+  status: string = "PENDING",
+  faculty_id: string | null = "",
+  faculty_name: string | null = ""
+) => {
+  interface TableName {
+    [key: string]: string;
+    Conferences: string;
+    Patents: string;
+    Workshops: string;
+    Journals: string;
+  }
+  const table_name: TableName = {
+    Conferences: "conferences",
+    Patents: "patents",
+    Workshops: "fdp_workshop_refresher_course",
+    Journals: "journal_publications",
+  };
+  const supabase = createServerComponentClient({ cookies });
+  // console.log("Control inside getDataForReport");
+  const { data: conference, error: e_conf } = await supabase
+    .from("conferences")
+    .select(`*`)
+    .filter("conf_date", "gte", start_date)
+    .filter("conf_date", "lte", end_date)
+    .filter("paper_title", "ilike", `%${title}%`)
+    .filter("is_verified", "ilike", `%${status}%`)
+    .filter("faculty_id", "ilike", `%${faculty_id}%`);
+
+  if (e_conf) {
+    console.log("Error from conferences: ", e_conf.message);
+  }
+
+  const { data: patents, error: e_pat } = await supabase
+    .from("patents")
+    .select(`*`)
+    .filter("patent_date", "gte", start_date)
+    .filter("patent_date", "lte", end_date)
+    .filter("patent_name", "ilike", `%${title}%`)
+    .filter("is_verified", "ilike", `%${status}%`)
+    .filter("faculty_id", "ilike", `%${faculty_id}%`);
+  if (e_pat) {
+    console.log("Pat error ", e_pat);
+  }
+
+  const { data: workshops, error: e_work } = await supabase
+    .from("fdp_workshop_refresher_course")
+    .select(`*`)
+    .filter("date", "gte", start_date)
+    .filter("date", "lte", end_date)
+    .filter("title", "ilike", `%${title}%`)
+    .filter("is_verified", "ilike", `%${status}%`)
+    .filter("faculty_id", "ilike", `%${faculty_id}%`);
+  if (e_work) {
+    console.log("Work error ", e_work);
+  }
+
+  const { data: journals, error: e_journal } = await supabase
+    .from("journal_publications")
+    .select(`*`)
+    .filter("month_and_year_of_publication", "gte", start_date)
+    .filter("month_and_year_of_publication", "lte", end_date)
+    .filter("paper_title", "ilike", `%${title}%`)
+    .filter("is_verified", "ilike", `%${status}%`)
+    .filter("faculty_id", "ilike", `%${faculty_id}%`);
+
+  if (e_journal) {
+    console.log("Journal error ", e_journal);
+  }
+
+  //adding entry types to each objects
+  if (conference) {
+    for (let i = 0; i < conference.length; i++) {
+      conference[i]["entry_type"] = "conference";
+    }
+  }
+  if (patents) {
+    for (let i = 0; i < patents.length; i++) {
+      patents[i]["entry_type"] = "patent";
+    }
+  }
+  if (workshops) {
+    for (let i = 0; i < workshops.length; i++) {
+      workshops[i]["entry_type"] = "workshop";
+    }
+  }
+  if (journals) {
+    for (let i = 0; i < journals.length; i++) {
+      journals[i]["entry_type"] = "journal";
+    }
+  }
+  let conference_smolData: any[] | undefined = [];
+  let patents_smolData: any[] | undefined = [];
+  let workshops_smolData: any[] | undefined = [];
+  let journals_smolData: any[] | undefined = [];
+
+  conference_smolData = conference?.map((obj) => {
+    return {
+      title: obj["paper_title"],
+      faculty_id: obj["faculty_id"],
+      faculty_name: obj["faculty_name"],
+      entry_type: "conference",
+      date: obj["conf_date"],
+      status: obj["is_verified"],
+    };
+  });
+  patents_smolData = patents?.map((obj) => {
+    return {
+      title: obj["patent_name"],
+      faculty_id: obj["faculty_id"],
+      faculty_name: obj["faculty_name"],
+      entry_type: "patent",
+      date: obj["patent_date"],
+      status: obj["is_verified"],
+    };
+  });
+  workshops_smolData = workshops?.map((obj) => {
+    return {
+      title: obj["title"],
+      faculty_id: obj["faculty_id"],
+      faculty_name: obj["faculty_name"],
+      entry_type: "workshop",
+      date: obj["date"],
+      status: obj["is_verified"],
+    };
+  });
+  journals_smolData = journals?.map((obj) => {
+    return {
+      title: obj["paper_title"],
+      faculty_id: obj["faculty_id"],
+      faculty_name: obj["faculty_name"],
+      entry_type: "journal",
+      date: obj["month_and_year_of_publication"],
+      status: obj["is_verified"],
+    };
+  });
+
+  if (filterType == "Conferences") {
+    return { full_data: conference, disp_data: conference_smolData };
+  } else if (filterType == "Patents") {
+    return { full_data: patents, disp_data: patents_smolData };
+  } else if (filterType == "Workshops") {
+    return { full_data: workshops, disp_data: workshops_smolData };
+  } else if (filterType == "Journals") {
+    return { full_data: journals, disp_data: journals_smolData };
+  } else {
+    // console.log("conference", conference);
+    // console.log("papents", patents);
+    // console.log("workshops", workshops);
+    // console.log("journals", journals);
+    console.log(conference_smolData, "this is conference_smolData");
+    const smolData = [
+      ...(conference_smolData || []),
+      ...(patents_smolData || []),
+      ...(workshops_smolData || []),
+      ...(journals_smolData || []),
+    ];
+
+    const fullDisplayData = [
+      ...(conference || []),
+      ...(patents || []),
+      ...(workshops || []),
+      ...(journals || []),
+    ];
+
+    // console.log(
+    //   smolData + " is small data",
+    //   "and it's type is ",
+    //   typeof smolData
+    // );
+
+    // console.log("fullDisplayData", fullDisplayData);
+    // console.log("smolData for all", smolData);
+    return {
+      full_data: fullDisplayData,
+      disp_data: smolData,
+    };
+  }
+};
+
+export const fetchData = async (tableName: string, email: string) => {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // fetches the user data of the user in session
+  const { data: userData, error: userError } = await supabase
+    .from("faculty")
+    .select()
+    .eq("faculty_email", user?.email);
+
+  //fetches the data of the user using the faculty id of userData
+  const { data: tableData, error: tableError } = await supabase
+    .from(tableName)
+    .select()
+    .eq("faculty_id", userData ? userData[0].faculty_id : "");
+
+  return tableData;
+};
+
+export const updateConf = async (
+  type: string,
+  paper_title: string,
+  conf_date: string,
+  proceedings: boolean,
+  conf_name: string,
+  proceeding_fp: boolean,
+  certificate: string,
+  id: number,
+  is_verified: string
+) => {
+  const supabase = createServerComponentClient({ cookies });
+
+  if (is_verified.toLowerCase() == "pending") {
+    const { error } = await supabase
+      .from("conferences")
+      .update({
+        paper_title: paper_title,
+        conf_name: conf_name,
+        conf_date: conf_date,
+        proceedings: proceedings,
+        certificate: certificate,
+        proceeding_fp: proceeding_fp,
+      })
+      .eq("id", id);
+  } else {
+    const { error } = await supabase
+      .from("conferences")
+      .update({
+        paper_title: paper_title,
+        conf_name: conf_name,
+        conf_date: conf_date,
+        proceedings: proceedings,
+        certificate: certificate,
+        proceeding_fp: proceeding_fp,
+        is_verified: "Pending",
+      })
+      .eq("id", id);
+    if (is_verified.toLowerCase() == "pending") {
+      const { error } = await supabase
+        .from("conferences")
+        .update({
+          paper_title: paper_title,
+          conf_name: conf_name,
+          conf_date: conf_date,
+          proceedings: proceedings,
+          certificate: certificate,
+          proceeding_fp: proceeding_fp,
+        })
+        .eq("id", id);
+    } else {
+      const { error } = await supabase
+        .from("conferences")
+        .update({
+          paper_title: paper_title,
+          conf_name: conf_name,
+          conf_date: conf_date,
+          proceedings: proceedings,
+          certificate: certificate,
+          proceeding_fp: proceeding_fp,
+          is_verified: "Pending",
+        })
+        .eq("id", id);
+    }
+  }
+};
+
+export const updateJournals = async (
+  paper_title: string,
+  date_of_publication: string,
+  journal_name: string,
+  issn_number: string,
+  indexed_in: string,
+  link: string,
+  is_verified: string,
+  id: number
+) => {
+  const supabase = createServerComponentClient({ cookies });
+
+  if (is_verified.toLowerCase() == "pending") {
+    const { error } = await supabase
+      .from("journal_publications")
+      .update({
+        paper_title: paper_title,
+        journal_name: journal_name,
+        issn_number: issn_number,
+        month_and_year_of_publication: date_of_publication,
+        indexed_in: indexed_in,
+        link: link,
+      })
+      .eq("id", id);
+  } else {
+    const { error } = await supabase
+      .from("journal_publications")
+      .update({
+        paper_title: paper_title,
+        journal_name: journal_name,
+        issn_number: issn_number,
+        month_and_year_of_publication: date_of_publication,
+        indexed_in: indexed_in,
+        link: link,
+        is_verified: "Pending",
+      })
+      .eq("id", id);
+  }
+};
+
+export const updatePatents = async (
+  patent_name: string,
+  patent_date: string,
+  patent_type: string,
+  application_no: string,
+  status: string,
+  patent_link: string,
+  is_verified: string,
+  id: number
+) => {
+  const supabase = createServerComponentClient({ cookies });
+
+  if (is_verified.toLowerCase() == "pending") {
+    const { error } = await supabase
+      .from("patents")
+      .update({
+        patent_name: patent_name,
+        patent_date: patent_date,
+        patent_type: patent_type,
+        application_no: application_no,
+        status: status,
+        patent_link: patent_link,
+      })
+      .eq("id", id);
+  } else {
+    const { error } = await supabase
+      .from("patents")
+      .update({
+        patent_name: patent_name,
+        patent_date: patent_date,
+        patent_type: patent_type,
+        application_no: application_no,
+        status: status,
+        patent_link: patent_link,
+        is_verified: "Pending",
+      })
+      .eq("id", id);
+  }
+};
+
+export const updateWorkshops = async (
+  date: string,
+  type: string,
+  title: string,
+  number_of_days: number,
+  // organized_by: string,
+  is_verified: string,
+  id: number
+) => {
+  const supabase = createServerComponentClient({ cookies });
+
+  if (is_verified.toLowerCase() == "pending") {
+    const { error } = await supabase
+      .from("fdp_workshop_refresher_course")
+      .update({
+        date: date,
+        type: type,
+        title: title,
+        number_of_days: number_of_days,
+        // organized_by: organized_by,
+      })
+      .eq("id", id);
+  } else {
+    const { error } = await supabase
+      .from("fdp_workshop_refresher_course")
+      .update({
+        date: date,
+        type: type,
+        title: title,
+        number_of_days: number_of_days,
+        // organized_by: organized_by,
+        is_verified: "Pending",
+      })
+      .eq("id", id);
+  }
+};
+
+export async function conferenceQuery(
+  filterByDateRange: null | boolean = null,
+  start_date: null | string = "2001-01-01",
+  end_date: null | string = new Date().toJSON().slice(0, 10),
+  filterByType: null | boolean = null,
+  type: null | string = null,
+  filterByVerified: null | boolean = null,
+  verified: null | string = "PENDING"
+) {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+
+  if (filterByDateRange) {
+    const { data: conferences } = await supabase
+      .from("conferences")
+      .select()
+      .gte("conf_date", start_date)
+      .lte("conf_date", end_date);
+
+    return conferences;
+  }
+
+  if (filterByType) {
+    const { data: conferences } = await supabase
+      .from("conferences")
+      .select()
+      .eq("type", type);
+
+    return conferences;
+  }
+
+  if (filterByVerified) {
+    const { data: conferences } = await supabase
+      .from("conferences")
+      .select()
+      .eq("is_verified", verified);
+
+    return conferences;
+  }
+}
+
+export async function fdpQuery(
+  filterByDateRange: null | boolean = null,
+  start_date: null | string = "2001-01-01",
+  end_date: null | string = new Date().toJSON().slice(0, 10),
+  filterByType: null | boolean = null,
+  type: null | string = null,
+  filterByNumberOfDays: null | boolean = null,
+  noOfDays: null | number = 0,
+  filterByTitle: null | boolean = null,
+  title: null | string = "",
+  filterByOrganizedBy: null | boolean = null,
+  organizedBy: null | string = "",
+  filterByVerified: null | boolean = null,
+  verified: null | string = "PENDING"
+) {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+
+  if (filterByDateRange) {
+    const { data: fdp_workshop_refresher_courses } = await supabase
+      .from("fdp_workshop_refresher_course")
+      .select()
+      .gte("date", start_date)
+      .lte("date", end_date);
+    return fdp_workshop_refresher_courses;
+  }
+
+  if (filterByType) {
+    const { data: fdp_workshop_refresher_courses } = await supabase
+      .from("fdp_workshop_refresher_course")
+      .select()
+      .eq("type", type);
+    return fdp_workshop_refresher_courses;
+  }
+
+  if (filterByNumberOfDays) {
+    const { data: fdp_workshop_refresher_courses } = await supabase
+      .from("fdp_workshop_refresher_course")
+      .select()
+      .eq("number_of_days", noOfDays);
+    return fdp_workshop_refresher_courses;
+  }
+
+  if (filterByTitle) {
+    const { data: fdp_workshop_refresher_courses } = await supabase
+      .from("fdp_workshop_refresher_course")
+      .select()
+      .eq("title", title);
+    return fdp_workshop_refresher_courses;
+  }
+
+  if (filterByOrganizedBy) {
+    const { data: fdp_workshop_refresher_courses } = await supabase
+      .from("fdp_workshop_refresher_course")
+      .select()
+      .eq("organized_by", organizedBy);
+    return fdp_workshop_refresher_courses;
+  }
+
+  if (filterByVerified) {
+    const { data: fdp_workshop_refresher_courses } = await supabase
+      .from("fdp_workshop_refresher_course")
+      .select()
+      .eq("is_verified", verified);
+    return fdp_workshop_refresher_courses;
+  }
+}
+
+export async function journalQuery(
+  filterByDateRange: null | boolean = null,
+  start_date: null | string = "2001-01-01",
+  end_date: null | string = new Date().toJSON().slice(0, 10),
+  filterByName: null | boolean = null, // Journal name
+  name: null | string = null,
+  filterByIndexedIn: null | boolean = null,
+  indexedIn: null | string = "",
+  filterByTitle: null | boolean = null, //Paper title
+  title: null | string = "",
+  filterByVerified: null | boolean = null,
+  verified: null | string = "PENDING"
+) {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+
+  if (filterByDateRange) {
+    const { data: journals } = await supabase
+      .from("journal_publications")
+      .select()
+      .gte("date", start_date)
+      .lte("date", end_date);
+    return journals;
+  }
+
+  if (filterByName) {
+    const { data: journals } = await supabase
+      .from("journal_publications")
+      .select()
+      .eq("type", name);
+    return journals;
+  }
+
+  if (filterByIndexedIn) {
+    const { data: journals } = await supabase
+      .from("journal_publications")
+      .select()
+      .eq("number_of_days", indexedIn);
+    return journals;
+  }
+
+  if (filterByTitle) {
+    const { data: journals } = await supabase
+      .from("journal_publications")
+      .select()
+      .eq("title", title);
+    return journals;
+  }
+
+  if (filterByVerified) {
+    const { data: journals } = await supabase
+      .from("journal_publications")
+      .select()
+      .eq("is_verified", verified);
+    return journals;
+  }
+}
+
+export async function patentsQuery(
+  filterByDateRange: null | boolean = null,
+  start_date: null | string = "2001-01-01",
+  end_date: null | string = new Date().toJSON().slice(0, 10),
+  filterByName: null | boolean = null, // Patent name
+  name: null | string = null,
+  filterByType: null | boolean = null,
+  type: null | string = null,
+  filterByStatus: null | boolean = null,
+  status: null | string = "",
+  filterByApplicationNo: null | boolean = null,
+  applicationNo: null | string = "",
+  filterByIndexedIn: null | boolean = null,
+  indexedIn: null | string = "",
+  filterByTitle: null | boolean = null, //Paper title
+  title: null | string = "",
+  filterByVerified: null | boolean = null,
+  verified: null | string = "PENDING"
+) {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+
+  if (filterByDateRange) {
+    const { data: patents } = await supabase
+      .from("patents")
+      .select()
+      .gte("date", start_date)
+      .lte("date", end_date);
+    return patents;
+  }
+
+  if (filterByName) {
+    const { data: patents } = await supabase
+      .from("patents")
+      .select()
+      .eq("type", name);
+    return patents;
+  }
+
+  if (filterByType) {
+    const { data: patents } = await supabase
+      .from("patents")
+      .select()
+      .eq("patent_type", type);
+    return patents;
+  }
+
+  if (filterByStatus) {
+    const { data: patents } = await supabase
+      .from("patents")
+      .select()
+      .eq("status", status);
+    return patents;
+  }
+
+  if (filterByApplicationNo) {
+    const { data: patents } = await supabase
+      .from("patents")
+      .select()
+      .eq("application_no", applicationNo);
+    return patents;
+  }
+
+  if (filterByIndexedIn) {
+    const { data: patents } = await supabase
+      .from("patents")
+      .select()
+      .eq("number_of_days", indexedIn);
+    return patents;
+  }
+
+  if (filterByTitle) {
+    const { data: patents } = await supabase
+      .from("patents")
+      .select()
+      .eq("title", title);
+    return patents;
+  }
+
+  if (filterByVerified) {
+    const { data: patents } = await supabase
+      .from("patents")
+      .select()
+      .eq("is_verified", verified);
+    return patents;
+  }
+}
