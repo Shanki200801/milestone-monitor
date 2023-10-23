@@ -30,7 +30,7 @@ export default function NavTest() {
   return (
     <section
       id="navbar-1"
-      className={`${bodyText.className} fixed top-[3%] right-0 sm:left-[10%] h-[10vh]`}
+      className={`${bodyText.className} fixed top-[3.5%] right-0 sm:left-[10%] h-[10vh]`}
     >
       {/* Navigation Bar - 1: Small Screens Only*/}
       <ul className="sm:hidden grid grid-cols-3 grid-rows-2 items-center justify-center">
@@ -129,7 +129,7 @@ export default function NavTest() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="hover:text-emerald-500 w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[50px] lg:h-[50px]"
+                className="hover:text-emerald-500 w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
               >
                 <path
                   strokeLinecap="round"
@@ -152,7 +152,7 @@ export default function NavTest() {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="hover:text-emerald-500 w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[50px] lg:h-[50px]"
+                className="hover:text-emerald-500 w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
               >
                 <path
                   strokeLinecap="round"
