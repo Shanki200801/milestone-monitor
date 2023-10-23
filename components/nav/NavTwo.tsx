@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
 import logoImg from "../../public/logo.webp";
 import { Montserrat } from "next/font/google";
+import { useState } from "react";
 
 const bodyText = Montserrat({
   weight: "500",
@@ -8,6 +10,12 @@ const bodyText = Montserrat({
 });
 
 export default function NavTwo() {
+  const [subMenuOpen, setSubMenuOpen] = useState(false);
+
+  const toggleSubMenu = () => {
+    setSubMenuOpen(!subMenuOpen);
+  };
+
   return (
     <section
       id="navbar-2"
@@ -16,7 +24,7 @@ export default function NavTwo() {
       {/* Navigation Bar - 2 */}
       <ul
         id="navbar-2-elements"
-        className="uppercase tracking-wider h-full lg:text-sm sm:text-[0.60rem] grid grid-cols-1 grid-rows-6 sm:gap-2 lg:gap-[1.5rem] items-center justify-between text-center"
+        className="text-teal-950 uppercase tracking-wider h-full lg:text-sm sm:text-[0.60rem] grid grid-cols-1 grid-rows-8 gap-4 justify-around items-center text-center"
       >
         <li>
           <a href="/">
@@ -24,7 +32,7 @@ export default function NavTwo() {
               id="logo-home"
               src={logoImg}
               alt="Logo Image"
-              className="mx-auto lg:w-4/6 lg:h-4/6 md:3/5 md:3/5 w:2/5 h:2/5 pt-2"
+              className="mx-auto -mt-[10%] -mb-6 lg:w-4/6 lg:h-4/6 md:3/5 md:3/5 w:2/5 h:2/5"
             />
           </a>
         </li>
@@ -36,7 +44,7 @@ export default function NavTwo() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[50px] lg:h-[50px]"
+              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
             >
               <path
                 strokeLinecap="round"
@@ -55,7 +63,7 @@ export default function NavTwo() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[50px] lg:h-[50px]"
+              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
             >
               <path
                 strokeLinecap="round"
@@ -74,7 +82,7 @@ export default function NavTwo() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[50px] lg:h-[50px]"
+              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
             >
               <path
                 strokeLinecap="round"
@@ -93,7 +101,7 @@ export default function NavTwo() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[50px] lg:h-[50px]"
+              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
             >
               <path
                 strokeLinecap="round"
@@ -112,7 +120,7 @@ export default function NavTwo() {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[50px] lg:h-[50px]"
+              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
             >
               <path
                 strokeLinecap="round"
@@ -121,6 +129,102 @@ export default function NavTwo() {
               />
             </svg>
             <p className=" ">Patents</p>
+          </a>
+        </li>
+
+        {/* should only be accessible by hod  */}
+        <li className="relative">
+          <button
+            onMouseOver={toggleSubMenu} //choose your demon lol; this one is a little seizurey
+            // onClick={toggleSubMenu} //choose your demon lol; this one is a little annoying but more reliable ig
+            className="hover:text-emerald-300 "
+          >
+            <a href="/modify"></a>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M21.75 6.75a4.5 4.5 0 01-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 11-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 016.336-4.486l-3.276 3.276a3.004 3.004 0 002.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.867 19.125h.008v.008h-.008v-.008z"
+              />
+            </svg>
+            <p className="uppercase">Modify</p>
+          </button>
+
+          {subMenuOpen && (
+            <ul className="z-10 absolute flex flex-col justify-between gap-8 bg-teal-500 left-[95%] p-4 -top-[80%] border border-transparent rounded-r">
+              <li className="hover:text-emerald-300">
+                <a href="/modify/staff/add-staff">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"
+                    />
+                  </svg>
+                  <p>Add Staff</p>
+                </a>
+              </li>
+              <li className="hover:text-emerald-300">
+                <a href="/modify/approvals">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"
+                    />
+                  </svg>
+                  <p>Approvals</p>
+                </a>
+              </li>
+            </ul>
+          )}
+        </li>
+
+        {/* should only be accessible by hod & editor */}
+        <li className="hover:text-emerald-300 ">
+          <a href="/report-gen">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="mx-auto w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25M9 16.5v.75m3-3v3M15 12v5.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+              />
+            </svg>
+
+            <p className=" ">Reports</p>
           </a>
         </li>
       </ul>
