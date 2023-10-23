@@ -4,7 +4,7 @@ import NoData from "@/components/categories/NoData";
 
 const tableFont = Alata({ weight: "400", subsets: ["latin"] });
 
-const GeneralTable = ({ data, staffDetails }) => {
+const GeneralTable = ({ data, staffDetails }:any) => {
   // console.log("data from table component", data);
   // console.log("Staff details ->", staffDetails);
   return (
