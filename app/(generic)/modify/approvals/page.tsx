@@ -24,7 +24,7 @@ const page = async () => {
     redirect("/login");
   }else{
     let userData = await fetchRole(user.email as string);
-    if(userData.faculty_role!="hod" && userData.faculty_role!="editor"){
+    if(userData.faculty_role!="hod"){
       redirect("/404");
     }
   }
