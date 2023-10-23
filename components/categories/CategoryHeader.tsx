@@ -30,7 +30,7 @@ export default function CategoryHeader(props: any) {
   return (
     <header
       id="section-heading"
-      className={`${bodyText.className} fixed top-[3%] right-0 sm:left-[10%] h-[10vh]`}
+      className={`${bodyText.className} fixed top-[3.5%] right-0 sm:left-[10%] h-[10vh]`}
     >
       <ul
         id="lg-navbar-1-elements"
@@ -54,7 +54,7 @@ export default function CategoryHeader(props: any) {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="hover:text-emerald-500 w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[50px] lg:h-[50px]"
+                className="hover:text-emerald-500 w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
               >
                 <path
                   strokeLinecap="round"
@@ -77,7 +77,7 @@ export default function CategoryHeader(props: any) {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
-                className="hover:text-emerald-500 w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[50px] lg:h-[50px]"
+                className="hover:text-emerald-500 w-[2.5rem] h-[2.5rem] sm:w-[40px] sm:h-[40px] md:w-[45px] md:h-[45px] lg:w-[45px] lg:h-[45px]"
               >
                 <path
                   strokeLinecap="round"

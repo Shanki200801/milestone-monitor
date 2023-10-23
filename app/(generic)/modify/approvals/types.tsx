@@ -2,7 +2,7 @@ export interface PendingConference {
   id: number;
   created_at: string;
   type: string;
-  title: string;
+  paper_title: string;
   conf_name: string;
   conf_date: string;
   proceedings: null | any; // You can replace 'any' with the appropriate type for proceedings
@@ -11,12 +11,13 @@ export interface PendingConference {
   faculty_id: string;
   is_verified: string;
   entry_type: string;
+  title: string;
 }
 
 export interface PendingJournal {
   faculty_id: string;
   created_at: null | string; // This can be null or a string representing the date
-  title: string;
+  paper_title: string;
   journal_name: string;
   issn_number: string;
   month_and_year_of_publication: string;
@@ -27,6 +28,7 @@ export interface PendingJournal {
   id: number;
   type: string;
   entry_type: string;
+  title: string;
 }
 
 export interface PendingWorkshop {
@@ -46,7 +48,7 @@ export interface PendingPatent {
   id: number;
   created_at: string;
   faculty_id: string;
-  title: string;
+  patent_name: string;
   patent_type: string;
   application_no: string;
   status: string;
@@ -55,6 +57,7 @@ export interface PendingPatent {
   patent_date: string;
   is_verified: string;
   entry_type: string;
+  title: string;
 }
 
 export interface PendingData {
@@ -62,4 +65,9 @@ export interface PendingData {
   pending_journal: PendingJournal[];
   pending_workshop: PendingWorkshop[];
   pending_patent: PendingPatent[];
+}
+
+export interface TransferedData {
+  data: PendingJournal | PendingConference | PendingPatent | PendingWorkshop;
+  view_state: boolean;
 }
