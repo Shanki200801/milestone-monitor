@@ -952,3 +952,12 @@ export const fetchRole =async (email:string) => {
 
   return userData?userData[0]:"null";
 }
+export const fetchRole =async (email:string) => {
+  const supabase = createServerComponentClient({ cookies });
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  // fetches the user data of the user in session
+  const { data:userData, error:userError } = await supabase.from('faculty').select().eq('faculty_email', user?.email);
+
+  return userData?userData[0]:"null";
+}
