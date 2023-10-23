@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { Poppins } from "next/font/google";
-import Account from "@/components/profile/Account";
+import Account from "@/components/dashboard/Account";
 import { updateUserWhenLoggedIn } from "@/app/api/dbfunctions";
 
 const bodyText = Poppins({

@@ -53,10 +53,21 @@ const ReportPage = ({ staff_details }) => {
       (d: any) => d.entry_type === "workshop"
     );
     const patentData = fullData.filter((d: any) => d.entry_type === "patent");
-    downloadCSV(conferenceData, "confdata.csv");
-    downloadCSV(journalData, "journaldata.csv");
-    downloadCSV(workshopData, "workshopdata.csv");
-    downloadCSV(patentData, "patentdata.csv");
+
+    if (filterState.selectedType === "Conferences") {
+      downloadCSV(conferenceData, "confdata.csv");
+    } else if (filterState.selectedType === "Patents") {
+      downloadCSV(patentData, "patentdata.csv");
+    } else if (filterState.selectedType === "Workshops") {
+      downloadCSV(workshopData, "workshopdata.csv");
+    } else if (filterState.selectedType === "Journals") {
+      downloadCSV(journalData, "journaldata.csv");
+    } else {
+      downloadCSV(conferenceData, "confdata.csv");
+      downloadCSV(journalData, "journaldata.csv");
+      downloadCSV(workshopData, "workshopdata.csv");
+      downloadCSV(patentData, "patentdata.csv");
+    }
   };
 
   return (
