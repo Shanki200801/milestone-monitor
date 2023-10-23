@@ -884,3 +884,61 @@ export async function patentsQuery(
     return patents;
   }
 }
+
+export const approveEntry = async (data: any) => {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  if (data.entry_type === "Journal") {
+    const { error } = await supabase
+      .from("journal_publications")
+      .update({ is_verified: "APPROVED" })
+      .eq("id", data.id);
+  }
+  if (data.entry_type === "Conference") {
+    const { error } = await supabase
+      .from("conferences")
+      .update({ is_verified: "APPROVED" })
+      .eq("id", data.id);
+  }
+  if (data.entry_type === "Patent") {
+    const { error } = await supabase
+      .from("patents")
+      .update({ is_verified: "APPROVED" })
+      .eq("id", data.id);
+  }
+  if (data.entry_type === "Workshop") {
+    const { error } = await supabase
+      .from("fdp_workshop_refresher_course")
+      .update({ is_verified: "APPROVED" })
+      .eq("id", data.id);
+  }
+};
+
+export const rejectEntry = async (data: any) => {
+  const cookieStore = cookies();
+  const supabase = createServerComponentClient({ cookies: () => cookieStore });
+  if (data.entry_type === "Journal") {
+    const { error } = await supabase
+      .from("journal_publications")
+      .update({ is_verified: "REJECTED" })
+      .eq("id", data.id);
+  }
+  if (data.entry_type === "Conference") {
+    const { error } = await supabase
+      .from("conferences")
+      .update({ is_verified: "REJECTED" })
+      .eq("id", data.id);
+  }
+  if (data.entry_type === "Patent") {
+    const { error } = await supabase
+      .from("patents")
+      .update({ is_verified: "REJECTED" })
+      .eq("id", data.id);
+  }
+  if (data.entry_type === "Workshop") {
+    const { error } = await supabase
+      .from("fdp_workshop_refresher_course")
+      .update({ is_verified: "REJECTED" })
+      .eq("id", data.id);
+  }
+};
