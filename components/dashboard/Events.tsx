@@ -46,11 +46,18 @@ export default function Events() {
             Patents
           </li>
         </a>
-        <a href="/modify">
+        <a href="/modify/staff/add-staff">
           <li
             className={`bg-teal-300 w-[9vw] py-4 text-center shadow-lg shadow-teal-600/60 border-[2.5px] border-transparent hover:border-cyan-800 rounded-tl-md rounded-tr-xl rounded-bl-xl rounded-br-md`}
           >
-            Modify
+            Add Staff
+          </li>
+        </a>
+        <a href="/modify/approvals">
+          <li
+            className={`bg-teal-300 w-[9vw] py-4 text-center shadow-lg shadow-teal-600/60 border-[2.5px] border-transparent hover:border-cyan-800 rounded-tl-md rounded-tr-xl rounded-bl-xl rounded-br-md`}
+          >
+            Approvals
           </li>
         </a>
         <a href="/report-gen">
