@@ -484,32 +484,6 @@ export const updateConf = async (
         is_verified: "Pending",
       })
       .eq("id", id);
-    if (is_verified.toLowerCase() == "pending") {
-      const { error } = await supabase
-        .from("conferences")
-        .update({
-          paper_title: paper_title,
-          conf_name: conf_name,
-          conf_date: conf_date,
-          proceedings: proceedings,
-          certificate: certificate,
-          proceeding_fp: proceeding_fp,
-        })
-        .eq("id", id);
-    } else {
-      const { error } = await supabase
-        .from("conferences")
-        .update({
-          paper_title: paper_title,
-          conf_name: conf_name,
-          conf_date: conf_date,
-          proceedings: proceedings,
-          certificate: certificate,
-          proceeding_fp: proceeding_fp,
-          is_verified: "Pending",
-        })
-        .eq("id", id);
-    }
   }
 };
 
@@ -943,15 +917,6 @@ export const rejectEntry = async (data: any) => {
   }
 };
 
-export const fetchRole =async (email:string) => {
-  const supabase = createServerComponentClient({ cookies });
-  const { data: { user } } = await supabase.auth.getUser();
-  
-  // fetches the user data of the user in session
-  const { data:userData, error:userError } = await supabase.from('faculty').select().eq('faculty_email', user?.email);
-
-  return userData?userData[0]:"null";
-}
 export const fetchRole =async (email:string) => {
   const supabase = createServerComponentClient({ cookies });
   const { data: { user } } = await supabase.auth.getUser();
