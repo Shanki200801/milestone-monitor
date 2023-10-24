@@ -31,25 +31,25 @@ export default function Account() {
           <Image
             id="pfp-placeholder"
             src={profileImg}
-            className="lg:w-full lg:h-full aspect-auto object-contain object-center overflow-hidden"
+            className="lg:w-full lg:h-full aspect-auto object-contain object-center overflow-hidden shadow-md shadow-teal-700/20 border border-teal-700/20 rounded-md"
             alt="[user's profile picture]"
           />
         </div>
 
         <ul className="flex flex-col justify-center gap-8 pr-4 h-full w-[70vw] bg-teal-700/20 border border-transparent rounded-r">
           <ul
-            className={`${bodyText.className} tracking-wide p-2 border border-transparent rounded bg-teal-700/40 flex flex-row gap-2`}
+            className={`${bodyText.className} tracking-wide p-2 bg-teal-700/40 flex flex-row gap-2 shadow-md shadow-teal-700/20 border border-teal-700/10 rounded`}
           >
-            <li className="font-bold">Name:</li>
-            <li>[user.name]</li>
+            <li className="text-teal-950 font-bold">Name:</li>
+            <li className="font-bold text-teal-800/80">[user.name]</li>
           </ul>
-          <ul className="p-2 border border-transparent rounded bg-teal-700/40 flex flex-row gap-2">
-            <li className="font-bold">Department:</li>
-            <li>[user.dept]</li>
+          <ul className="p-2 shadow-md shadow-teal-700/20 border border-teal-700/10 rounded bg-teal-700/40 flex flex-row gap-2">
+            <li className="text-teal-950 font-bold">Department:</li>
+            <li className="font-bold text-teal-800/80">[user.dept]</li>
           </ul>
-          <ul className="p-2 border border-transparent rounded bg-teal-700/40 flex flex-row gap-2">
-            <li className="font-bold">Faculty:</li>
-            <li>[user.faculty]</li>
+          <ul className="p-2 shadow-md shadow-teal-700/20 border border-teal-700/10 bg-teal-700/40 flex flex-row gap-2">
+            <li className="text-teal-950 font-bold">Faculty:</li>
+            <li className="font-bold text-teal-800/80">[user.faculty]</li>
           </ul>
         </ul>
       </div>
