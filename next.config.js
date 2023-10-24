@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
   experimental: {
     serverActions: true,
   },
@@ -10,9 +11,7 @@ const nextConfig = {
         hostname: "**",
       },
     ],
-  }
-}
+  },
+};
 
-
-
-module.exports = nextConfig
+module.exports = nextConfig;

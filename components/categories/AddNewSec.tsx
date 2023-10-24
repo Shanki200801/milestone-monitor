@@ -33,7 +33,7 @@ export default function AddNewSec(props: any) {
                 />
               </svg>
             </PopoverTrigger>
-            <PopoverContent className="w-96 overflow-y-auto ">
+            <PopoverContent className="overflow-y-auto ">
               {props.children}
             </PopoverContent>
           </Popover>

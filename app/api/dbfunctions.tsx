@@ -942,8 +942,6 @@ export const rejectEntry = async (data: any) => {
       .eq("id", data.id);
   }
 };
-<<<<<<< Updated upstream
-=======
 
 export const fetchRole = async (email: string) => {
   const supabase = createServerComponentClient({ cookies });
@@ -1014,4 +1012,3 @@ export const getMilestoneNumbers = async () => {
   }
   return [n_conf, n_jpub, n_workshop, n_patent];
 };
->>>>>>> Stashed changes
