@@ -917,12 +917,74 @@ export const rejectEntry = async (data: any) => {
   }
 };
 
-export const fetchRole =async (email:string) => {
-  const supabase = createServerComponentClient({ cookies });
-  const { data: { user } } = await supabase.auth.getUser();
-  
-  // fetches the user data of the user in session
-  const { data:userData, error:userError } = await supabase.from('faculty').select().eq('faculty_email', user?.email);
 
-  return userData?userData[0]:"null";
-}
+export const fetchRole = async (email: string) => {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // fetches the user data of the user in session
+  const { data: userData, error: userError } = await supabase
+    .from("faculty")
+    .select()
+    .eq("faculty_email", user?.email);
+
+  return userData ? userData[0] : "null";
+};
+
+export const getMilestoneNumbers = async () => {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  // fetches the user data of the user in session
+  const { data: userData, error: userError } = await supabase
+    .from("faculty")
+    .select()
+    .eq("faculty_email", user?.email);
+
+  const {
+    data: d_conf,
+    count: n_conf,
+    error: e_conf,
+  } = await supabase
+    .from("conferences")
+    .select("*", { count: "exact", head: true })
+    .eq("faculty_id", userData?.[0]?.faculty_id);
+  const {
+    data: d_jpub,
+    count: n_jpub,
+    error: e_jpub,
+  } = await supabase
+    .from("journal_publications")
+    .select("*", { count: "exact", head: true })
+    .eq("faculty_id", userData?.[0]?.faculty_id);
+  const {
+    data: d_workshop,
+    count: n_workshop,
+    error: e_workshop,
+  } = await supabase
+    .from("fdp_workshop_refresher_course")
+    .select("*", { count: "exact", head: true })
+    .eq("faculty_id", userData?.[0]?.faculty_id);
+  const {
+    data: d_patent,
+    count: n_patent,
+    error: e_patent,
+  } = await supabase
+    .from("patents")
+    .select("*", { count: "exact", head: true })
+    .eq("faculty_id", userData?.[0]?.faculty_id);
+
+  if (e_conf || e_jpub || e_workshop || e_patent) {
+    console.log("error");
+    console.log(e_conf);
+    console.log(e_jpub);
+    console.log(e_workshop);
+    console.log(e_patent);
+  }
+  return [n_conf, n_jpub, n_workshop, n_patent];
+};
+
