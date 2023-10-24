@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { Montserrat } from "next/font/google";
 import Account from "@/components/dashboard/Account";
 import Events from "@/components/dashboard/Events";
+import Stats  from "@/components/dashboard/Stats";
 
 const bodyText = Montserrat({
   weight: "400",
@@ -57,6 +58,7 @@ export default async function Index() {
       className={`invisible lg:visible ${bodyText.className} grid grid-cols-2 grid-rows-2 gap-8 md:h-[85vh] lg:h-[90vh] bg-teal-500/40 lg:p-8`}
     >
       <Account />
+      <Stats/>
       <Events/>
     </section>
   );
