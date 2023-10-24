@@ -3,6 +3,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Urbanist } from "next/font/google";
+import { fetchRole } from "@/app/api/dbfunctions";
 
 const bodyText = Urbanist({
   weight: "400",
@@ -26,7 +27,13 @@ const page = async () => {
     // This route can only be accessed by authenticated users.
     // Unauthenticated users will be redirected to the `/login` route.
     redirect("/login");
+  }else{
+    let userData = await fetchRole(user.email as string);
+    if(userData.faculty_role!="hod"){
+      redirect("/404");
+    }
   }
+
   return (
     <section>
       <section id="small-settings-wrapper" className="lg:hidden text-center">
