@@ -49,13 +49,18 @@ const AddStaff = () => {
             className="mb-5 rounded p-1"
           />
           <label className="mb-1">Department</label>
-          <input
-            type="text"
-            required
+          <select
             value={dept}
             onChange={(e) => setDept(e.target.value)}
-            className="mb-5 rounded p-1"
-          />
+            className="mb-5 rounded p-1 bg-white"
+          >
+            <option value="computer science">Computer Science</option>
+            <option value="mathematics">Mathematics</option>
+            <option value="physics">Physics</option>
+            <option value="chemistry">Chemistry</option>
+            <option value="botany">Botany</option>
+            {/* .....lets add more if needed later  */}
+          </select>
           <label className="mb-1">Role</label>
           <select
             value={role}
