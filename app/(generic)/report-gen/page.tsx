@@ -4,6 +4,7 @@ import ReportPage from "./ReportPage";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { fetchRole } from "@/app/api/dbfunctions";
 
 const page = async () => {
   const supabase = createServerComponentClient({ cookies });
@@ -38,7 +39,15 @@ const page = async () => {
     // This route can only be accessed by authenticated users.
     // Unauthenticated users will be redirected to the `/login` route.
     redirect("/login");
+  }else{
+    //only hods and editors can access reports
+    let userData = await fetchRole(user.email as string);
+    if(userData.faculty_role!="hod" && userData.faculty_role!="editor"){
+      redirect("/404");
+    }
   }
+
+
   return <ReportPage staff_details={staff_details} />;
 };
 
