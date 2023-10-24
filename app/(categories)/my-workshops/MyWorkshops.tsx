@@ -47,7 +47,7 @@ const WorkshopTable = (props: any) => {
           <tr>
             {props.columns.map((items: any, index: any) => {
               return (
-                <th scope="col" className="px-6 py-3">
+                <th scope="col" className="px-6 py-3" key={index}>
                   {items}
                 </th>
               );
@@ -59,6 +59,7 @@ const WorkshopTable = (props: any) => {
             return (
               <tr
                 className={`${tableBodyFont.className} bg-[#29b7a6] border-b hover:bg-gray-50 tracking-normal`}
+                key={index}
               >
                 <th
                   scope="row"
