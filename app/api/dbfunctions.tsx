@@ -1003,9 +1003,10 @@ async function uploadFile(path: string, file: File): Promise<string> {
 
 export async function uploadConferenceMedia(
   facultyNo: string,
-  file: File
+  file: File,
+  event_date: string
 ): Promise<string> {
-  const path = `conferenceMedia/${facultyNo}/${facultyNo}_${Date.now()}.${
+  const path = `conferenceMedia/${facultyNo}/${facultyNo}_${event_date}.${
     file.type.split("/")[1]
   }`;
   return await uploadFile(path, file);
@@ -1013,9 +1014,10 @@ export async function uploadConferenceMedia(
 
 export async function uploadWorkshopMedia(
   facultyNo: string,
-  file: File
+  file: File,
+  event_date: string
 ): Promise<string> {
-  const path = `workshopMedia/${facultyNo}/${facultyNo}_${Date.now()}.${
+  const path = `workshopMedia/${facultyNo}/${facultyNo}_${event_date}.${
     file.type.split("/")[1]
   }`;
   return await uploadFile(path, file);
@@ -1023,9 +1025,10 @@ export async function uploadWorkshopMedia(
 
 export async function uploadPatentMedia(
   facultyNo: string,
-  file: File
+  file: File,
+  event_date: string
 ): Promise<string> {
-  const path = `patentMedia/${facultyNo}/${facultyNo}_${Date.now()}.${
+  const path = `patentMedia/${facultyNo}/${facultyNo}_${event_date}.${
     file.type.split("/")[1]
   }`;
   return await uploadFile(path, file);
@@ -1033,9 +1036,10 @@ export async function uploadPatentMedia(
 
 export async function uploadJournalMedia(
   facultyNo: string,
-  file: File
+  file: File,
+  event_date: string
 ): Promise<string> {
-  const path = `journalMedia/${facultyNo}/${facultyNo}_${Date.now()}.${
+  const path = `journalMedia/${facultyNo}/${facultyNo}_${event_date}.${
     file.type.split("/")[1]
   }`;
   return await uploadFile(path, file);
