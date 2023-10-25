@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchRole, updateStaffGoogleScholar, updateStaffLinkedInURL, updateStaffName, updateStaffPW, updateStaffPhoneNumber } from "@/app/api/dbfunctions";
+import { fetchRole, updateStaffGoogleScholar, updateStaffLinkedInURL, updateStaffName, updateStaffPW, updateStaffPhoneNumber, uploadProfilePicture } from "@/app/api/dbfunctions";
 import React, { useEffect, useState } from "react";
 import { Modal, FileInput, TextInput, Checkbox, Label, Button } from "flowbite-react";
 
@@ -16,6 +16,7 @@ function formatFieldName(fieldName: string): string {
   }
 
 export default function Settings() {
+  const [facultyId, setFacultyId] = useState("");
   const [pw1, setPw1] = useState("");
   const [pw2, setPw2] = useState("");
   const [user, setUser] = useState(null);
@@ -32,8 +33,6 @@ export default function Settings() {
     linkedIn_url: "",	
     phone_number:"",
     google_scholar:"",
-    password:"12345",
-    profile_picture:    ""//media file so might have to handle differently
   });
   useEffect(() => {
     fetchRole("dummy").then((data) => {
@@ -43,9 +42,8 @@ export default function Settings() {
         linkedIn_url: data?.faculty_linkedin,
         phone_number:data?.faculty_phone,
         google_scholar:data?.faculty_google_scholar,
-        password:"12345",
-        profile_picture:    ""
       })
+      setFacultyId(data?.faculty_id);
     })
   }, []);
 
@@ -110,8 +108,11 @@ export default function Settings() {
     }
   }
 
-  const handleFileChange = (e) => {
-    
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const file = Array.from(e.currentTarget.files??[]);
+    // const path = 
+    uploadProfilePicture(facultyId, file);
   }
 
   const handleSaveClick = (field: string) => {
@@ -197,8 +198,26 @@ export default function Settings() {
           </div>
         ) 
         )}
-        <div className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80">
+
+<div className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80" >
         
+        <Label
+          htmlFor="file"
+          value="Upload Profile Picture" 
+          className="font-bold text-md"
+        />
+      
+        <FileInput onChange={handleFileChange}
+          id="file"
+        />
+
+        </div>
+
+        <div className="w-full flex place-items-center place-content-center" >
+        
+
+        
+
         <Button onClick={() => props.setOpenModal('form-elements')}>Reset Password</Button>
       <Modal show={props.openModal === 'form-elements'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
         <Modal.Header />
@@ -226,18 +245,7 @@ export default function Settings() {
         </Modal.Body>
       </Modal>
         </div>
-        <div className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80" >
-        
-        <Label
-          htmlFor="file"
-          value="Upload file"
-        />
-      
-        <FileInput onChange={handleFileChange}
-          id="file"
-        />
 
-        </div>
         
 
       </div>

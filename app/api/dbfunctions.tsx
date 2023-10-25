@@ -1118,6 +1118,7 @@ export async function uploadProfilePicture(
   facultyId: string,
   file: File
 ): Promise<string> {
+  console.log("This is from upload pics: "+file);
   const path = `profilePictures/${facultyId}.${file.type.split("/")[1]}`;
   return await uploadFile(path, file);
 }
