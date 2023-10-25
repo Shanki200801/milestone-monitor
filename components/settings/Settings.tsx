@@ -68,16 +68,16 @@ export default function Settings() {
             className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80"
           >
             <span className="flex gap-2 items-center">
-              <p className="font-bold">{formatFieldName(field)}:</p>
+              <p className="font-bold tracking-wide">{formatFieldName(field)}:</p>
               {isEditing[field] ? (
                 <input
                   name={field}
-                  className="w-[15vw] h-fit border-2 border-teal-900 rounded bg-teal-200 py-1 px-2"
+                  className="caret-emerald-700 border-teal-800 font-bold text-teal-800/80 w-[15vw] h-fit border-2 rounded bg-teal-200 py-1 px-2"
                   value={settings[field]}
                   onChange={(e) => handleInputChange(e, field)}
                 />
               ) : (
-                <span className="w-[15vw] h-fit border border-transparent rounded">
+                <span className="font-bold text-teal-800/80 w-[15vw] h-fit border border-transparent rounded">
                   {settings[field]}
                 </span>
               )}
