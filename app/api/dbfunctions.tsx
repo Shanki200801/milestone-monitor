@@ -917,7 +917,6 @@ export const rejectEntry = async (data: any) => {
   }
 };
 
-
 export const fetchRole = async (email: string) => {
   const supabase = createServerComponentClient({ cookies });
   const {
@@ -988,3 +987,68 @@ export const getMilestoneNumbers = async () => {
   return [n_conf, n_jpub, n_workshop, n_patent];
 };
 
+async function uploadFile(path: string, file: File): Promise<string> {
+  const supabase = createClientComponentClient();
+  const { error } = await supabase.storage
+    .from("staff-media")
+    .upload(path, file);
+  if (error) {
+    console.error("Error uploading file: ", error);
+    return "";
+  } else {
+    console.log("File uploaded successfully");
+    return path;
+  }
+}
+
+export async function uploadConferenceMedia(
+  facultyNo: string,
+  file: File,
+  event_date: string
+): Promise<string> {
+  const path = `conferenceMedia/${facultyNo}/${facultyNo}_${event_date}.${
+    file.type.split("/")[1]
+  }`;
+  return await uploadFile(path, file);
+}
+
+export async function uploadWorkshopMedia(
+  facultyNo: string,
+  file: File,
+  event_date: string
+): Promise<string> {
+  const path = `workshopMedia/${facultyNo}/${facultyNo}_${event_date}.${
+    file.type.split("/")[1]
+  }`;
+  return await uploadFile(path, file);
+}
+
+export async function uploadPatentMedia(
+  facultyNo: string,
+  file: File,
+  event_date: string
+): Promise<string> {
+  const path = `patentMedia/${facultyNo}/${facultyNo}_${event_date}.${
+    file.type.split("/")[1]
+  }`;
+  return await uploadFile(path, file);
+}
+
+export async function uploadJournalMedia(
+  facultyNo: string,
+  file: File,
+  event_date: string
+): Promise<string> {
+  const path = `journalMedia/${facultyNo}/${facultyNo}_${event_date}.${
+    file.type.split("/")[1]
+  }`;
+  return await uploadFile(path, file);
+}
+
+export async function uploadProfilePicture(
+  facultyId: string,
+  file: File
+): Promise<string> {
+  const path = `profilePictures/${facultyId}.${file.type.split("/")[1]}`;
+  return await uploadFile(path, file);
+}

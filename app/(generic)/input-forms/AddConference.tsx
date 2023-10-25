@@ -23,6 +23,9 @@ const AddConference = () => {
 
   const supabase = createClientComponentClient();
 
+  // Do not use the below function. Use the one in DB functions
+  // pass staff id and e.target.files[0] and date state to it as args to it
+  // it also does not do the path setting to certificate state. Handle that out of the function
   async function uploadImage(e: any) {
     let file = e.target.files[0];
 
