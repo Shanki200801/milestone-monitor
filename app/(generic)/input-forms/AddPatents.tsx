@@ -28,7 +28,9 @@ const AddPatents = () => {
       }
     } catch (e) {}
   };
-
+  // Do not use the below function. Use the one in DB functions
+  // pass staff id and e.target.files[0] as args to it
+  // it also does not do the path setting to certificate state. Handle that out of the function
   async function uploadImage(e: any) {
     let file = e.target.files[0];
     setImage("patentsMedia/" + userId + file.name);
@@ -39,10 +41,13 @@ const AddPatents = () => {
     console.log(error);
   }
 
-  const addPatentWrapper = async(e: React.MouseEvent, args: [string, string, string, string, string, string, string, string]) => {
+  const addPatentWrapper = async (
+    e: React.MouseEvent,
+    args: [string, string, string, string, string, string, string, string]
+  ) => {
     e.preventDefault();
     await addPatent(...args);
-  }
+  };
   return (
     <div className="">
       <form>
@@ -78,12 +83,12 @@ const AddPatents = () => {
             input_value={status}
             set_input={setStatus}
           />
-           <InputCard
+          <InputCard
             input_name="Image link"
             input_type="text"
             input_value={image}
             set_input={setImage}
-          /> 
+          />
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Upload image
           </label>
@@ -100,7 +105,21 @@ const AddPatents = () => {
             input_value={patentDate}
             set_input={setPatentDate}
           />
-          <input type="submit" onClick={(e) => addPatentWrapper(e, [facultyID, patentName, patentDate, applicationNo, image, status, patentType, patentLink])} />
+          <input
+            type="submit"
+            onClick={(e) =>
+              addPatentWrapper(e, [
+                facultyID,
+                patentName,
+                patentDate,
+                applicationNo,
+                image,
+                status,
+                patentType,
+                patentLink,
+              ])
+            }
+          />
         </div>
       </form>
     </div>

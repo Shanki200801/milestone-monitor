@@ -11,6 +11,9 @@ const AddWorkshops = () => {
   const [heldOrAttended, setHeldorAttended] = useState("Attended");
   const [organisedBy, setOrganisedBy] = useState("");
 
+  // Do not use the below function. Use the one in DB functions
+  // pass staff id and e.target.files[0] as args to it
+  // it also does not do the path setting to certificate state. Handle that out of the function
   const addWorkshopsWrapper = async (
     e: React.MouseEvent,
     args: [string, string, string, string, number, string]
