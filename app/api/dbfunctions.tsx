@@ -53,7 +53,7 @@ export const addStaff = async (
 };
 
 //the below function should be called on first login of the user by maybe checking if pw is default pw
-export const updateStaffPW = async (email: string, password: string) => {
+export const updateStaffPW = async (password: string) => {
   const supabase = createServerComponentClient({ cookies });
 
   const { data, error } = await supabase.auth.updateUser({
@@ -64,6 +64,75 @@ export const updateStaffPW = async (email: string, password: string) => {
     console.log("error from update pw " + error);
   }
 };
+
+
+export const updateStaffName = async (name: string) => {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data, error } = await supabase.from("faculty").update({	
+   faculty_name : name
+  }).eq("faculty_email", user?.email);	
+
+  if (error) {
+    console.log("error" + error);
+  }
+};
+
+
+
+export const updateStaffPhoneNumber = async (phNo: string) => {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data, error } = await supabase.from("faculty").update({	
+   faculty_phone : phNo
+  }).eq("faculty_email", user?.email);	
+
+  if (error) {
+    console.log("error" + error);
+  }
+};
+
+
+export const updateStaffLinkedInURL = async (url: string) => {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data, error } = await supabase.from("faculty").update({	
+   faculty_linkedin : url
+  }).eq("faculty_email", user?.email);	
+
+  if (error) {
+    console.log("error" + error);
+  }
+};
+
+
+export const updateStaffGoogleScholar = async (google_scholar: string) => {
+  const supabase = createServerComponentClient({ cookies });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { data, error } = await supabase.from("faculty").update({	
+   faculty_google_scholar : google_scholar
+  }).eq("faculty_email", user?.email);	
+
+  if (error) {
+    console.log("error " + error);
+  }
+};
+
+
+
+
 
 export const addConference = async (
   type: string,
@@ -1049,6 +1118,7 @@ export async function uploadProfilePicture(
   facultyId: string,
   file: File
 ): Promise<string> {
+  console.log("This is from upload pics: "+file);
   const path = `profilePictures/${facultyId}.${file.type.split("/")[1]}`;
   return await uploadFile(path, file);
 }
