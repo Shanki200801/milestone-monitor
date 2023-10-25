@@ -87,7 +87,7 @@ export default async function Index() {
 
      
 
-      {/* <Stats/> */}
+      <Stats/>
      
  <Events is_hod={hodBool} is_editor={editorBool}/>
     </section>
