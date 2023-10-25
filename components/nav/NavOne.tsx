@@ -21,7 +21,7 @@ const fancyText = Courgette({
   subsets: ["latin"],
 });
 
-export default function NavOne() {
+export default function NavOne(props:any) {
   const router = useRouter();
 
   // Create a Supabase client configured to use cookies
@@ -123,7 +123,7 @@ export default function NavOne() {
           Welcome back,
           <span className={`${fancyText.className} tracking-tight`}>
             {" "}
-            [user.name] 📝✨
+            {props.userData.faculty_name} 📝✨
           </span>
         </h1>
         <ul

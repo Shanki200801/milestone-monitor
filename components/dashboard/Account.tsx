@@ -12,7 +12,7 @@ const bodyText = Urbanist({
   subsets: ["latin"],
 });
 
-export default function Account() {
+export default function Account(props:any) {
   return (
     <div
       id="profile-details"
@@ -41,15 +41,15 @@ export default function Account() {
             className={`${bodyText.className} tracking-wide p-2 bg-teal-700/40 flex flex-row gap-2 shadow-md shadow-teal-700/20 border border-teal-700/10 rounded`}
           >
             <li className="text-teal-950 font-bold">Name:</li>
-            <li className="font-bold text-teal-800/80">[user.name]</li>
+            <li className="font-bold text-teal-800/80">{props.userData.faculty_name}</li>
           </ul>
           <ul className="p-2 shadow-md shadow-teal-700/20 border border-teal-700/10 rounded bg-teal-700/40 flex flex-row gap-2">
             <li className="text-teal-950 font-bold">Department:</li>
-            <li className="font-bold text-teal-800/80">[user.dept]</li>
+            <li className="font-bold text-teal-800/80">{props.userData.faculty_department}</li>
           </ul>
           <ul className="p-2 shadow-md shadow-teal-700/20 border border-teal-700/10 bg-teal-700/40 flex flex-row gap-2">
             <li className="text-teal-950 font-bold">Faculty:</li>
-            <li className="font-bold text-teal-800/80">[user.faculty]</li>
+            <li className="font-bold text-teal-800/80">{props.userData.faculty_id}</li>
           </ul>
         </ul>
       </div>
