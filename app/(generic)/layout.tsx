@@ -34,6 +34,7 @@ const RootLayout = async ({
 
   let hodBool =true
   let editorBool = true;
+  let userData;
   
   if (!user) {
     // This route can only be accessed by authenticated users.
@@ -41,7 +42,9 @@ const RootLayout = async ({
     redirect("/login");
   }else{
     //only hods and editors can access reports
-    let userData = await fetchRole(user.email as string);
+    userData = await fetchRole(user.email as string);
+
+    //conditions to check if the user is an hod, editor or regular faculty
     if(userData.faculty_role!="hod"){
       hodBool = false;
       
@@ -49,13 +52,14 @@ const RootLayout = async ({
     if(userData.faculty_role!="editor"){
       editorBool = false;
     }
+
   }
 
   return (
     <html lang="en">
       <body>
         {/* Navigation Bars (horizontal and vertical) */}
-        <Navbar is_hod={hodBool} is_editor={editorBool}/>
+        <Navbar is_hod={hodBool} is_editor={editorBool} userData={userData}/>
         <main className="absolute top-1/2 inset-x-[2%] sm:right-0 sm:top-[20%] sm:left-[10%] md:top-[15%] lg:top-[10%] ">
           {children}
         </main>

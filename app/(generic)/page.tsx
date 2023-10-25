@@ -52,6 +52,7 @@ export default async function Index() {
   const supabase = createServerComponentClient({ cookies });
   let hodBool =true
   let editorBool = true;
+  let userData, imageJpg, imagePng;
 
   const {
     data: { user },
@@ -62,7 +63,7 @@ export default async function Index() {
     // Unauthenticated users will be redirected to the `/login` route.
     redirect("/login");
   }else{
-    let userData = await fetchRole(user.email as string);
+    userData = await fetchRole(user.email as string);
     if(userData.faculty_role!="hod"){
       hodBool = false;
       
@@ -70,6 +71,11 @@ export default async function Index() {
     if(userData.faculty_role!="editor"){
       editorBool = false;
     }
+
+    const {data:imgJpg} = supabase.storage.from('staff-media').getPublicUrl(`profilePictures/${userData.faculty_id}.jpg`);
+    const {data:imgPng} = supabase.storage.from('staff-media').getPublicUrl(`profilePictures/${userData.faculty_id}.png`);
+    imageJpg = imgJpg.publicUrl;
+    imagePng = imgPng.publicUrl;
   }
 
   return (
@@ -77,7 +83,7 @@ export default async function Index() {
       id="dashboard"
       className={`invisible lg:visible ${bodyText.className} grid grid-cols-2 grid-rows-2 gap-8 md:h-[85vh] lg:h-[90vh] bg-teal-500/40 lg:p-8`}
     >
-      <Account />
+      <Account userData={userData} imageJpg={imageJpg} imagePng={imagePng}/>
 
      
 

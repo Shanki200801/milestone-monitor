@@ -1,6 +1,8 @@
 'use client'
 
-import React, { useState } from "react";
+import { fetchRole, updateStaffGoogleScholar, updateStaffLinkedInURL, updateStaffName, updateStaffPW, updateStaffPhoneNumber, uploadProfilePicture } from "@/app/api/dbfunctions";
+import React, { useEffect, useState } from "react";
+import { Modal, FileInput, TextInput, Checkbox, Label, Button } from "flowbite-react";
 
 type Settings = {
     [key: string]: string;
@@ -14,15 +16,66 @@ function formatFieldName(fieldName: string): string {
   }
 
 export default function Settings() {
-  const [settings, setSettings] = useState<Settings>({
+  const [facultyId, setFacultyId] = useState("");
+  const [pw1, setPw1] = useState("");
+  const [pw2, setPw2] = useState("");
+  const [user, setUser] = useState(null);
+  const [openModal, setOpenModal] = useState<string | undefined>();
+  const props = { openModal, setOpenModal }
+  const [settings, setSettings] = useState<Settings>
+  
+  ({
+
+
+    
     // Add more fields/values here in the same format (formatter will change appearance in UI)
-    name: "[empty]",
-    phone_number: "[empty]",
-    linkedIn_url: "[empty]",
-    google_scholar: "[empty]",
-    password: "[empty]",
-    profile_picture: "[empty]", //media file so might have to handle differently
+    name: "",
+    linkedIn_url: "",	
+    phone_number:"",
+    google_scholar:"",
   });
+  useEffect(() => {
+    fetchRole("dummy").then((data) => {
+      setUser(data);
+      setSettings({
+        name: data?.faculty_name,
+        linkedIn_url: data?.faculty_linkedin,
+        phone_number:data?.faculty_phone,
+        google_scholar:data?.faculty_google_scholar,
+      })
+      setFacultyId(data?.faculty_id);
+    })
+  }, []);
+
+  console.log("From settings component", user);
+
+
+    // console.log(user,"user updated");
+
+  useEffect(() => {
+
+    updateStaffName(settings.name);
+    
+    
+  }, [settings.name]);
+
+  useEffect(() => {
+    updateStaffPhoneNumber(settings.phone_number);
+  }, [settings.phone_number]);
+
+
+  useEffect(() => {
+    updateStaffLinkedInURL(settings.linkedIn_url);
+  },[settings.linkedIn_url]);
+
+  useEffect(() => {
+    updateStaffGoogleScholar(settings.google_scholar);
+  }, [settings.google_scholar]);
+  
+  useEffect(() => {
+    updateStaffPW(settings.password);
+  }, [settings.password]);
+
 
   const [isEditing, setIsEditing] = useState<Record<string, boolean>>({
     name: false,
@@ -42,6 +95,25 @@ export default function Settings() {
   const handleEditClick = (field: string) => {
     setIsEditing({ ...isEditing, [field]: true });
   };
+
+  const handlePwChange = () => {
+    if(pw1 === pw2) {
+      updateStaffPW(pw1);
+      props.setOpenModal(undefined);
+    }
+    else{
+      setPw1("");
+      setPw2("");
+      alert("Passwords do not match");
+    }
+  }
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const file = Array.from(e.currentTarget.files??[]);
+    // const path = 
+    uploadProfilePicture(facultyId, file);
+  }
 
   const handleSaveClick = (field: string) => {
     // Assuming you want to save the value when the user clicks the save button.
@@ -68,16 +140,16 @@ export default function Settings() {
             className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80"
           >
             <span className="flex gap-2 items-center">
-              <p className="font-bold">{formatFieldName(field)}:</p>
+              <p className="font-bold tracking-wide">{formatFieldName(field)}:</p>
               {isEditing[field] ? (
                 <input
                   name={field}
-                  className="w-[15vw] h-fit border-2 border-teal-900 rounded bg-teal-200 py-1 px-2"
+                  className="caret-emerald-700 border-teal-800 font-bold text-teal-800/80 w-[15vw] h-fit border-2 rounded bg-teal-200 py-1 px-2"
                   value={settings[field]}
                   onChange={(e) => handleInputChange(e, field)}
                 />
               ) : (
-                <span className="w-[15vw] h-fit border border-transparent rounded">
+                <span className="font-bold text-teal-800/80 w-[15vw] h-fit border border-transparent rounded">
                   {settings[field]}
                 </span>
               )}
@@ -124,7 +196,58 @@ export default function Settings() {
               )}
             </div>
           </div>
-        ))}
+        ) 
+        )}
+
+<div className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80" >
+        
+        <Label
+          htmlFor="file"
+          value="Upload Profile Picture" 
+          className="font-bold text-md"
+        />
+      
+        <FileInput onChange={handleFileChange}
+          id="file"
+        />
+
+        </div>
+
+        <div className="w-full flex place-items-center place-content-center" >
+        
+
+        
+
+        <Button onClick={() => props.setOpenModal('form-elements')}>Reset Password</Button>
+      <Modal show={props.openModal === 'form-elements'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="space-y-6">
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white">Update Password</h3>
+            <div>
+              <div className="mb-2 block">
+                <Label value="New password" />
+              </div>
+              <TextInput id="newPassword" type="password" placeholder="********" value={pw1} onChange={(e) => setPw1(e.target.value)} required />
+            </div>
+            <div>
+              <div className="mb-2 block">
+                <Label value="Re-enter New Password" />
+              </div>
+              <TextInput id="verifyNewPassword" type="password" placeholder="********" value={pw2} onChange={(e) => setPw2(e.target.value)} required />
+            </div>
+            
+            <div className="w-full">
+              <Button onClick={handlePwChange}>Confirm Reset</Button>
+            </div>            
+            
+          </div>
+        </Modal.Body>
+      </Modal>
+        </div>
+
+        
+
       </div>
     </div>
   );
