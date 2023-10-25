@@ -1,6 +1,8 @@
 'use client'
 
-import React, { useState } from "react";
+import { fetchRole, updateStaffGoogleScholar, updateStaffLinkedInURL, updateStaffName, updateStaffPW, updateStaffPhoneNumber } from "@/app/api/dbfunctions";
+import React, { useEffect, useState } from "react";
+import { Modal, FileInput, TextInput, Checkbox, Label, Button } from "flowbite-react";
 
 type Settings = {
     [key: string]: string;
@@ -14,15 +16,68 @@ function formatFieldName(fieldName: string): string {
   }
 
 export default function Settings() {
-  const [settings, setSettings] = useState<Settings>({
+  const [pw1, setPw1] = useState("");
+  const [pw2, setPw2] = useState("");
+  const [user, setUser] = useState(null);
+  const [openModal, setOpenModal] = useState<string | undefined>();
+  const props = { openModal, setOpenModal }
+  const [settings, setSettings] = useState<Settings>
+  
+  ({
+
+
+    
     // Add more fields/values here in the same format (formatter will change appearance in UI)
-    name: "[empty]",
-    phone_number: "[empty]",
-    linkedIn_url: "[empty]",
-    google_scholar: "[empty]",
-    password: "[empty]",
-    profile_picture: "[empty]", //media file so might have to handle differently
+    name: "",
+    linkedIn_url: "",	
+    phone_number:"",
+    google_scholar:"",
+    password:"12345",
+    profile_picture:    ""//media file so might have to handle differently
   });
+  useEffect(() => {
+    fetchRole("dummy").then((data) => {
+      setUser(data);
+      setSettings({
+        name: data?.faculty_name,
+        linkedIn_url: data?.faculty_linkedin,
+        phone_number:data?.faculty_phone,
+        google_scholar:data?.faculty_google_scholar,
+        password:"12345",
+        profile_picture:    ""
+      })
+    })
+  }, []);
+
+  console.log("From settings component", user);
+
+
+    // console.log(user,"user updated");
+
+  useEffect(() => {
+
+    updateStaffName(settings.name);
+    
+    
+  }, [settings.name]);
+
+  useEffect(() => {
+    updateStaffPhoneNumber(settings.phone_number);
+  }, [settings.phone_number]);
+
+
+  useEffect(() => {
+    updateStaffLinkedInURL(settings.linkedIn_url);
+  },[settings.linkedIn_url]);
+
+  useEffect(() => {
+    updateStaffGoogleScholar(settings.google_scholar);
+  }, [settings.google_scholar]);
+  
+  useEffect(() => {
+    updateStaffPW(settings.password);
+  }, [settings.password]);
+
 
   const [isEditing, setIsEditing] = useState<Record<string, boolean>>({
     name: false,
@@ -42,6 +97,22 @@ export default function Settings() {
   const handleEditClick = (field: string) => {
     setIsEditing({ ...isEditing, [field]: true });
   };
+
+  const handlePwChange = () => {
+    if(pw1 === pw2) {
+      updateStaffPW(pw1);
+      props.setOpenModal(undefined);
+    }
+    else{
+      setPw1("");
+      setPw2("");
+      alert("Passwords do not match");
+    }
+  }
+
+  const handleFileChange = (e) => {
+    
+  }
 
   const handleSaveClick = (field: string) => {
     // Assuming you want to save the value when the user clicks the save button.
@@ -124,7 +195,51 @@ export default function Settings() {
               )}
             </div>
           </div>
-        ))}
+        ) 
+        )}
+        <div className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80">
+        
+        <Button onClick={() => props.setOpenModal('form-elements')}>Reset Password</Button>
+      <Modal show={props.openModal === 'form-elements'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
+        <Modal.Header />
+        <Modal.Body>
+          <div className="space-y-6">
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white">Update Password</h3>
+            <div>
+              <div className="mb-2 block">
+                <Label value="New password" />
+              </div>
+              <TextInput id="newPassword" type="password" placeholder="********" value={pw1} onChange={(e) => setPw1(e.target.value)} required />
+            </div>
+            <div>
+              <div className="mb-2 block">
+                <Label value="Re-enter New Password" />
+              </div>
+              <TextInput id="verifyNewPassword" type="password" placeholder="********" value={pw2} onChange={(e) => setPw2(e.target.value)} required />
+            </div>
+            
+            <div className="w-full">
+              <Button onClick={handlePwChange}>Confirm Reset</Button>
+            </div>            
+            
+          </div>
+        </Modal.Body>
+      </Modal>
+        </div>
+        <div className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80" >
+        
+        <Label
+          htmlFor="file"
+          value="Upload file"
+        />
+      
+        <FileInput onChange={handleFileChange}
+          id="file"
+        />
+
+        </div>
+        
+
       </div>
     </div>
   );
