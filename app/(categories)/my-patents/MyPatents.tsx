@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Montserrat, Inter } from "next/font/google";
-import { fetchData, updatePatents } from "@/app/api/dbfunctions";
+import { fetchData, updatePatents, addPatent } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
 import AddPatents from "@/app/(generic)/input-forms/AddPatents";
@@ -24,7 +24,10 @@ export const MyPatents = (props: any) => {
 
   return (
     <section>
+      {/* Navigation Bar One */}
       <CategoryHeader name="My Patents" />
+
+      {/* Table of existing patents, along with an edit button for each entry */}
       <section className="grid grid-rows-2 lg:h-[80vh] gap-24">
         <section
           id="table-section"
@@ -36,8 +39,10 @@ export const MyPatents = (props: any) => {
             <PatentTable data={props.data} columns={columns} />
           )}
         </section>
+
+        {/* Button to add a new patent */}
         <AddNewSec name="Patent">
-          <AddPatents />
+          <AddPatentModal />
         </AddNewSec>
       </section>
     </section>
@@ -87,6 +92,156 @@ const PatentTable = (props: any) => {
         </tbody>
       </table>
     </div>
+  );
+};
+
+const AddPatentModal = () => {
+  const [openModal, setOpenModal] = useState<string | undefined>();
+  const propsModal = { openModal, setOpenModal };
+  const [facultyID, setFacultyID] = useState("");
+  const [patentName, setPatentName] = useState("");
+  const [patentType, setPatentType] = useState("");
+  const [applicationNo, setApplicationNo] = useState("");
+  const [status, setStatus] = useState("");
+  const [image, setImage] = useState("");
+  const [patentLink, setPatentLink] = useState("");
+  const [patentDate, setPatentDate] = useState("");
+
+  const handleAddPatents = async () => {
+    await addPatent(
+      facultyID,
+      patentName,
+      patentDate,
+      patentType,
+      applicationNo,
+      status,
+      image,
+      patentLink
+    );
+    window.location.reload();
+  };
+
+  return (
+    <>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-28 h-28 cursor-pointer hover:w-[6.8rem] hover:h-[6.8rem]"
+        onClick={() => propsModal.setOpenModal("form-elements")}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <Modal
+        show={propsModal.openModal === "form-elements"}
+        size="xl"
+        popup
+        onClose={() => propsModal.setOpenModal(undefined)}
+        className={`${tableFont.className}`}
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="space-y-6">
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white text-center">
+              Add new patent
+            </h3>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Faculty ID" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setFacultyID(e.target.value)}
+                value={facultyID}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Patent Name" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setPatentName(e.target.value)}
+                value={patentName}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Patent Type" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setPatentType(e.target.value)}
+                value={patentType}
+                required
+              />
+            </div>
+            <div>
+              <div className="mb-2 block">
+                <Label value="Application Number" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setApplicationNo(e.target.value)}
+                value={applicationNo}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Status" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setStatus(e.target.value)}
+                value={status}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Patent Link" />
+              </div>
+              <input
+                type="text"
+                onChange={(e) => setPatentLink(e.target.value)}
+                value={patentLink}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Patent Date" />
+              </div>
+              <TextInput
+                type="date"
+                onChange={(e) => setPatentDate(e.target.value)}
+                value={patentDate}
+                required
+              />
+            </div>
+
+            <div className="flex justify-center">
+              <Button onClick={handleAddPatents}>Update</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 };
 

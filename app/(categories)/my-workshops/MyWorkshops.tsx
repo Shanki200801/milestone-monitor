@@ -2,7 +2,11 @@
 
 import React, { useState } from "react";
 import { Montserrat, Inter } from "next/font/google";
-import { fetchData, updateWorkshops } from "@/app/api/dbfunctions";
+import {
+  fetchData,
+  updateWorkshops,
+  addWorkshops,
+} from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
 import AddWorkshops from "@/app/(generic)/input-forms/AddWorkshops";
@@ -22,7 +26,7 @@ const MyWorkshops = (props: any) => {
         <section
           id="table-section"
           className="bg-[#cbfef8] m-3 mt-0 p-5 sm:rounded h-[45vh]"
-          >
+        >
           {props.data.length == 0 ? (
             <NoData columns={columns} />
           ) : (
@@ -30,7 +34,7 @@ const MyWorkshops = (props: any) => {
           )}
         </section>
         <AddNewSec name="Workshop">
-          <AddWorkshops />
+          <AddWorkshopModal />
         </AddNewSec>
       </section>
     </section>
@@ -80,6 +84,159 @@ const WorkshopTable = (props: any) => {
         </tbody>
       </table>
     </div>
+  );
+};
+
+const AddWorkshopModal = () => {
+  const [openModal, setOpenModal] = useState<string | undefined>();
+  const propsModal = { openModal, setOpenModal };
+  const [facultyID, setFacultyID] = useState("");
+  const [date, setDate] = useState("");
+  const [type, setType] = useState("");
+  const [title, setTitle] = useState("");
+  const [noDays, setNoDays] = useState(0);
+  const [heldOrAttended, setHeldorAttended] = useState("Attended");
+  const [organisedBy, setOrganisedBy] = useState("");
+
+  const handleAddWorkshops = async () => {
+    await addWorkshops(facultyID, date, type, title, noDays, organisedBy);
+    window.location.reload();
+  };
+
+  return (
+    <>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-28 h-28 cursor-pointer hover:w-[6.8rem] hover:h-[6.8rem]"
+        onClick={() => propsModal.setOpenModal("form-elements")}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <Modal
+        show={propsModal.openModal === "form-elements"}
+        size="xl"
+        popup
+        onClose={() => propsModal.setOpenModal(undefined)}
+        className={`${tableFont.className}`}
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="space-y-6">
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white text-center">
+              Add new workshop
+            </h3>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Faculty ID" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setFacultyID(e.target.value)}
+                value={facultyID}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Workshop Date" />
+              </div>
+              <TextInput
+                type="date"
+                onChange={(e) => setDate(e.target.value)}
+                value={date}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Workshop Type" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setType(e.target.value)}
+                value={type}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Title" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Number of Days" />
+              </div>
+              <input
+                type="number"
+                onChange={(e) => setNoDays(parseInt(e.target.value))}
+                value={noDays}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Select if you held or attended the workshop" />
+              </div>
+              <input
+                type="radio"
+                name="heldOrAttended"
+                className="mx-4"
+                value="Attended"
+                checked={heldOrAttended === "Attended"}
+                onChange={(e) => setHeldorAttended(e.target.value)}
+              />
+              Attended
+              <input
+                type="radio"
+                name="heldOrAttended"
+                value="Held"
+                className="mx-4"
+                checked={heldOrAttended === "Held"}
+                onChange={(e) => setHeldorAttended(e.target.value)}
+              />
+              Organized
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Workshop organized by" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setOrganisedBy(e.target.value)}
+                value={organisedBy}
+                required
+              />
+            </div>
+
+            <div className="flex justify-center">
+              <Button onClick={handleAddWorkshops}>Update</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 };
 

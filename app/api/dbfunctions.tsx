@@ -65,7 +65,6 @@ export const updateStaffPW = async (password: string) => {
   }
 };
 
-
 export const updateStaffName = async (name: string) => {
   const supabase = createServerComponentClient({ cookies });
   const {
@@ -80,8 +79,6 @@ export const updateStaffName = async (name: string) => {
     console.log("error" + error);
   }
 };
-
-
 
 export const updateStaffPhoneNumber = async (phNo: string) => {
   const supabase = createServerComponentClient({ cookies });
@@ -98,7 +95,6 @@ export const updateStaffPhoneNumber = async (phNo: string) => {
   }
 };
 
-
 export const updateStaffLinkedInURL = async (url: string) => {
   const supabase = createServerComponentClient({ cookies });
   const {
@@ -114,7 +110,6 @@ export const updateStaffLinkedInURL = async (url: string) => {
   }
 };
 
-
 export const updateStaffGoogleScholar = async (google_scholar: string) => {
   const supabase = createServerComponentClient({ cookies });
   const {
@@ -129,10 +124,6 @@ export const updateStaffGoogleScholar = async (google_scholar: string) => {
     console.log("error " + error);
   }
 };
-
-
-
-
 
 export const addConference = async (
   type: string,

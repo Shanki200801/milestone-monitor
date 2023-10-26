@@ -2,7 +2,7 @@
 
 import React, { use, useState } from "react";
 import { Montserrat, Inter } from "next/font/google";
-import { fetchData, updateConf } from "@/app/api/dbfunctions";
+import { fetchData, updateConf, addConference } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
 import AddConference from "@/app/(generic)/input-forms/AddConference";
@@ -38,7 +38,7 @@ const MyConference = (props: any) => {
           )}
         </section>
         <AddNewSec name="Conference">
-          <AddConference />
+          <AddConferenceModal />
         </AddNewSec>
       </section>
     </section>
@@ -88,6 +88,158 @@ const ConferenceTable = (props: any) => {
         </tbody>
       </table>
     </div>
+  );
+};
+
+const AddConferenceModal = () => {
+  const [openModal, setOpenModal] = useState<string | undefined>();
+  const propsModal = { openModal, setOpenModal };
+  const [paperTitle, setPaperTitle] = useState("");
+  const [conferenceName, setConferenceName] = useState("");
+  const [conferenceDate, setConferenceDate] = useState("");
+  const [proceedings, setProceedings] = useState(false);
+  const [facultyID, setFacultyID] = useState("");
+  const [proceedingsFP, setProceedingsFP] = useState(false);
+  const [certificate, setCertificate] = useState("");
+  const [type, setType] = useState("");
+
+
+  const handleAddConference = async () => {
+    await addConference(
+    paperTitle,
+    conferenceName,
+    conferenceDate,
+    proceedings,
+    facultyID,
+    proceedingsFP,
+    certificate,
+    type
+      );
+    window.location.reload();
+  };
+
+  return (
+    <>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-28 h-28 cursor-pointer hover:w-[6.8rem] hover:h-[6.8rem]"
+        onClick={() => propsModal.setOpenModal("form-elements")}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <Modal
+        show={propsModal.openModal === "form-elements"}
+        size="xl"
+        popup
+        onClose={() => propsModal.setOpenModal(undefined)}
+        className={`${tableFont.className}`}
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="space-y-6">
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white text-center">
+              Add new journal
+            </h3>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Faculty ID" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setFacultyID(e.target.value)}
+                value={facultyID}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Paper Title" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setPaperTitle(e.target.value)}
+                value={paperTitle}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Conference Name" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setConferenceName(e.target.value)}
+                value={conferenceName}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Conference Date" />
+              </div>
+              <TextInput
+                type="date"
+                onChange={(e) => setConferenceDate(e.target.value)}
+                value={conferenceDate}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Conference Type" />
+              </div>
+              <input
+                type="text"
+                onChange={(e) => setType(e.target.value)}
+                value={type}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Published as proceedings" />
+              </div>
+              <input
+                type="checkbox"
+                onChange={(e) => setProceedings(Boolean(e.target.value))}
+                value={proceedings}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Proceedings Front Page" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setProceedingsFP(Boolean(e.target.value))}
+                value={proceedingsFP}
+                required
+              />
+            </div>
+
+            <div className="flex justify-center">
+              <Button onClick={handleAddConference}>Update</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 };
 

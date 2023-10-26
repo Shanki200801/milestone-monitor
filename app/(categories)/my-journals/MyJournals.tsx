@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Montserrat, Inter } from "next/font/google";
-import { fetchData, updateJournals } from "@/app/api/dbfunctions";
+import { addJournals, fetchData, updateJournals } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
 import AddJournals from "@/app/(generic)/input-forms/AddJournals";
@@ -37,7 +37,7 @@ const MyJournals = (props: any) => {
           )}
         </section>
         <AddNewSec name="Journal">
-          <AddJournals />
+          <AddJournalModal />
         </AddNewSec>
       </section>
     </section>
@@ -89,6 +89,156 @@ const JournalTable = (props: any) => {
         </tbody>
       </table>
     </div>
+  );
+};
+
+const AddJournalModal = () => {
+  const [openModal, setOpenModal] = useState<string | undefined>();
+  const propsModal = { openModal, setOpenModal };
+  const [facultyID, setFacultyID] = useState("");
+  const [date, setDate] = useState("");
+  const [paperTitle, setPaperTitle] = useState("");
+  const [journalName, setJournalName] = useState("");
+  const [issn, setIssn] = useState("");
+  const [indexedIn, setIndexedIn] = useState("");
+  const [link, setLink] = useState("");
+  const [imageLink, setImageLink] = useState("");
+
+  const handleAddWorkshops = async () => {
+    await addJournals(
+    facultyID, 
+    date, 
+    paperTitle, 
+    journalName, 
+    issn, 
+    indexedIn,
+    link,
+    imageLink);
+    window.location.reload();
+  };
+
+  return (
+    <>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        strokeWidth={1.5}
+        stroke="currentColor"
+        className="w-28 h-28 cursor-pointer hover:w-[6.8rem] hover:h-[6.8rem]"
+        onClick={() => propsModal.setOpenModal("form-elements")}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
+        />
+      </svg>
+      <Modal
+        show={propsModal.openModal === "form-elements"}
+        size="xl"
+        popup
+        onClose={() => propsModal.setOpenModal(undefined)}
+        className={`${tableFont.className}`}
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="space-y-6">
+            <h3 className="text-xl font-medium text-gray-900 dark:text-white text-center">
+              Add new journal
+            </h3>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Faculty ID" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setFacultyID(e.target.value)}
+                value={facultyID}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Paper Title" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setPaperTitle(e.target.value)}
+                value={paperTitle}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Journal Name" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setJournalName(e.target.value)}
+                value={journalName}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Date published" />
+              </div>
+              <TextInput
+                type="date"
+                onChange={(e) => setDate(e.target.value)}
+                value={date}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="ISSN Number" />
+              </div>
+              <input
+                type="text"
+                onChange={(e) => setIssn(e.target.value)}
+                value={issn}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Indexed in" />
+              </div>
+              <input
+                type="text"
+                onChange={(e) => setIndexedIn(e.target.value)}
+                value={indexedIn}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Link" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setLink(e.target.value)}
+                value={link}
+                required
+              />
+            </div>
+
+            <div className="flex justify-center">
+              <Button onClick={handleAddWorkshops}>Update</Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+    </>
   );
 };
 
