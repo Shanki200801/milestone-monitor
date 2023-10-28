@@ -99,7 +99,7 @@ const AddWorkshopModal = () => {
   const [organisedBy, setOrganisedBy] = useState("");
 
   const handleAddWorkshops = async () => {
-    await addWorkshops(facultyID, date, type, title, noDays, organisedBy);
+    await addWorkshops(facultyID, title, date, type, noDays, organisedBy);
     window.location.reload();
   };
 
@@ -145,6 +145,18 @@ const AddWorkshopModal = () => {
                 required
               />
             </div>
+            
+            <div>
+              <div className="mb-2 block">
+                <Label value="Title" />
+              </div>
+              <TextInput
+                type="text"
+                onChange={(e) => setTitle(e.target.value)}
+                value={title}
+                required
+              />
+            </div>
 
             <div>
               <div className="mb-2 block">
@@ -172,21 +184,9 @@ const AddWorkshopModal = () => {
 
             <div>
               <div className="mb-2 block">
-                <Label value="Title" />
-              </div>
-              <TextInput
-                type="text"
-                onChange={(e) => setTitle(e.target.value)}
-                value={title}
-                required
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
                 <Label value="Number of Days" />
               </div>
-              <input
+              <TextInput
                 type="number"
                 onChange={(e) => setNoDays(parseInt(e.target.value))}
                 value={noDays}

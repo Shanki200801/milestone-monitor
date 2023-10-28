@@ -107,9 +107,9 @@ const AddJournalModal = () => {
   const handleAddWorkshops = async () => {
     await addJournals(
     facultyID, 
-    date, 
     paperTitle, 
     journalName, 
+    date, 
     issn, 
     indexedIn,
     link,
@@ -200,7 +200,7 @@ const AddJournalModal = () => {
               <div className="mb-2 block">
                 <Label value="ISSN Number" />
               </div>
-              <input
+              <TextInput
                 type="text"
                 onChange={(e) => setIssn(e.target.value)}
                 value={issn}
@@ -212,7 +212,7 @@ const AddJournalModal = () => {
               <div className="mb-2 block">
                 <Label value="Indexed in" />
               </div>
-              <input
+              <TextInput
                 type="text"
                 onChange={(e) => setIndexedIn(e.target.value)}
                 value={indexedIn}

@@ -99,21 +99,21 @@ const AddConferenceModal = () => {
   const [conferenceDate, setConferenceDate] = useState("");
   const [proceedings, setProceedings] = useState(false);
   const [facultyID, setFacultyID] = useState("");
-  const [proceedingsFP, setProceedingsFP] = useState(false);
+  const [proceedingsFP, setProceedingsFP] = useState("");
   const [certificate, setCertificate] = useState("");
   const [type, setType] = useState("");
 
 
   const handleAddConference = async () => {
     await addConference(
+    facultyID,
     paperTitle,
     conferenceName,
     conferenceDate,
+    type,
     proceedings,
-    facultyID,
     proceedingsFP,
     certificate,
-    type
       );
     window.location.reload();
   };
@@ -146,7 +146,7 @@ const AddConferenceModal = () => {
         <Modal.Body>
           <div className="space-y-6">
             <h3 className="text-xl font-medium text-gray-900 dark:text-white text-center">
-              Add new journal
+              Add new conference
             </h3>
 
             <div>
@@ -201,7 +201,7 @@ const AddConferenceModal = () => {
               <div className="mb-2 block">
                 <Label value="Conference Type" />
               </div>
-              <input
+              <TextInput
                 type="text"
                 onChange={(e) => setType(e.target.value)}
                 value={type}
@@ -215,8 +215,8 @@ const AddConferenceModal = () => {
               </div>
               <input
                 type="checkbox"
-                onChange={(e) => setProceedings(Boolean(e.target.value))}
-                value={proceedings}
+                onChange={() => setProceedings(!proceedings)}
+                checked={proceedings}
                 required
               />
             </div>
@@ -227,7 +227,7 @@ const AddConferenceModal = () => {
               </div>
               <TextInput
                 type="text"
-                onChange={(e) => setProceedingsFP(Boolean(e.target.value))}
+                onChange={(e) => setProceedingsFP(e.target.value)}
                 value={proceedingsFP}
                 required
               />

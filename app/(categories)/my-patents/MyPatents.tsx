@@ -100,12 +100,12 @@ const AddPatentModal = () => {
   const propsModal = { openModal, setOpenModal };
   const [facultyID, setFacultyID] = useState("");
   const [patentName, setPatentName] = useState("");
+  const [patentDate, setPatentDate] = useState("");
   const [patentType, setPatentType] = useState("");
   const [applicationNo, setApplicationNo] = useState("");
   const [status, setStatus] = useState("");
-  const [image, setImage] = useState("");
   const [patentLink, setPatentLink] = useState("");
-  const [patentDate, setPatentDate] = useState("");
+  const [image, setImage] = useState("");
 
   const handleAddPatents = async () => {
     await addPatent(
@@ -115,8 +115,8 @@ const AddPatentModal = () => {
       patentType,
       applicationNo,
       status,
+      patentLink,
       image,
-      patentLink
     );
     window.location.reload();
   };
@@ -178,6 +178,18 @@ const AddPatentModal = () => {
 
             <div>
               <div className="mb-2 block">
+                <Label value="Patent Date" />
+              </div>
+              <TextInput
+                type="date"
+                onChange={(e) => setPatentDate(e.target.value)}
+                value={patentDate}
+                required
+              />
+            </div>
+
+            <div>
+              <div className="mb-2 block">
                 <Label value="Patent Type" />
               </div>
               <TextInput
@@ -215,22 +227,10 @@ const AddPatentModal = () => {
               <div className="mb-2 block">
                 <Label value="Patent Link" />
               </div>
-              <input
+              <TextInput
                 type="text"
                 onChange={(e) => setPatentLink(e.target.value)}
                 value={patentLink}
-                required
-              />
-            </div>
-
-            <div>
-              <div className="mb-2 block">
-                <Label value="Patent Date" />
-              </div>
-              <TextInput
-                type="date"
-                onChange={(e) => setPatentDate(e.target.value)}
-                value={patentDate}
                 required
               />
             </div>
