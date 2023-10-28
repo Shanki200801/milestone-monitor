@@ -34,7 +34,7 @@ const MyWorkshops = (props: any) => {
           )}
         </section>
         <AddNewSec name="Workshop">
-          <AddWorkshopModal />
+          <AddWorkshopModal facultyData={props.facultyData}/>
         </AddNewSec>
       </section>
     </section>
@@ -87,10 +87,10 @@ const WorkshopTable = (props: any) => {
   );
 };
 
-const AddWorkshopModal = () => {
+const AddWorkshopModal = ({facultyData}:{facultyData:any}) => {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const propsModal = { openModal, setOpenModal };
-  const [facultyID, setFacultyID] = useState("");
+  const [facultyID, setFacultyID] = useState(facultyData.faculty_id);
   const [date, setDate] = useState("");
   const [type, setType] = useState("");
   const [title, setTitle] = useState("");
@@ -144,6 +144,7 @@ const AddWorkshopModal = () => {
                 value={facultyID}
                 required
                 readOnly
+                disabled
               />
             </div>
             

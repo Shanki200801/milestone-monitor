@@ -37,7 +37,7 @@ const MyJournals = (props: any) => {
           )}
         </section>
         <AddNewSec name="Journal">
-          <AddJournalModal />
+          <AddJournalModal facultyData={props.facultyData}/>
         </AddNewSec>
       </section>
     </section>
@@ -92,10 +92,10 @@ const JournalTable = (props: any) => {
   );
 };
 
-const AddJournalModal = () => {
+const AddJournalModal = ({facultyData}:{facultyData:any}) => {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const propsModal = { openModal, setOpenModal };
-  const [facultyID, setFacultyID] = useState("");
+  const [facultyID, setFacultyID] = useState(facultyData.faculty_id);
   const [date, setDate] = useState("");
   const [paperTitle, setPaperTitle] = useState("");
   const [journalName, setJournalName] = useState("");
@@ -158,6 +158,7 @@ const AddJournalModal = () => {
                 value={facultyID}
                 required
                 readOnly
+                disabled
               />
             </div>
 

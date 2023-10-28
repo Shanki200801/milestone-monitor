@@ -4,7 +4,7 @@ import MyWorkshops from "./MyWorkshops";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { fetchData } from "@/app/api/dbfunctions";
+import { fetchData, fetchRole } from "@/app/api/dbfunctions";
 
 const PageWorkshop = async () => {
   const supabase = createServerComponentClient({ cookies });
@@ -19,8 +19,9 @@ const PageWorkshop = async () => {
     redirect("/login");
   }
   let tableData= await fetchData("fdp_workshop_refresher_course", user.email as string);
+  const facultyData = await fetchRole(user.email as string);
 
-  return <MyWorkshops data={tableData}/>;
+  return <MyWorkshops data={tableData} facultyData={facultyData}/>;
 };
 
 export default PageWorkshop;

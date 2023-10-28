@@ -42,7 +42,7 @@ export const MyPatents = (props: any) => {
 
         {/* Button to add a new patent */}
         <AddNewSec name="Patent" data={props.data}>
-          <AddPatentModal />
+          <AddPatentModal facultyData={props.facultyData}/>
         </AddNewSec>
       </section>
     </section>
@@ -95,10 +95,10 @@ const PatentTable = (props: any) => {
   );
 };
 
-const AddPatentModal = (props: any) => {
+const AddPatentModal = ({facultyData}:{facultyData:any}) => {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const propsModal = { openModal, setOpenModal };
-  const [facultyID, setFacultyID] = useState(""); //pass faculty_id here...
+  const [facultyID, setFacultyID] = useState(facultyData.faculty_id); //pass faculty_id here...
   const [patentName, setPatentName] = useState("");
   const [patentDate, setPatentDate] = useState("");
   const [patentType, setPatentType] = useState("");
@@ -162,6 +162,7 @@ const AddPatentModal = (props: any) => {
                 value={facultyID}
                 required
                 readOnly
+                disabled
               />
             </div>
 

@@ -38,7 +38,7 @@ const MyConference = (props: any) => {
           )}
         </section>
         <AddNewSec name="Conference">
-          <AddConferenceModal />
+          <AddConferenceModal facultyData={props.facultyData}/>
         </AddNewSec>
       </section>
     </section>
@@ -91,14 +91,14 @@ const ConferenceTable = (props: any) => {
   );
 };
 
-const AddConferenceModal = () => {
+const AddConferenceModal = (props:any) => {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const propsModal = { openModal, setOpenModal };
   const [paperTitle, setPaperTitle] = useState("");
   const [conferenceName, setConferenceName] = useState("");
   const [conferenceDate, setConferenceDate] = useState("");
   const [proceedings, setProceedings] = useState(false);
-  const [facultyID, setFacultyID] = useState("");
+  const [facultyID, setFacultyID] = useState(props.facultyData.faculty_id);
   const [proceedingsFP, setProceedingsFP] = useState("");
   const [certificate, setCertificate] = useState("");
   const [type, setType] = useState("");
@@ -159,6 +159,7 @@ const AddConferenceModal = () => {
                 value={facultyID}
                 required
                 readOnly
+                disabled  
               />
             </div>
 
