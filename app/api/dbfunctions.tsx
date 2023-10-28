@@ -1080,9 +1080,9 @@ export async function uploadConferenceMedia(
 ): Promise<string> {
   const file = Formdata.get("file");
   const path = `conferenceMedia/${facultyNo}/${facultyNo}_${event_date}.${
-    file.type.split("/")[1]
+    (file as File).type.split("/")[1]
   }`;
-  return await uploadFile(path, file);
+  return await uploadFile(path, file as File);
 }
 
 export async function uploadWorkshopMedia(
@@ -1092,9 +1092,9 @@ export async function uploadWorkshopMedia(
 ): Promise<string> {
   const file = formData.get("file");
   const path = `workshopMedia/${facultyNo}/${facultyNo}_${event_date}.${
-    file.type.split("/")[1]
+    (file as File).type.split("/")[1]
   }`;
-  return await uploadFile(path, file);
+  return await uploadFile(path, file as File);
 }
 
 export async function uploadPatentMedia(
@@ -1104,9 +1104,9 @@ export async function uploadPatentMedia(
 ): Promise<string> {
   const file = formData.get("file");
   const path = `patentMedia/${facultyNo}/${facultyNo}_${event_date}.${
-    file.type.split("/")[1]
+    (file as File).type.split("/")[1]
   }`;
-  return await uploadFile(path, file);
+  return await uploadFile(path, file as File);
 }
 
 export async function uploadJournalMedia(
@@ -1117,9 +1117,9 @@ export async function uploadJournalMedia(
   const file = formData.get("file");
 
   const path = `journalMedia/${facultyNo}/${facultyNo}_${event_date}.${
-    file.type.split("/")[1]
+    (file as File).type.split("/")[1]
   }`;
-  return await uploadFile(path, file);
+  return await uploadFile(path, file as File);
 }
 
 export const uploadProfilePicture = async (
@@ -1127,11 +1127,13 @@ export const uploadProfilePicture = async (
   formData: FormData
 ): Promise<string> => {
   const file = formData.get("file");
-  console.log("This is from upload pics: " + JSON.stringify(formData));
+  console.log("This is from upload pics: " + formData);
 
   if (file !== null) {
-    const path = `profilePictures/${facultyId}.${file.type.split("/")[1]}`;
-    return await uploadFile(path, file);
+    const path = `profilePictures/${facultyId}.${
+      (file as File).type.split("/")[1]
+    }`;
+    return await uploadFile(path, file as File);
   }
   return "";
 };
