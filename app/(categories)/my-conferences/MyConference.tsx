@@ -158,6 +158,7 @@ const AddConferenceModal = () => {
                 onChange={(e) => setFacultyID(e.target.value)}
                 value={facultyID}
                 required
+                readOnly
               />
             </div>
 

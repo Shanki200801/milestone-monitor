@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Montserrat, Inter } from "next/font/google";
-import { fetchData, updatePatents, addPatent } from "@/app/api/dbfunctions";
+import { fetchData, updatePatents, addPatent, uploadPatentMedia } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
 import AddPatents from "@/app/(generic)/input-forms/AddPatents";
@@ -41,7 +41,7 @@ export const MyPatents = (props: any) => {
         </section>
 
         {/* Button to add a new patent */}
-        <AddNewSec name="Patent">
+        <AddNewSec name="Patent" data={props.data}>
           <AddPatentModal />
         </AddNewSec>
       </section>
@@ -95,10 +95,10 @@ const PatentTable = (props: any) => {
   );
 };
 
-const AddPatentModal = () => {
+const AddPatentModal = (props: any) => {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const propsModal = { openModal, setOpenModal };
-  const [facultyID, setFacultyID] = useState("");
+  const [facultyID, setFacultyID] = useState(""); //pass faculty_id here...
   const [patentName, setPatentName] = useState("");
   const [patentDate, setPatentDate] = useState("");
   const [patentType, setPatentType] = useState("");
@@ -161,6 +161,7 @@ const AddPatentModal = () => {
                 onChange={(e) => setFacultyID(e.target.value)}
                 value={facultyID}
                 required
+                readOnly
               />
             </div>
 
@@ -234,6 +235,8 @@ const AddPatentModal = () => {
                 required
               />
             </div>
+
+
 
             <div className="flex justify-center">
               <Button onClick={handleAddPatents}>Update</Button>
