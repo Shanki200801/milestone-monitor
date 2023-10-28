@@ -65,23 +65,23 @@ export const updateStaffPW = async (password: string) => {
   }
 };
 
-
 export const updateStaffName = async (name: string) => {
   const supabase = createServerComponentClient({ cookies });
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data, error } = await supabase.from("faculty").update({	
-   faculty_name : name
-  }).eq("faculty_email", user?.email);	
+  const { data, error } = await supabase
+    .from("faculty")
+    .update({
+      faculty_name: name,
+    })
+    .eq("faculty_email", user?.email);
 
   if (error) {
     console.log("error" + error);
   }
 };
-
-
 
 export const updateStaffPhoneNumber = async (phNo: string) => {
   const supabase = createServerComponentClient({ cookies });
@@ -89,15 +89,17 @@ export const updateStaffPhoneNumber = async (phNo: string) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data, error } = await supabase.from("faculty").update({	
-   faculty_phone : phNo
-  }).eq("faculty_email", user?.email);	
+  const { data, error } = await supabase
+    .from("faculty")
+    .update({
+      faculty_phone: phNo,
+    })
+    .eq("faculty_email", user?.email);
 
   if (error) {
     console.log("error" + error);
   }
 };
-
 
 export const updateStaffLinkedInURL = async (url: string) => {
   const supabase = createServerComponentClient({ cookies });
@@ -105,15 +107,17 @@ export const updateStaffLinkedInURL = async (url: string) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data, error } = await supabase.from("faculty").update({	
-   faculty_linkedin : url
-  }).eq("faculty_email", user?.email);	
+  const { data, error } = await supabase
+    .from("faculty")
+    .update({
+      faculty_linkedin: url,
+    })
+    .eq("faculty_email", user?.email);
 
   if (error) {
     console.log("error" + error);
   }
 };
-
 
 export const updateStaffGoogleScholar = async (google_scholar: string) => {
   const supabase = createServerComponentClient({ cookies });
@@ -121,18 +125,17 @@ export const updateStaffGoogleScholar = async (google_scholar: string) => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data, error } = await supabase.from("faculty").update({	
-   faculty_google_scholar : google_scholar
-  }).eq("faculty_email", user?.email);	
+  const { data, error } = await supabase
+    .from("faculty")
+    .update({
+      faculty_google_scholar: google_scholar,
+    })
+    .eq("faculty_email", user?.email);
 
   if (error) {
     console.log("error " + error);
   }
 };
-
-
-
-
 
 export const addConference = async (
   type: string,
@@ -1060,7 +1063,7 @@ async function uploadFile(path: string, file: File): Promise<string> {
   const supabase = createClientComponentClient();
   const { error } = await supabase.storage
     .from("staff-media")
-    .upload(path, file);
+    .upload(path, file, { upsert: true, cacheControl: "3600" });
   if (error) {
     console.error("Error uploading file: ", error);
     return "";
@@ -1072,53 +1075,65 @@ async function uploadFile(path: string, file: File): Promise<string> {
 
 export async function uploadConferenceMedia(
   facultyNo: string,
-  file: File,
+  Formdata: FormData,
   event_date: string
 ): Promise<string> {
+  const file = Formdata.get("file");
   const path = `conferenceMedia/${facultyNo}/${facultyNo}_${event_date}.${
-    file.type.split("/")[1]
+    (file as File).type.split("/")[1]
   }`;
-  return await uploadFile(path, file);
+  return await uploadFile(path, file as File);
 }
 
 export async function uploadWorkshopMedia(
   facultyNo: string,
-  file: File,
+  formData: FormData,
   event_date: string
 ): Promise<string> {
+  const file = formData.get("file");
   const path = `workshopMedia/${facultyNo}/${facultyNo}_${event_date}.${
-    file.type.split("/")[1]
+    (file as File).type.split("/")[1]
   }`;
-  return await uploadFile(path, file);
+  return await uploadFile(path, file as File);
 }
 
 export async function uploadPatentMedia(
   facultyNo: string,
-  file: File,
+  formData: FormData,
   event_date: string
 ): Promise<string> {
+  const file = formData.get("file");
   const path = `patentMedia/${facultyNo}/${facultyNo}_${event_date}.${
-    file.type.split("/")[1]
+    (file as File).type.split("/")[1]
   }`;
-  return await uploadFile(path, file);
+  return await uploadFile(path, file as File);
 }
 
 export async function uploadJournalMedia(
   facultyNo: string,
-  file: File,
+  formData: FormData,
   event_date: string
 ): Promise<string> {
+  const file = formData.get("file");
+
   const path = `journalMedia/${facultyNo}/${facultyNo}_${event_date}.${
-    file.type.split("/")[1]
+    (file as File).type.split("/")[1]
   }`;
-  return await uploadFile(path, file);
+  return await uploadFile(path, file as File);
 }
 
-export async function uploadProfilePicture(
+export const uploadProfilePicture = async (
   facultyId: string,
-  file: File
-): Promise<string> {
-  console.log("This is from upload pics: "+file);
-  const path = `profilePictures/${facultyId}.${file.type.split("/")[1]}`;
-  return await uploadFile(path, file);
-}
+  formData: FormData
+): Promise<string> => {
+  const file = formData.get("file");
+  console.log("This is from upload pics: " + formData);
+
+  if (file !== null) {
+    const path = `profilePictures/${facultyId}.${
+      (file as File).type.split("/")[1]
+    }`;
+    return await uploadFile(path, file as File);
+  }
+  return "";
+};

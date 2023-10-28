@@ -1,9 +1,7 @@
 "use client";
 import React from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
 import { Urbanist } from "next/font/google";
-import { getMilestoneNumbers } from "@/app/api/dbfunctions";
 import DoughNutWrapper from "./DoughNutWrapper";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
