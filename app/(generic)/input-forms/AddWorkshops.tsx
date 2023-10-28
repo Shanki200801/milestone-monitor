@@ -13,7 +13,6 @@ const AddWorkshops = () => {
 
   // Do not use the below function. Use the one in DB functions
   // pass staff id and e.target.files[0] and date state to it as args to it
-
   // it also does not do the path setting to certificate state. Handle that out of the function
   const addWorkshopsWrapper = async (
     e: React.MouseEvent,

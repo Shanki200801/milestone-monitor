@@ -1,19 +1,34 @@
-'use client'
+"use client";
 
-import { fetchRole, updateStaffGoogleScholar, updateStaffLinkedInURL, updateStaffName, updateStaffPW, updateStaffPhoneNumber, uploadProfilePicture } from "@/app/api/dbfunctions";
+import {
+  fetchRole,
+  updateStaffGoogleScholar,
+  updateStaffLinkedInURL,
+  updateStaffName,
+  updateStaffPW,
+  updateStaffPhoneNumber,
+  uploadProfilePicture,
+} from "@/app/api/dbfunctions";
 import React, { useEffect, useState } from "react";
-import { Modal, FileInput, TextInput, Checkbox, Label, Button } from "flowbite-react";
+import {
+  Modal,
+  FileInput,
+  TextInput,
+  Checkbox,
+  Label,
+  Button,
+} from "flowbite-react";
 
 type Settings = {
-    [key: string]: string;
+  [key: string]: string;
 };
 
 function formatFieldName(fieldName: string): string {
-    return fieldName
-      .split("_") // Split the field name by underscores
-      .map((part) => part.charAt(0).toUpperCase() + part.slice(1)) // Capitalize each part
-      .join(" "); // Join the parts with spaces
-  }
+  return fieldName
+    .split("_") // Split the field name by underscores
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1)) // Capitalize each part
+    .join(" "); // Join the parts with spaces
+}
 
 export default function Settings() {
   const [facultyId, setFacultyId] = useState("");
@@ -21,18 +36,13 @@ export default function Settings() {
   const [pw2, setPw2] = useState("");
   const [user, setUser] = useState(null);
   const [openModal, setOpenModal] = useState<string | undefined>();
-  const props = { openModal, setOpenModal }
-  const [settings, setSettings] = useState<Settings>
-  
-  ({
-
-
-    
+  const props = { openModal, setOpenModal };
+  const [settings, setSettings] = useState<Settings>({
     // Add more fields/values here in the same format (formatter will change appearance in UI)
     name: "",
-    linkedIn_url: "",	
-    phone_number:"",
-    google_scholar:"",
+    linkedIn_url: "",
+    phone_number: "",
+    google_scholar: "",
   });
   useEffect(() => {
     fetchRole("dummy").then((data) => {
@@ -40,42 +50,36 @@ export default function Settings() {
       setSettings({
         name: data?.faculty_name,
         linkedIn_url: data?.faculty_linkedin,
-        phone_number:data?.faculty_phone,
-        google_scholar:data?.faculty_google_scholar,
-      })
+        phone_number: data?.faculty_phone,
+        google_scholar: data?.faculty_google_scholar,
+      });
       setFacultyId(data?.faculty_id);
-    })
+    });
   }, []);
 
   console.log("From settings component", user);
 
-
-    // console.log(user,"user updated");
+  // console.log(user,"user updated");
 
   useEffect(() => {
-
     updateStaffName(settings.name);
-    
-    
   }, [settings.name]);
 
   useEffect(() => {
     updateStaffPhoneNumber(settings.phone_number);
   }, [settings.phone_number]);
 
-
   useEffect(() => {
     updateStaffLinkedInURL(settings.linkedIn_url);
-  },[settings.linkedIn_url]);
+  }, [settings.linkedIn_url]);
 
   useEffect(() => {
     updateStaffGoogleScholar(settings.google_scholar);
   }, [settings.google_scholar]);
-  
+
   useEffect(() => {
     updateStaffPW(settings.password);
   }, [settings.password]);
-
 
   const [isEditing, setIsEditing] = useState<Record<string, boolean>>({
     name: false,
@@ -87,7 +91,10 @@ export default function Settings() {
   });
 
   // Handles changes in input field
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, field: string) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) => {
     const { value } = e.target;
     setSettings({ ...settings, [field]: value });
   };
@@ -97,23 +104,28 @@ export default function Settings() {
   };
 
   const handlePwChange = () => {
-    if(pw1 === pw2) {
+    if (pw1 === pw2) {
       updateStaffPW(pw1);
       props.setOpenModal(undefined);
-    }
-    else{
+    } else {
       setPw1("");
       setPw2("");
       alert("Passwords do not match");
     }
-  }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const file = Array.from(e.currentTarget.files??[]);
-    // const path = 
-    uploadProfilePicture(facultyId, file);
-  }
+    const files = Array.from(e.currentTarget.files ?? []);
+    console.log(files);
+    if (files.length > 0) {
+      const file = files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log("files are ", formData.get("file"));
+      uploadProfilePicture(facultyId, formData);
+    }
+  };
 
   const handleSaveClick = (field: string) => {
     // Assuming you want to save the value when the user clicks the save button.
@@ -129,7 +141,6 @@ export default function Settings() {
       id="settings-wrapper"
       className="text-teal-950 flex flex-col justify-center items-center px-4 bg-teal-500/20 col-start-2 col-span-2 border border-transparent rounded h-[85vh]"
     >
-
       <div
         id="settings-items-wrapper"
         className="flex flex-col justify-center gap-10 w-full border border-transparent rounded"
@@ -140,7 +151,9 @@ export default function Settings() {
             className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80"
           >
             <span className="flex gap-2 items-center">
-              <p className="font-bold tracking-wide">{formatFieldName(field)}:</p>
+              <p className="font-bold tracking-wide">
+                {formatFieldName(field)}:
+              </p>
               {isEditing[field] ? (
                 <input
                   name={field}
@@ -156,7 +169,11 @@ export default function Settings() {
             </span>
 
             <div
-              className={`setting-edit-btn p-2 border border-transparent rounded-full bg-teal-200 hover:cursor-pointer ${isEditing[field] ? "hover:bg-teal-700" : "hover:bg-teal-700"} ${isEditing[field] ? "hover:text-teal-200" : "hover:text-teal-200"}`}
+              className={`setting-edit-btn p-2 border border-transparent rounded-full bg-teal-200 hover:cursor-pointer ${
+                isEditing[field] ? "hover:bg-teal-700" : "hover:bg-teal-700"
+              } ${
+                isEditing[field] ? "hover:text-teal-200" : "hover:text-teal-200"
+              }`}
               onClick={() => {
                 if (isEditing[field]) {
                   handleSaveClick(field);
@@ -175,7 +192,11 @@ export default function Settings() {
                   stroke="currentColor"
                   className="w-6 h-6"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M4.5 12.75l6 6 9-13.5"
+                  />
                 </svg>
               ) : (
                 // Edit icon when not editing
@@ -196,58 +217,73 @@ export default function Settings() {
               )}
             </div>
           </div>
-        ) 
-        )}
+        ))}
 
-<div className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80" >
-        
-        <Label
-          htmlFor="file"
-          value="Upload Profile Picture" 
-          className="font-bold text-md"
-        />
-      
-        <FileInput onChange={handleFileChange}
-          id="file"
-        />
+        <div className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80">
+          <Label
+            htmlFor="file"
+            value="Upload Profile Picture"
+            className="font-bold text-md"
+          />
 
+          <input
+            type="file"
+            onChange={handleFileChange}
+            id="file"
+            name="file"
+          />
         </div>
 
-        <div className="w-full flex place-items-center place-content-center" >
-        
+        <div className="w-full flex place-items-center place-content-center">
+          <Button onClick={() => props.setOpenModal("form-elements")}>
+            Reset Password
+          </Button>
+          <Modal
+            show={props.openModal === "form-elements"}
+            size="md"
+            popup
+            onClose={() => props.setOpenModal(undefined)}
+          >
+            <Modal.Header />
+            <Modal.Body>
+              <div className="space-y-6">
+                <h3 className="text-xl font-medium text-gray-900 dark:text-white">
+                  Update Password
+                </h3>
+                <div>
+                  <div className="mb-2 block">
+                    <Label value="New password" />
+                  </div>
+                  <TextInput
+                    id="newPassword"
+                    type="password"
+                    placeholder="********"
+                    value={pw1}
+                    onChange={(e) => setPw1(e.target.value)}
+                    required
+                  />
+                </div>
+                <div>
+                  <div className="mb-2 block">
+                    <Label value="Re-enter New Password" />
+                  </div>
+                  <TextInput
+                    id="verifyNewPassword"
+                    type="password"
+                    placeholder="********"
+                    value={pw2}
+                    onChange={(e) => setPw2(e.target.value)}
+                    required
+                  />
+                </div>
 
-        
-
-        <Button onClick={() => props.setOpenModal('form-elements')}>Reset Password</Button>
-      <Modal show={props.openModal === 'form-elements'} size="md" popup onClose={() => props.setOpenModal(undefined)}>
-        <Modal.Header />
-        <Modal.Body>
-          <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">Update Password</h3>
-            <div>
-              <div className="mb-2 block">
-                <Label value="New password" />
+                <div className="w-full">
+                  <Button onClick={handlePwChange}>Confirm Reset</Button>
+                </div>
               </div>
-              <TextInput id="newPassword" type="password" placeholder="********" value={pw1} onChange={(e) => setPw1(e.target.value)} required />
-            </div>
-            <div>
-              <div className="mb-2 block">
-                <Label value="Re-enter New Password" />
-              </div>
-              <TextInput id="verifyNewPassword" type="password" placeholder="********" value={pw2} onChange={(e) => setPw2(e.target.value)} required />
-            </div>
-            
-            <div className="w-full">
-              <Button onClick={handlePwChange}>Confirm Reset</Button>
-            </div>            
-            
-          </div>
-        </Modal.Body>
-      </Modal>
+            </Modal.Body>
+          </Modal>
         </div>
-
-        
-
       </div>
     </div>
   );
