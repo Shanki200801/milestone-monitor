@@ -8,7 +8,7 @@ import {
   PendingJournal,
   PendingWorkshop,
 } from "./types";
-import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
+import { Button, Checkbox, Label, Modal, Table, TextInput } from "flowbite-react";
 import { approveEntry, rejectEntry } from "@/app/api/dbfunctions";
 
 // Example usage:
@@ -56,49 +56,48 @@ const Approval = ({ pending_data }: { pending_data: PendingData }) => {
         </span>
         <div className="w-full lg:w-5/6">
           <div className="bg-white shadow-md rounded my-6">
-            <table className="min-w-max w-full table-auto overflow-scroll h-4/5">
-              <thead>
-                <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                  <th className="py-3 px-6 text-left">Time Stamp</th>
-                  <th className="py-3 px-6 text-left">Category</th>
-                  <th className="py-3 px-6 text-center">Faculty Name</th>
-                  <th className="py-3 px-6 text-center">Title</th>
-                  <th className="py-3 px-6 text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 text-sm font-light">
+            <Table>
+              <Table.Head>
+                
+                  <Table.HeadCell>Time Stamp</Table.HeadCell>
+                  <Table.HeadCell>Category</Table.HeadCell>
+                  <Table.HeadCell>Faculty Name</Table.HeadCell>
+                  <Table.HeadCell>Title</Table.HeadCell>
+                  <Table.HeadCell>Actions</Table.HeadCell>
+              </Table.Head>
+              <Table.Body className="divide-y">
                 {outer_display_object.map((item, index) => (
-                  <tr
-                    className="border-b border-gray-200 hover:bg-gray-100"
+                  <Table.Row
+                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
                     key={index}
                   >
-                    <td className="py-3 px-6 text-left whitespace-nowrap">
+                    <Table.Cell className="py-3 px-6 text-left whitespace-nowrap">
                       <div className="flex items-center">
                         <span className="font-medium">
                           {item.created_at?.substring(0, 10)}
                         </span>
                       </div>
-                    </td>
-                    <td className="py-3 px-6 text-left">
+                    </Table.Cell>
+                    <Table.Cell className="py-3 px-6 text-left">
                       <div className="flex items-center">
                         <span className="font-medium">{item.entry_type}</span>
                       </div>
-                    </td>
-                    <td className="py-3 px-6 text-center">
+                    </Table.Cell>
+                    <Table.Cell className="py-3 px-6 text-center">
                       <span className="font-medium">{item.faculty_id}</span>
-                    </td>
-                    <td className="py-3 px-6 text-center w-60 inline-block">
+                    </Table.Cell>
+                    <Table.Cell className="py-3 px-6 text-center w-60 inline-block">
                       <span className="font-medium truncate block">
                         {item.title}
                       </span>
-                    </td>
-                    <td className="py-3 px-6 text-center">
+                    </Table.Cell>
+                    <Table.Cell className="py-3 px-6 text-center">
                       <ViewModal data={item} />
-                    </td>
-                  </tr>
+                    </Table.Cell>
+                  </Table.Row>
                 ))}
-              </tbody>
-            </table>
+              </Table.Body>
+            </Table>
           </div>
         </div>
       </div>
