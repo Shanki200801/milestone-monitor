@@ -222,8 +222,8 @@ export default function Settings() {
         <div className="w-full py-3 px-4 border border-transparent rounded-full bg-teal-700/40 flex flex-row gap-2 items-center justify-between hover:shadow-lg hover:shadow-teal-600/80">
           <Label
             htmlFor="file"
-            value="Upload Profile Picture"
-            className="font-bold text-md"
+            value="Change Profile Picture:"
+            className="text-teal-950 font-bold text-md tracking-wide"
           />
 
           <input
@@ -231,13 +231,14 @@ export default function Settings() {
             onChange={handleFileChange}
             id="file"
             name="file"
+            className="font-bold text-teal-950 bg-teal-200 rounded-full"
           />
         </div>
 
         <div className="w-full flex place-items-center place-content-center">
-          <Button onClick={() => props.setOpenModal("form-elements")}>
+          <button onClick={() => props.setOpenModal("form-elements")} className="p-[0.8rem] bg-teal-200 text-teal-950 hover:bg-teal-700 hover:text-teal-200 border border-transparent rounded-full font-bold">
             Reset Password
-          </Button>
+          </button>
           <Modal
             show={props.openModal === "form-elements"}
             size="md"
