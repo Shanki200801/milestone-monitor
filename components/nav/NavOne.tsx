@@ -4,7 +4,8 @@ import Image from "next/image";
 import logoImg from "../../public/logo.webp";
 import { Montserrat, Urbanist, Courgette } from "next/font/google";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+
 
 const bodyText = Montserrat({
   weight: "400",
@@ -23,6 +24,7 @@ const fancyText = Courgette({
 
 export default function NavOne(props:any) {
   const router = useRouter();
+  const pathName = usePathname();
 
   // Create a Supabase client configured to use cookies
   const supabase = createClientComponentClient();
@@ -120,11 +122,14 @@ export default function NavOne(props:any) {
           id="home-greeting-user-header"
           className={`${headerText.className} text-lg sm:text-xl lg:text-2xl xl:text-3xl text-center row-start-2 col-span-3 sm:col-span-1 sm:col-start-2 sm:row-start-1 -mt-20 lg:-mt-[1rem] sm:m-0`}
         >
-          Welcome back,
+           {pathName=="/modify/approvals"? <div>Approvals</div>: <div>
+           Welcome back,
           <span className={`${fancyText.className} tracking-tight`}>
             {" "}
             {props.userData.faculty_name} 📝✨
           </span>
+           </div> }
+          
         </h1>
         <ul
           id="home-user-actions-elements"
