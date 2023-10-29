@@ -34,7 +34,7 @@ const MyWorkshops = (props: any) => {
           )}
         </section>
         <AddNewSec name="Workshop">
-          <AddWorkshopModal facultyData={props.facultyData}/>
+          <AddWorkshopModal facultyData={props.facultyData} />
         </AddNewSec>
       </section>
     </section>
@@ -87,7 +87,7 @@ const WorkshopTable = (props: any) => {
   );
 };
 
-const AddWorkshopModal = ({facultyData}:{facultyData:any}) => {
+const AddWorkshopModal = ({ facultyData }: { facultyData: any }) => {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const propsModal = { openModal, setOpenModal };
   const [facultyID, setFacultyID] = useState(facultyData.faculty_id);
@@ -147,7 +147,7 @@ const AddWorkshopModal = ({facultyData}:{facultyData:any}) => {
                 disabled
               />
             </div>
-            
+
             <div>
               <div className="mb-2 block">
                 <Label value="Title" />
@@ -220,17 +220,19 @@ const AddWorkshopModal = ({facultyData}:{facultyData:any}) => {
               Organized
             </div>
 
-            <div>
-              <div className="mb-2 block">
-                <Label value="Workshop organized by" />
+            {heldOrAttended === "Attended" && (
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Workshop organized by" />
+                </div>
+                <TextInput
+                  type="text"
+                  onChange={(e) => setOrganisedBy(e.target.value)}
+                  value={organisedBy}
+                  required
+                />
               </div>
-              <TextInput
-                type="text"
-                onChange={(e) => setOrganisedBy(e.target.value)}
-                value={organisedBy}
-                required
-              />
-            </div>
+            )}
 
             <div className="flex justify-center">
               <Button onClick={handleAddWorkshops}>Update</Button>
