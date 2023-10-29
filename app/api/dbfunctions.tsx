@@ -138,9 +138,11 @@ export const updateStaffGoogleScholar = async (google_scholar: string) => {
 };
 
 export const addConference = async (
-  type: string,
+  faculty_id: string,
   paper_title: string,
+  conf_name: string,
   conf_date: string,
+  type: string,
   proceedings: boolean,
   proceeding_fp: string,
   certificate: string
@@ -150,13 +152,14 @@ export const addConference = async (
     .from("conferences")
     .insert([
       {
-        type: type,
+        faculty_id: faculty_id,
         paper_title: paper_title,
         conf_name: conf_name,
         conf_date: conf_date,
-        certificate: certificate,
+        type: type,
+        proceedings: proceedings,
         proceeding_fp: proceeding_fp,
-        faculty_id: faculty_id,
+        certificate: certificate,
       },
     ])
     .select();
@@ -165,9 +168,9 @@ export const addConference = async (
 
 export const addWorkshops = async (
   faculty_id: string,
+  title: string,
   date: string,
   type: string,
-  title: string,
   number_of_days: number,
   organized_by: string
 ) => {
@@ -177,9 +180,9 @@ export const addWorkshops = async (
     .insert([
       {
         faculty_id: faculty_id,
+        title: title,
         date: date,
         type: type,
-        title: title,
         number_of_days: number_of_days,
         organized_by: organized_by,
       },
@@ -191,8 +194,8 @@ export const addWorkshops = async (
 export const addJournals = async (
   faculty_id: string,
   paper_title: string,
-  date_of_publication: string,
   journal_name: string,
+  date_of_publication: string,
   issn_number: string,
   indexed_in: string,
   link: string,
@@ -206,8 +209,8 @@ export const addJournals = async (
         faculty_id: faculty_id,
         paper_title: paper_title,
         journal_name: journal_name,
-        issn_number: issn_number,
         month_and_year_of_publication: date_of_publication,
+        issn_number: issn_number,
         indexed_in: indexed_in,
         link: link,
         upload_image: upload_image,
@@ -274,8 +277,8 @@ export const addPatent = async (
       patent_type: patent_type,
       application_no: application_no,
       status: status,
-      image: image,
       patent_link: patent_link,
+      image: image,
     },
   ]);
   console.log("error is " + error?.message);

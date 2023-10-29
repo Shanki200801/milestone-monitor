@@ -3,7 +3,7 @@ import { unauthenticatedRedirector } from "@/lib/unauthRedirect";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { fetchData } from "@/app/api/dbfunctions";
+import { fetchData, fetchRole } from "@/app/api/dbfunctions";
 import MyConference from "./MyConference";
 
 const PageConference = async () => {
@@ -19,8 +19,9 @@ const PageConference = async () => {
     redirect("/login");
   }
   let tableData= await fetchData("conferences", user.email as string);
+  const facultyData = await fetchRole(user.email as string);
 
-  return <MyConference data={tableData}/>;
+  return <MyConference data={tableData} facultyData={facultyData}/>;
 };
 
 export default PageConference;

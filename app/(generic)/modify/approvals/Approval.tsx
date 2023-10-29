@@ -8,13 +8,19 @@ import {
   PendingJournal,
   PendingWorkshop,
 } from "./types";
-import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
+import { Button, Checkbox, Label, Modal, Table, TextInput } from "flowbite-react";
 import { approveEntry, rejectEntry } from "@/app/api/dbfunctions";
+import { Urbanist } from "next/font/google";
+
+const bodyText = Urbanist({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 // Example usage:
 // const data: PendingData = /* Your JSON data here */;
 
-const Approval = ({ pending_data }: { pending_data: PendingData }) => {
+const Approval = ({ pending_data, userData }: { pending_data: PendingData, userData:any }) => {
   //specific data
 
   //modal jsx
@@ -48,61 +54,50 @@ const Approval = ({ pending_data }: { pending_data: PendingData }) => {
   //   "testing " + JSON.stringify([...pending_data["pending_conferences"]])
   // );
   return (
-    <div className="overflow-x-auto">
-      <div className="min-w-screen min-h-screen bg-gray-100 flex flex-col items-center justify-center  font-sans overflow-hidden">
-        <span>
-          Use the following table to approve or disapprove the submissions made
-          by staff of ... department
-        </span>
-        <div className="w-full lg:w-5/6">
-          <div className="bg-white shadow-md rounded my-6">
-            <table className="min-w-max w-full table-auto overflow-scroll h-4/5">
-              <thead>
-                <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                  <th className="py-3 px-6 text-left">Time Stamp</th>
-                  <th className="py-3 px-6 text-left">Category</th>
-                  <th className="py-3 px-6 text-center">Faculty Name</th>
-                  <th className="py-3 px-6 text-center">Title</th>
-                  <th className="py-3 px-6 text-center">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="text-gray-600 text-sm font-light">
+      <div className=" min-h-screen bg-white flex flex-col items-center font-sans">
+        <p className={`${bodyText.className} my-6 text-xl`}>
+          Use the table to approve or disapprove submissions made
+          by staff of the {userData.faculty_department} department
+        </p>
+        <div className="w-full bg-white py-5 px-6">
+          <div className={`bg-[#cbfef8] py-5 px-6 rounded`}>
+          <Table className={`${bodyText.className} text-black `} hoverable>
+              <Table.Head className={``}>
+                
+                  <Table.HeadCell className={`bg-[#60fbdf]`}>Time Stamp</Table.HeadCell>
+                  <Table.HeadCell className={`bg-[#60fbdf]`}>Category</Table.HeadCell>
+                  <Table.HeadCell className={`bg-[#60fbdf]`}>Faculty Name</Table.HeadCell>
+                  <Table.HeadCell className={`bg-[#60fbdf]`}>Title</Table.HeadCell>
+                  <Table.HeadCell className={`bg-[#60fbdf] text-center`}>Actions</Table.HeadCell>
+              </Table.Head>
+              <Table.Body className="divide-y">
                 {outer_display_object.map((item, index) => (
-                  <tr
-                    className="border-b border-gray-200 hover:bg-gray-100"
+                  <Table.Row
+                  className="bg-[#29b7a6]"
                     key={index}
                   >
-                    <td className="py-3 px-6 text-left whitespace-nowrap">
-                      <div className="flex items-center">
-                        <span className="font-medium">
+                    <Table.Cell>
                           {item.created_at?.substring(0, 10)}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-6 text-left">
-                      <div className="flex items-center">
-                        <span className="font-medium">{item.entry_type}</span>
-                      </div>
-                    </td>
-                    <td className="py-3 px-6 text-center">
-                      <span className="font-medium">{item.faculty_id}</span>
-                    </td>
-                    <td className="py-3 px-6 text-center w-60 inline-block">
-                      <span className="font-medium truncate block">
+                    </Table.Cell>
+                    <Table.Cell>
+                        {item.entry_type}
+                    </Table.Cell>
+                    <Table.Cell>
+                      {item.faculty_id}
+                    </Table.Cell>
+                    <Table.Cell>
                         {item.title}
-                      </span>
-                    </td>
-                    <td className="py-3 px-6 text-center">
+                    </Table.Cell>
+                    <Table.Cell className={`text-center`}>
                       <ViewModal data={item} />
-                    </td>
-                  </tr>
+                    </Table.Cell>
+                  </Table.Row>
                 ))}
-              </tbody>
-            </table>
+              </Table.Body>
+            </Table>
+          </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 
@@ -157,6 +152,7 @@ const ViewModal = ({
         dismissible
         show={props.openModal === "dismissible"}
         onClose={() => props.setOpenModal(undefined)}
+        className={`${bodyText.className}`}
       >
         <Modal.Header>Verify the details</Modal.Header>
         <Modal.Body>
@@ -168,7 +164,7 @@ const ViewModal = ({
         <Modal.Footer>
           {/* checkbox to confirm */}
           <div className="flex flex-col w-full">
-            <div className="flex items-center  mt-4">
+            <div className="flex items-center mb-4">
               <input
                 type="checkbox"
                 checked={isChecked}
@@ -211,15 +207,15 @@ const ConferenceModal = (data: any) => {
       {/* {JSON.stringify(data) + "data inside component"} */}
       <h1 className="text-center text-xl font-bold">Conference</h1>
       {/* Table */}
-      <table className="w-full text-center my-4">
+      <table className="w-full my-4">
         <tbody>
-          <tr>
-            <th className="py-2 px-4">Field</th>
-            <th className="py-2 px-4">Value</th>
+          <tr className={`font-bold border-b-2 border-black`}>
+            <td className="py-2 px-4">Field</td>
+            <td className="py-2 px-4">Value</td>
           </tr>
           <tr>
             <td className="py-2 px-4">Created At</td>
-            <td className="py-2 px-4">{data.created_at}</td>
+            <td className="py-2 px-4">{data.created_at?.substring(0, 10)}</td>
           </tr>
           <tr>
             <td className="py-2 px-4">Type of Conference</td>
@@ -264,17 +260,15 @@ const JournalModal = (data: any) => {
   return (
     <div className="">
       <h1 className="text-center text-xl font-bold">Journals</h1>
-      <table className="w-full text-center my-4">
-        <thead>
-          <tr>
-            <th className="py-2 px-4">Field</th>
-            <th className="py-2 px-4">Value</th>
+      <table className="w-full my-4 ">
+      <tbody>
+          <tr className={`font-bold border-b-2 border-black`}>
+            <td className="py-2 px-4">Field</td>
+            <td className="py-2 px-4">Value</td>
           </tr>
-        </thead>
-        <tbody>
           <tr>
             <td className="py-2 px-4">Created at</td>
-            <td className="py-2 px-4">{data.created_at}</td>
+            <td className="py-2 px-4">{data.created_at?.substring(0, 10)}</td>
           </tr>
           <tr>
             <td className="py-2 px-4">Paper Title</td>
@@ -293,7 +287,7 @@ const JournalModal = (data: any) => {
             <td className="py-2 px-4">{data.month_and_year_of_publication}</td>
           </tr>
           <tr>
-            <td className="py-2 px-4">indexed_in</td>
+            <td className="py-2 px-4">Indexed In</td>
             <td className="py-2 px-4">{data.indexed_in}</td>
           </tr>
           <tr>
@@ -320,17 +314,15 @@ const PatentModal = (data: any) => {
   return (
     <div className="">
       <h1 className="text-center text-xl font-bold">Patent</h1>
-      <table className="w-full text-center my-4">
-        <thead>
-          <tr>
-            <th className="py-2 px-4">Field</th>
-            <th className="py-2 px-4">Value</th>
+      <table className="w-full my-4">
+      <tbody>
+          <tr className={`font-bold border-b-2 border-black`}>
+            <td className="py-2 px-4">Field</td>
+            <td className="py-2 px-4">Value</td>
           </tr>
-        </thead>
-        <tbody>
           <tr>
-            <td className="py-2 px-4">created_at</td>
-            <td className="py-2 px-4">{data.created_at}</td>
+            <td className="py-2 px-4">Created At</td>
+            <td className="py-2 px-4">{data.created_at?.substring(0, 10)}</td>
           </tr>
           <tr>
             <td className="py-2 px-4">Patent Name</td>
@@ -361,7 +353,7 @@ const PatentModal = (data: any) => {
             <td className="py-2 px-4">{data.image}</td>
           </tr>
           <tr>
-            <td className="py-2 px-4">faculty_id</td>
+            <td className="py-2 px-4">Faculty ID</td>
             <td className="py-2 px-4">{data.faculty_id}</td>
           </tr>
         </tbody>
@@ -376,17 +368,15 @@ const WorkshopModal = (data: any) => {
   return (
     <div className="">
       <h1 className="text-center text-xl font-bold">Workshop</h1>
-      <table className="w-full text-center my-4">
-        <thead>
-          <tr>
-            <th className="py-2 px-4">Field</th>
-            <th className="py-2 px-4">Value</th>
+      <table className="w-full my-4">
+      <tbody>
+          <tr className={`font-bold border-b-2 border-black`}>
+            <td className="py-2 px-4">Field</td>
+            <td className="py-2 px-4">Value</td>
           </tr>
-        </thead>
-        <tbody>
           <tr>
-            <td className="py-2 px-4">created_at</td>
-            <td className="py-2 px-4">{data.created_at}</td>
+            <td className="py-2 px-4">Created At</td>
+            <td className="py-2 px-4">{data.created_at?.substring(0, 10)}</td>
           </tr>
           <tr>
             <td className="py-2 px-4">Workshop Title</td>
@@ -415,7 +405,7 @@ const WorkshopModal = (data: any) => {
           </tr>
           */}
           <tr>
-            <td className="py-2 px-4">faculty_id</td>
+            <td className="py-2 px-4">Faculty ID</td>
             <td className="py-2 px-4">{data.faculty_id}</td>
           </tr>
         </tbody>
