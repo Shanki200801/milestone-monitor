@@ -2,10 +2,9 @@
 
 import React, { useState } from "react";
 import { Montserrat, Inter } from "next/font/google";
-import { addJournals, fetchData, updateJournals } from "@/app/api/dbfunctions";
+import { addJournals, updateJournals, uploadJournalMedia } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
-import AddJournals from "@/app/(generic)/input-forms/AddJournals";
 import NoData from "@/components/categories/NoData";
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 
@@ -104,7 +103,20 @@ const AddJournalModal = ({facultyData}:{facultyData:any}) => {
   const [link, setLink] = useState("");
   const [imageLink, setImageLink] = useState("");
 
-  const handleAddWorkshops = async () => {
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const files = Array.from(e.currentTarget.files ?? []);
+    console.log(files);
+    if (files.length > 0) {
+      const file = files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log("files are ", formData.get("file"));
+      uploadJournalMedia(facultyID, formData, date);
+    }
+  };
+
+  const handleAddJournals = async () => {
     await addJournals(
     facultyID, 
     paperTitle, 
@@ -224,7 +236,7 @@ const AddJournalModal = ({facultyData}:{facultyData:any}) => {
 
             <div>
               <div className="mb-2 block">
-                <Label value="Link" />
+                <Label value="Journal Link" />
               </div>
               <TextInput
                 type="text"
@@ -234,8 +246,21 @@ const AddJournalModal = ({facultyData}:{facultyData:any}) => {
               />
             </div>
 
+            <div>
+              <div className="mb-2 block">
+                <Label value="Journal Image" />
+              </div>
+              <TextInput
+                type="file"
+                onChange={handleFileChange}
+                id="file"
+                name="file"
+              />
+            </div>
+
+
             <div className="flex justify-center">
-              <Button onClick={handleAddWorkshops}>Update</Button>
+              <Button onClick={handleAddJournals}>Update</Button>
             </div>
           </div>
         </Modal.Body>

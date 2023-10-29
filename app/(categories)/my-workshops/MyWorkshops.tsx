@@ -252,7 +252,7 @@ const FormElements = (props: any) => {
   // const [organisedBy, setOrganisedBy] = useState("");
   const propsModal = { openModal, setOpenModal };
 
-  const handleConfUpdate = async () => {
+  const handleAddWorkshops = async () => {
     await updateWorkshops(
       date,
       type,
@@ -342,7 +342,7 @@ const FormElements = (props: any) => {
               />
             </div>
             <div className="flex justify-center">
-              <Button onClick={handleConfUpdate}>Update</Button>
+              <Button onClick={handleAddWorkshops}>Update</Button>
             </div>
           </div>
         </Modal.Body>
