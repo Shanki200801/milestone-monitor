@@ -351,7 +351,7 @@ const FormElements = (props: any) => {
               <div className="mb-2 block">
                 <Label value="Patent Link" />
               </div>
-              <input
+              <TextInput
                 type="text"
                 onChange={(e) => setPatentLink(e.target.value)}
                 value={patentLink}

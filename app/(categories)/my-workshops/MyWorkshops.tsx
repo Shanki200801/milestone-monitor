@@ -334,7 +334,7 @@ const FormElements = (props: any) => {
               <div className="mb-2 block">
                 <Label value="Number of days" />
               </div>
-              <input
+              <TextInput
                 type="text"
                 onChange={(e) => setNoDays(e.target.value)}
                 value={noDays}
