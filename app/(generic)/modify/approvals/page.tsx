@@ -13,6 +13,7 @@ import {
 import { fetchRole } from "@/app/api/dbfunctions";
 const page = async () => {
   const supabase = createServerComponentClient({ cookies });
+  let userData;
 
   const {
     data: { user },
@@ -23,7 +24,7 @@ const page = async () => {
     // Unauthenticated users will be redirected to the `/login` route.
     redirect("/login");
   }else{
-    let userData = await fetchRole(user.email as string);
+    userData = await fetchRole(user.email as string);
     if(userData.faculty_role!="hod"){
       redirect("/404");
     }
@@ -62,7 +63,7 @@ const page = async () => {
 
   // console.log("printing data from page", pending_objects);
 
-  return <Approval pending_data={pending_objects} />;
+  return <Approval pending_data={pending_objects} userData={userData}/>;
 };
 
 export default page;
