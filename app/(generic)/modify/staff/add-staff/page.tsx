@@ -21,9 +21,6 @@ const AddStaffContainer = async () => {
     }
   }
 
-  
-
-
   return <AddStaff />;
 };
 

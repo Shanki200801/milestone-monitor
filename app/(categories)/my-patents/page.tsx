@@ -5,7 +5,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { MyPatents } from "./MyPatents";
-import { fetchData } from "@/app/api/dbfunctions";
+import { fetchData, fetchRole } from "@/app/api/dbfunctions";
 
 const PagePatent = async () => {
   const supabase = createServerComponentClient({ cookies });
@@ -21,8 +21,9 @@ const PagePatent = async () => {
   }
 
   let tableData= await fetchData("patents", user.email as string);
+  const facultyData = await fetchRole(user.email as string);
 
-  return <MyPatents data={tableData}/>;
+  return <MyPatents data={tableData} facultyData={facultyData}/>;
 };
 
 export default PagePatent;

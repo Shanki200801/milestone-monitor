@@ -4,7 +4,7 @@ import MyJournals from "./MyJournals";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { fetchData } from "@/app/api/dbfunctions";
+import { fetchData, fetchRole } from "@/app/api/dbfunctions";
 
 const PageJournal = async () => {
   const supabase = createServerComponentClient({ cookies });
@@ -20,7 +20,9 @@ const PageJournal = async () => {
   }
 
   let tableData= await fetchData("journal_publications", user.email as string);
-  return <MyJournals  data={tableData}/>;
+  const facultyData = await fetchRole(user.email as string);
+
+  return <MyJournals  data={tableData} facultyData={facultyData}/>;
 };
 
 export default PageJournal;
