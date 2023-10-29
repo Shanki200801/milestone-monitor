@@ -152,6 +152,7 @@ const ViewModal = ({
         dismissible
         show={props.openModal === "dismissible"}
         onClose={() => props.setOpenModal(undefined)}
+        className={`${bodyText.className}`}
       >
         <Modal.Header>Verify the details</Modal.Header>
         <Modal.Body>
@@ -163,7 +164,7 @@ const ViewModal = ({
         <Modal.Footer>
           {/* checkbox to confirm */}
           <div className="flex flex-col w-full">
-            <div className="flex items-center  mt-4">
+            <div className="flex items-center mb-4">
               <input
                 type="checkbox"
                 checked={isChecked}
@@ -206,15 +207,15 @@ const ConferenceModal = (data: any) => {
       {/* {JSON.stringify(data) + "data inside component"} */}
       <h1 className="text-center text-xl font-bold">Conference</h1>
       {/* Table */}
-      <table className="w-full text-center my-4">
+      <table className="w-full my-4">
         <tbody>
-          <tr>
-            <th className="py-2 px-4">Field</th>
-            <th className="py-2 px-4">Value</th>
+          <tr className={`font-bold border-b-2 border-black`}>
+            <td className="py-2 px-4">Field</td>
+            <td className="py-2 px-4">Value</td>
           </tr>
           <tr>
             <td className="py-2 px-4">Created At</td>
-            <td className="py-2 px-4">{data.created_at}</td>
+            <td className="py-2 px-4">{data.created_at?.substring(0, 10)}</td>
           </tr>
           <tr>
             <td className="py-2 px-4">Type of Conference</td>
@@ -259,17 +260,15 @@ const JournalModal = (data: any) => {
   return (
     <div className="">
       <h1 className="text-center text-xl font-bold">Journals</h1>
-      <table className="w-full text-center my-4">
-        <thead>
-          <tr>
-            <th className="py-2 px-4">Field</th>
-            <th className="py-2 px-4">Value</th>
+      <table className="w-full my-4 ">
+      <tbody>
+          <tr className={`font-bold border-b-2 border-black`}>
+            <td className="py-2 px-4">Field</td>
+            <td className="py-2 px-4">Value</td>
           </tr>
-        </thead>
-        <tbody>
           <tr>
             <td className="py-2 px-4">Created at</td>
-            <td className="py-2 px-4">{data.created_at}</td>
+            <td className="py-2 px-4">{data.created_at?.substring(0, 10)}</td>
           </tr>
           <tr>
             <td className="py-2 px-4">Paper Title</td>
@@ -288,7 +287,7 @@ const JournalModal = (data: any) => {
             <td className="py-2 px-4">{data.month_and_year_of_publication}</td>
           </tr>
           <tr>
-            <td className="py-2 px-4">indexed_in</td>
+            <td className="py-2 px-4">Indexed In</td>
             <td className="py-2 px-4">{data.indexed_in}</td>
           </tr>
           <tr>
@@ -315,17 +314,15 @@ const PatentModal = (data: any) => {
   return (
     <div className="">
       <h1 className="text-center text-xl font-bold">Patent</h1>
-      <table className="w-full text-center my-4">
-        <thead>
-          <tr>
-            <th className="py-2 px-4">Field</th>
-            <th className="py-2 px-4">Value</th>
+      <table className="w-full my-4">
+      <tbody>
+          <tr className={`font-bold border-b-2 border-black`}>
+            <td className="py-2 px-4">Field</td>
+            <td className="py-2 px-4">Value</td>
           </tr>
-        </thead>
-        <tbody>
           <tr>
-            <td className="py-2 px-4">created_at</td>
-            <td className="py-2 px-4">{data.created_at}</td>
+            <td className="py-2 px-4">Created At</td>
+            <td className="py-2 px-4">{data.created_at?.substring(0, 10)}</td>
           </tr>
           <tr>
             <td className="py-2 px-4">Patent Name</td>
@@ -356,7 +353,7 @@ const PatentModal = (data: any) => {
             <td className="py-2 px-4">{data.image}</td>
           </tr>
           <tr>
-            <td className="py-2 px-4">faculty_id</td>
+            <td className="py-2 px-4">Faculty ID</td>
             <td className="py-2 px-4">{data.faculty_id}</td>
           </tr>
         </tbody>
@@ -371,17 +368,15 @@ const WorkshopModal = (data: any) => {
   return (
     <div className="">
       <h1 className="text-center text-xl font-bold">Workshop</h1>
-      <table className="w-full text-center my-4">
-        <thead>
-          <tr>
-            <th className="py-2 px-4">Field</th>
-            <th className="py-2 px-4">Value</th>
+      <table className="w-full my-4">
+      <tbody>
+          <tr className={`font-bold border-b-2 border-black`}>
+            <td className="py-2 px-4">Field</td>
+            <td className="py-2 px-4">Value</td>
           </tr>
-        </thead>
-        <tbody>
           <tr>
-            <td className="py-2 px-4">created_at</td>
-            <td className="py-2 px-4">{data.created_at}</td>
+            <td className="py-2 px-4">Created At</td>
+            <td className="py-2 px-4">{data.created_at?.substring(0, 10)}</td>
           </tr>
           <tr>
             <td className="py-2 px-4">Workshop Title</td>
@@ -410,7 +405,7 @@ const WorkshopModal = (data: any) => {
           </tr>
           */}
           <tr>
-            <td className="py-2 px-4">faculty_id</td>
+            <td className="py-2 px-4">Faculty ID</td>
             <td className="py-2 px-4">{data.faculty_id}</td>
           </tr>
         </tbody>
