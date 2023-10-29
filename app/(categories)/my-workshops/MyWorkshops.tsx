@@ -9,7 +9,6 @@ import {
 } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
-import AddWorkshops from "@/app/(generic)/input-forms/AddWorkshops";
 import NoData from "@/components/categories/NoData";
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 
