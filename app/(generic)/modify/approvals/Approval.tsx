@@ -10,11 +10,17 @@ import {
 } from "./types";
 import { Button, Checkbox, Label, Modal, Table, TextInput } from "flowbite-react";
 import { approveEntry, rejectEntry } from "@/app/api/dbfunctions";
+import { Urbanist } from "next/font/google";
+
+const bodyText = Urbanist({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 // Example usage:
 // const data: PendingData = /* Your JSON data here */;
 
-const Approval = ({ pending_data }: { pending_data: PendingData }) => {
+const Approval = ({ pending_data, userData }: { pending_data: PendingData, userData:any }) => {
   //specific data
 
   //modal jsx
@@ -48,50 +54,41 @@ const Approval = ({ pending_data }: { pending_data: PendingData }) => {
   //   "testing " + JSON.stringify([...pending_data["pending_conferences"]])
   // );
   return (
-    <div className="overflow-x-auto">
-      <div className="min-w-screen min-h-screen bg-gray-100 flex flex-col items-center justify-center  font-sans overflow-hidden">
-        <span>
-          Use the following table to approve or disapprove the submissions made
-          by staff of ... department
-        </span>
-        <div className="w-full lg:w-5/6">
-          <div className="bg-white shadow-md rounded my-6">
-            <Table>
-              <Table.Head>
+      <div className=" min-h-screen bg-white flex flex-col items-center font-sans">
+        <p className={`${bodyText.className} my-6 text-xl`}>
+          Use the table to approve or disapprove submissions made
+          by staff of the {userData.faculty_department} department
+        </p>
+        <div className="w-full bg-white py-5 px-6">
+          <div className={`bg-[#cbfef8] py-5 px-6 rounded`}>
+          <Table className={`${bodyText.className} text-black `} hoverable>
+              <Table.Head className={``}>
                 
-                  <Table.HeadCell>Time Stamp</Table.HeadCell>
-                  <Table.HeadCell>Category</Table.HeadCell>
-                  <Table.HeadCell>Faculty Name</Table.HeadCell>
-                  <Table.HeadCell>Title</Table.HeadCell>
-                  <Table.HeadCell>Actions</Table.HeadCell>
+                  <Table.HeadCell className={`bg-[#60fbdf]`}>Time Stamp</Table.HeadCell>
+                  <Table.HeadCell className={`bg-[#60fbdf]`}>Category</Table.HeadCell>
+                  <Table.HeadCell className={`bg-[#60fbdf]`}>Faculty Name</Table.HeadCell>
+                  <Table.HeadCell className={`bg-[#60fbdf]`}>Title</Table.HeadCell>
+                  <Table.HeadCell className={`bg-[#60fbdf] text-center`}>Actions</Table.HeadCell>
               </Table.Head>
               <Table.Body className="divide-y">
                 {outer_display_object.map((item, index) => (
                   <Table.Row
-                  className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                  className="bg-[#29b7a6]"
                     key={index}
                   >
-                    <Table.Cell className="py-3 px-6 text-left whitespace-nowrap">
-                      <div className="flex items-center">
-                        <span className="font-medium">
+                    <Table.Cell>
                           {item.created_at?.substring(0, 10)}
-                        </span>
-                      </div>
                     </Table.Cell>
-                    <Table.Cell className="py-3 px-6 text-left">
-                      <div className="flex items-center">
-                        <span className="font-medium">{item.entry_type}</span>
-                      </div>
+                    <Table.Cell>
+                        {item.entry_type}
                     </Table.Cell>
-                    <Table.Cell className="py-3 px-6 text-center">
-                      <span className="font-medium">{item.faculty_id}</span>
+                    <Table.Cell>
+                      {item.faculty_id}
                     </Table.Cell>
-                    <Table.Cell className="py-3 px-6 text-center w-60 inline-block">
-                      <span className="font-medium truncate block">
+                    <Table.Cell>
                         {item.title}
-                      </span>
                     </Table.Cell>
-                    <Table.Cell className="py-3 px-6 text-center">
+                    <Table.Cell className={`text-center`}>
                       <ViewModal data={item} />
                     </Table.Cell>
                   </Table.Row>
@@ -99,9 +96,8 @@ const Approval = ({ pending_data }: { pending_data: PendingData }) => {
               </Table.Body>
             </Table>
           </div>
+          </div>
         </div>
-      </div>
-    </div>
   );
 };
 
