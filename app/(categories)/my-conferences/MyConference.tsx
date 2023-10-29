@@ -2,10 +2,13 @@
 
 import React, { use, useState } from "react";
 import { Montserrat, Inter } from "next/font/google";
-import { fetchData, updateConf, addConference } from "@/app/api/dbfunctions";
+import {
+  updateConf,
+  addConference,
+  uploadConferenceMedia,
+} from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
-import AddConference from "@/app/(generic)/input-forms/AddConference";
 import NoData from "@/components/categories/NoData";
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useRouter } from "next/navigation";
@@ -38,7 +41,7 @@ const MyConference = (props: any) => {
           )}
         </section>
         <AddNewSec name="Conference">
-          <AddConferenceModal facultyData={props.facultyData}/>
+          <AddConferenceModal facultyData={props.facultyData} />
         </AddNewSec>
       </section>
     </section>
@@ -91,31 +94,43 @@ const ConferenceTable = (props: any) => {
   );
 };
 
-const AddConferenceModal = (props:any) => {
+const AddConferenceModal = (props: any) => {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const propsModal = { openModal, setOpenModal };
+  const [facultyID, setFacultyID] = useState(props.facultyData.faculty_id);
   const [paperTitle, setPaperTitle] = useState("");
   const [conferenceName, setConferenceName] = useState("");
   const [conferenceDate, setConferenceDate] = useState("");
+  const [type, setType] = useState("");
   const [proceedings, setProceedings] = useState(false);
-  const [facultyID, setFacultyID] = useState(props.facultyData.faculty_id);
   const [proceedingsFP, setProceedingsFP] = useState("");
   const [certificate, setCertificate] = useState("");
-  const [type, setType] = useState("");
-
 
   const handleAddConference = async () => {
     await addConference(
-    facultyID,
-    paperTitle,
-    conferenceName,
-    conferenceDate,
-    type,
-    proceedings,
-    proceedingsFP,
-    certificate,
-      );
+      facultyID,
+      paperTitle,
+      conferenceName,
+      conferenceDate,
+      type,
+      proceedings,
+      proceedingsFP,
+      certificate
+    );
     window.location.reload();
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const files = Array.from(e.currentTarget.files ?? []);
+    console.log(files);
+    if (files.length > 0) {
+      const file = files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log("files are ", formData.get("file"));
+      uploadConferenceMedia(facultyID, formData, conferenceDate);
+    }
   };
 
   return (
@@ -159,7 +174,7 @@ const AddConferenceModal = (props:any) => {
                 value={facultyID}
                 required
                 readOnly
-                disabled  
+                disabled
               />
             </div>
 
@@ -222,21 +237,34 @@ const AddConferenceModal = (props:any) => {
                 required
               />
             </div>
+            {proceedings == true && (
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Proceedings Front Page" />
+                </div>
+                <TextInput
+                  type="text"
+                  onChange={(e) => setProceedingsFP(e.target.value)}
+                  value={proceedingsFP}
+                  required
+                />
+              </div>
+            )}
 
             <div>
               <div className="mb-2 block">
-                <Label value="Proceedings Front Page" />
+                <Label value="Conference Certificate" />
               </div>
               <TextInput
-                type="text"
-                onChange={(e) => setProceedingsFP(e.target.value)}
-                value={proceedingsFP}
-                required
+                type="file"
+                onChange={handleFileChange}
+                id="file"
+                name="file"
               />
             </div>
 
             <div className="flex justify-center">
-              <Button onClick={handleAddConference}>Update</Button>
+              <Button onClick={handleAddConference}>Add Conference</Button>
             </div>
           </div>
         </Modal.Body>

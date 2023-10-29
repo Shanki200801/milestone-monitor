@@ -264,7 +264,7 @@ const AddPatentModal = ({facultyData}:{facultyData:any}) => {
 
 
             <div className="flex justify-center">
-              <Button onClick={handleAddPatents}>Update</Button>
+              <Button onClick={handleAddPatents}>Add Patent</Button>
             </div>
           </div>
         </Modal.Body>

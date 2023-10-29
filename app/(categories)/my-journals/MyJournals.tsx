@@ -260,7 +260,7 @@ const AddJournalModal = ({facultyData}:{facultyData:any}) => {
 
 
             <div className="flex justify-center">
-              <Button onClick={handleAddJournals}>Update</Button>
+              <Button onClick={handleAddJournals}>Add Journal</Button>
             </div>
           </div>
         </Modal.Body>

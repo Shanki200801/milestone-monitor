@@ -235,7 +235,7 @@ const AddWorkshopModal = ({ facultyData }: { facultyData: any }) => {
             )}
 
             <div className="flex justify-center">
-              <Button onClick={handleAddWorkshops}>Update</Button>
+              <Button onClick={handleAddWorkshops}>Add Workshop</Button>
             </div>
           </div>
         </Modal.Body>
