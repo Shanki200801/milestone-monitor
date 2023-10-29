@@ -142,10 +142,8 @@ export const addConference = async (
   paper_title: string,
   conf_date: string,
   proceedings: boolean,
-  conf_name: string,
-  proceeding_fp: boolean,
-  certificate: string,
-  faculty_id: string
+  proceeding_fp: string,
+  certificate: string
 ) => {
   const supabase = createServerComponentClient({ cookies });
   const { data, error } = await supabase
@@ -264,8 +262,8 @@ export const addPatent = async (
   patent_type: string,
   application_no: string,
   status: string,
-  image: string,
-  patent_link: string
+  patent_link: string,
+  image: string
 ) => {
   const supabase = createServerComponentClient({ cookies });
   const { data, error } = await supabase.from("patents").insert([
@@ -1061,6 +1059,31 @@ export const getMilestoneNumbers = async () => {
 
 async function uploadFile(path: string, file: File): Promise<string> {
   const supabase = createClientComponentClient();
+  const { data: existingFiles, error: e1 } = await supabase.storage
+    .from("staff-media")
+    .list("profilePictures", {
+      limit: 100,
+      offset: 0,
+      sortBy: { column: "name", order: "asc" },
+      search: path.split("/")[1].split(".")[0],
+    });
+  // console.log(existingFiles, "existing files");
+  if (e1) {
+    console.log("error getting list", e1);
+  }
+  if (existingFiles?.length) {
+    for (const file of existingFiles) {
+      const { error } = await supabase.storage
+        .from("staff-media")
+        .remove([`profilePictures/${file.name}`]);
+      if (error) {
+        console.log(`Error deleting file: profilePictures/${file.name}`, error);
+      } else {
+        console.log(` deleted file: profilePictures/${file.name}`);
+      }
+    }
+  }
+
   const { error } = await supabase.storage
     .from("staff-media")
     .upload(path, file, { upsert: true, cacheControl: "3600" });
