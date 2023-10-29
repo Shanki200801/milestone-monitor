@@ -6,7 +6,6 @@ import { Montserrat, Urbanist, Courgette } from "next/font/google";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { usePathname, useRouter } from "next/navigation";
 
-
 const bodyText = Montserrat({
   weight: "400",
   subsets: ["latin"],
@@ -22,7 +21,7 @@ const fancyText = Courgette({
   subsets: ["latin"],
 });
 
-export default function NavOne(props:any) {
+export default function NavOne(props: any) {
   const router = useRouter();
   const pathName = usePathname();
 
@@ -109,7 +108,7 @@ export default function NavOne(props:any) {
           id="small-home-greeting-user-header"
           className={`${headerText.className} row-start-2 text-center text-2xl w-[100vw] h-fit -mt-16`}
         >
-          Welcome Back, [user.name]
+          Welcome Back, {props.userData.faculty_name}.
         </li>
       </ul>
 
@@ -122,14 +121,17 @@ export default function NavOne(props:any) {
           id="home-greeting-user-header"
           className={`${headerText.className} text-lg sm:text-xl lg:text-2xl xl:text-3xl text-center row-start-2 col-span-3 sm:col-span-1 sm:col-start-2 sm:row-start-1 -mt-20 lg:-mt-[1rem] sm:m-0`}
         >
-           {pathName=="/modify/approvals"? <div>Approvals</div>: <div>
-           Welcome back,
-          <span className={`${fancyText.className} tracking-tight`}>
-            {" "}
-            {props.userData.faculty_name} 📝✨
-          </span>
-           </div> }
-          
+          {pathName == "/modify/approvals" ? (
+            <div>Approvals</div>
+          ) : (
+            <div>
+              Welcome back,
+              <span className={`${fancyText.className} tracking-tight`}>
+                {" "}
+                {props.userData.faculty_name}.
+              </span>
+            </div>
+          )}
         </h1>
         <ul
           id="home-user-actions-elements"
