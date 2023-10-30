@@ -176,7 +176,7 @@ const ModifySubComp = () => {
       {subMenuOpen && (
         <ul className="absolute flex flex-col justify-between gap-8 bg-teal-500 left-[95%] p-4 -top-[80%] border border-transparent rounded-r">
           <li className="hover:text-emerald-300 hover:font-bold">
-            <a href="/modify/staff/add-staff">
+            <a href="/modify/add-staff">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -222,7 +222,7 @@ const ModifySubComp = () => {
 const ReportSubComp = () => {
   return (
     <li className="hover:text-emerald-300 hover:font-bold">
-      <a href="/report-gen">
+      <a href="/reports">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
