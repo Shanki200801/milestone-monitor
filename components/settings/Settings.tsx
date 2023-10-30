@@ -37,6 +37,7 @@ export default function Settings() {
   const [user, setUser] = useState(null);
   const [openModal, setOpenModal] = useState<string | undefined>();
   const props = { openModal, setOpenModal };
+  const [uploadVisible, setUploadVisible] = useState(true);
   const [settings, setSettings] = useState<Settings>({
     // Add more fields/values here in the same format (formatter will change appearance in UI)
     name: "",
@@ -116,6 +117,7 @@ export default function Settings() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+    setUploadVisible(false);
     const files = Array.from(e.currentTarget.files ?? []);
     console.log(files);
     if (files.length > 0) {
@@ -231,12 +233,43 @@ export default function Settings() {
             onChange={handleFileChange}
             id="file"
             name="file"
-            className="font-bold text-teal-950 bg-teal-200 rounded-full"
+            className={`font-bold text-teal-950 bg-teal-200 rounded-full ${
+              uploadVisible ? "" : "hidden"
+            }`}
           />
+          <div
+            className={`font-bold ${
+              uploadVisible ? "hidden" : "flex"
+            } w-full justify-between`}
+          >
+            <button onClick={() => setUploadVisible(true)}>Successful!</button>
+            <div
+              onClick={() => setUploadVisible(true)}
+              className="setting-edit-btn p-2 border border-transparent rounded-full bg-teal-200 hover:cursor-pointer"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6   "
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
+                />
+              </svg>
+            </div>
+          </div>
         </div>
 
         <div className="w-full flex place-items-center place-content-center">
-          <button onClick={() => props.setOpenModal("form-elements")} className="p-[0.8rem] bg-teal-200 text-teal-950 hover:bg-teal-700 hover:text-teal-200 border border-transparent rounded-full font-bold">
+          <button
+            onClick={() => props.setOpenModal("form-elements")}
+            className="p-[0.8rem] bg-teal-200 text-teal-950 hover:bg-teal-700 hover:text-teal-200 border border-transparent rounded-full font-bold"
+          >
             Reset Password
           </button>
           <Modal
