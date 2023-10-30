@@ -145,7 +145,7 @@ export const addConference = async (
   type: string,
   proceedings: boolean,
   proceeding_fp: string,
-  certificate: string,
+  certificate: string
 ) => {
   const supabase = createServerComponentClient({ cookies });
   const { data, error } = await supabase
@@ -266,7 +266,7 @@ export const addPatent = async (
   application_no: string,
   status: string,
   patent_link: string,
-  image: string,
+  image: string
 ) => {
   const supabase = createServerComponentClient({ cookies });
   const { data, error } = await supabase.from("patents").insert([
@@ -1134,6 +1134,36 @@ export const uploadProfilePicture = async (
     const path = `profilePictures/${facultyId}.${
       (file as File).type.split("/")[1]
     }`;
+
+    //check for existing files of the same name and delete them
+    const supabase = createClientComponentClient();
+    const { data: existingFiles, error: e1 } = await supabase.storage
+      .from("staff-media")
+      .list("profilePictures", {
+        limit: 100,
+        offset: 0,
+        sortBy: { column: "name", order: "asc" },
+        search: path.split("/")[1].split(".")[0],
+      });
+    // console.log(existingFiles, "existing files");
+    if (e1) {
+      console.log("error getting list", e1);
+    }
+    if (existingFiles?.length) {
+      for (const file of existingFiles) {
+        const { error } = await supabase.storage
+          .from("staff-media")
+          .remove([`profilePictures/${file.name}`]);
+        if (error) {
+          console.log(
+            `Error deleting file: profilePictures/${file.name}`,
+            error
+          );
+        } else {
+          console.log(` deleted file: profilePictures/${file.name}`);
+        }
+      }
+    }
     return await uploadFile(path, file as File);
   }
   return "";
