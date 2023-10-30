@@ -57,7 +57,7 @@ export default function Events(props:any) {
 
 const AddStaffSubEvent = ()=>{
   return(
-    <a href="/modify/staff/add-staff">
+    <a href="/modify/add-staff">
           <li
             className={`bg-teal-300 w-[9vw] py-4 text-center shadow-lg shadow-teal-600/60 border-[2.5px] border-transparent hover:border-cyan-800 hover:font-bold hover:shadow-teal-600 rounded-tl-md rounded-tr-xl rounded-bl-xl rounded-br-md`}
           >
@@ -81,7 +81,7 @@ const ApprovalSubEvent = ()=>{
 
 const ReportGenSubEvent = ()=>{
   return(
-    <a href="/report-gen">
+    <a href="/reports">
           <li
             className={`bg-teal-300 w-[9vw] py-4 text-center shadow-lg shadow-teal-600/60 border-[2.5px] border-transparent hover:border-cyan-800 hover:font-bold hover:shadow-teal-600 rounded-tl-md rounded-tr-xl rounded-bl-xl rounded-br-md`}
           >
