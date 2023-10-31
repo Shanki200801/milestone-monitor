@@ -39,11 +39,11 @@ const DisplayTable = (props: any, staffDetails: any) => {
   };
   return (
     <section id="table-section" className="m-3 p-5 sm:rounded min-h-[25rem]">
-      <div className="overflow-x-auto shadow-md sm:rounded border border-teal-500">
+      <div className="overflow-x-auto shadow-md shadow-teal-800/10 sm:rounded-lg border border-teal-500/30">
         <table
-          className={`${headerFont.className} w-full text-sm text-center`}
+          className={`${headerFont.className} text-emerald-800 w-full text-sm text-center`}
         >
-          <thead className="text-lg text-center text-black uppercase tracking-wide bg-[#60fbdf]">
+          <thead className="text-lg text-center uppercase tracking-wide bg-teal-400/50">
             <tr>
               <th className="py-2 px-2 whitespace-nowrap border border-teal-500/30">Faculty ID</th>
               <th className="py-2 px-2 whitespace-nowrap border border-teal-500/30">Faculty Name</th>
@@ -53,7 +53,7 @@ const DisplayTable = (props: any, staffDetails: any) => {
               <th className="py-2 px-4 whitespace-nowrap border border-teal-500/30">Status</th>
             </tr>
           </thead>
-          <tbody className={`${tableFont.className} `}>
+          <tbody className={`${tableFont.className} text-emerald-800`}>
             {props.map((item: any, index: any) => {
               return (
                 <tr key={index}>

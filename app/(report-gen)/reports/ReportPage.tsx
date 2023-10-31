@@ -86,7 +86,7 @@ const ReportPage = ({ staff_details }: any) => {
         <div className={`${generalFont.className} flex place-content-evenly`}>
           <button
             onClick={handleFirstLinkClick}
-            className="tracking-wide text-white px-4 py-2 rounded bg-teal-700 hover:bg-teal-400 hover:text-teal-900 hover:font-bold"
+            className="tracking-wide text-white px-4 py-2 rounded bg-teal-700 hover:bg-teal-500 hover:font-bold shadow-md shadow-teal-500/50 hover:shadow-lg hover:shadow-teal-500/70"
           >
             Download Full Report
           </button>
@@ -95,7 +95,7 @@ const ReportPage = ({ staff_details }: any) => {
             data={data}
             headers={smolDataHeadersCSV}
             filename="light-report.csv"
-            className="tracking-wide text-white px-4 py-2 rounded bg-teal-700 hover:bg-teal-400 hover:text-teal-900 hover:font-bold"
+            className="tracking-wide text-white px-4 py-2 rounded bg-teal-700 hover:bg-teal-500 hover:font-bold shadow-md shadow-teal-500/50 hover:shadow-lg hover:shadow-teal-500/70"
           >
             Download Light Report
           </CSVLink>
