@@ -7,8 +7,14 @@ import { getDataForReport } from "@/app/api/dbfunctions";
 import { CSVLink } from "react-csv";
 import { saveAs } from "file-saver";
 import { smolDataHeadersCSV } from "./CSVHeaders";
+import { Urbanist } from "next/font/google";
 
-const ReportPage = ({ staff_details }:any) => {
+const generalFont = Urbanist({
+  weight: "400",
+  subsets: ["latin"],
+});
+
+const ReportPage = ({ staff_details }: any) => {
   const [filterState, setFilterState] = useState({
     searchQuery: "",
     startDate: undefined,
@@ -71,25 +77,27 @@ const ReportPage = ({ staff_details }:any) => {
   };
 
   return (
-    <div className="h-[90vh] grid grid-cols-6 bg-[#cbfef8]">
-      <div className="col-start-1 col-end-5 ">
+    <div
+      className={`${generalFont.className} h-[90vh] grid grid-cols-6 bg-[#cbfef8]`}
+    >
+      <div className="col-start-1 col-end-5">
         <GeneralTable data={data} staffDetails={staff_details} />
 
-        <div className="flex place-content-evenly ">
+        <div className={`${generalFont.className} flex place-content-evenly`}>
           <button
             onClick={handleFirstLinkClick}
-            className="text-white px-4 py-2 rounded bg-lime-700"
+            className="tracking-wide text-white px-4 py-2 rounded bg-teal-700 hover:bg-teal-400 hover:text-teal-900 hover:font-bold"
           >
-            Download full report
+            Download Full Report
           </button>
 
           <CSVLink
             data={data}
             headers={smolDataHeadersCSV}
             filename="light-report.csv"
-            className="text-white px-4 py-2 rounded bg-lime-700"
+            className="tracking-wide text-white px-4 py-2 rounded bg-teal-700 hover:bg-teal-400 hover:text-teal-900 hover:font-bold"
           >
-            Download light report
+            Download Light Report
           </CSVLink>
         </div>
       </div>

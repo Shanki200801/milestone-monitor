@@ -1,8 +1,9 @@
 import React from "react";
-import { Alata } from "next/font/google";
+import { Urbanist, Inter } from "next/font/google";
 import NoData from "@/components/categories/NoData";
 
-const tableFont = Alata({ weight: "400", subsets: ["latin"] });
+const headerFont = Urbanist({ weight: "400", subsets: ["latin"] });
+const tableFont = Inter({weight: "400", subsets: ["latin"]});
 
 const GeneralTable = ({ data, staffDetails }:any) => {
   // console.log("data from table component", data);
@@ -37,33 +38,33 @@ const DisplayTable = (props: any, staffDetails: any) => {
     return faculty ? faculty.faculty_name : "";
   };
   return (
-    <section id="table-section" className=" m-3 p-5 sm:rounded min-h-[25rem]">
-      <div className="overflow-x-auto shadow-md sm:rounded">
+    <section id="table-section" className="m-3 p-5 sm:rounded min-h-[25rem]">
+      <div className="overflow-x-auto shadow-md sm:rounded border border-teal-500">
         <table
-          className={`${tableFont.className} w-full text-sm text-left text-black`}
+          className={`${headerFont.className} w-full text-sm text-center`}
         >
-          <thead className="text-lg text-black uppercase bg-[#60fbdf]">
+          <thead className="text-lg text-center text-black uppercase tracking-wide bg-[#60fbdf]">
             <tr>
-              <th className="py-2 px-4">Faculty ID</th>
-              <th className="py-2 px-4">Faculty Name</th>
-              <th className="py-2 px-4">Entry Type</th>
-              <th className="py-2 px-4">Date</th>
-              <th className="py-2 px-4">Title</th>
-              <th className="py-2 px-4">Verification Status</th>
+              <th className="py-2 px-2 whitespace-nowrap border border-teal-500/30">Faculty ID</th>
+              <th className="py-2 px-2 whitespace-nowrap border border-teal-500/30">Faculty Name</th>
+              <th className="py-2 px-2 whitespace-nowrap border border-teal-500/30">Entry Type</th>
+              <th className="py-2 border border-teal-500/30">Date</th>
+              <th className="py-2 border border-teal-500/30">Title</th>
+              <th className="py-2 px-4 whitespace-nowrap border border-teal-500/30">Status</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className={`${tableFont.className} `}>
             {props.map((item: any, index: any) => {
               return (
                 <tr key={index}>
-                  <td className="py-2 px-4">{item.faculty_id}</td>
-                  <td className="py-2 px-4">
+                  <td className="py-2 px-4 border border-teal-500/30">{item.faculty_id}</td>
+                  <td className="py-2 px-4 whitespace-nowrap border border-teal-500/30">
                     {getfacultyname(item.faculty_id)}
                   </td>
-                  <td className="py-2 px-4">{item.entry_type}</td>
-                  <td className="py-2 px-4">{item.date}</td>
-                  <td className="py-2 px-4">{item.title}</td>
-                  <td className="py-2 px-4">{item.status}</td>
+                  <td className="py-2 px-4 border border-teal-500/30">{item.entry_type}</td>
+                  <td className="py-2 px-4 whitespace-nowrap border border-teal-500/30">{item.date}</td>
+                  <td className="py-2 px-4 border border-teal-500/30">{item.title}</td>
+                  <td className="py-2 px-4 border border-teal-500/30">{item.status}</td>
                 </tr>
               );
             })}

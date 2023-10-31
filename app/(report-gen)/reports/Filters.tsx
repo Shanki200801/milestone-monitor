@@ -39,13 +39,13 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
 
   return (
     <div className="col-start-5 col-end-7 bg-light-green-100 flex items-center justify-center">
-      <div className="p-4 rounded-lg shadow-lg w-full bg-[#cbfef8] mx-2  max-w-xs">
-        <h1 className="text-xl font-semibold my-2 text-center">Filters</h1>
+      <div className="p-4 rounded-lg shadow-lg w-fit bg-[#cbfef8]">
+        <h1 className="text-xl uppercase font-bold tracking-wide my-2 text-center">Filters</h1>
         <div className="mb-4 relative">
           <input
             type="text"
             placeholder="Search..."
-            className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
+            className="w-full py-2 px-4 border-2 border-teal-500/30 rounded focus:outline-none focus:border-emerald-500 hover:border-emerald-400"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
@@ -58,8 +58,8 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
             </label>
             <input
               type="date"
-              className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
-              value={startDate}
+            className="w-full py-2 px-4 border-2 border-teal-500/30 rounded focus:outline-none focus:border-emerald-500 hover:border-emerald-400"
+            value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
             />
           </div>
@@ -69,8 +69,8 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
             </label>
             <input
               type="date"
-              className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
-              value={endDate}
+            className="w-full py-2 px-4 border-2 border-teal-500/30 rounded focus:outline-none focus:border-emerald-500 hover:border-emerald-400"
+            value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
             />
           </div>
@@ -80,7 +80,7 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
             Select Staff
           </label>
           <select
-            className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
+            className="w-full py-2 px-4 border-2 border-teal-500/30 rounded focus:outline-none focus:border-emerald-500 hover:border-emerald-400"
             value={selectedStaff}
             onChange={(e) => setSelectedStaff(e.target.value)}
           >
@@ -98,7 +98,7 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
             Select Type
           </label>
           <select
-            className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
+            className="w-full py-2 px-4 border-2 border-teal-500/30 rounded focus:outline-none focus:border-emerald-500 hover:border-emerald-400"
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
           >
@@ -114,10 +114,10 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
         </div>
         <div className="mb-6">
           <label className="block text-sm font-medium text-gray-600 mb-2">
-            Select Verification status
+            Select Verification Status
           </label>
           <select
-            className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
+            className="w-full py-2 px-4 border-2 border-teal-500/30 rounded focus:outline-none focus:border-emerald-500 hover:border-emerald-400"
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
           >
