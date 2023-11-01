@@ -3,6 +3,11 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import AddStaff from "./AddStaff";
 import { fetchRole } from "@/app/api/dbfunctions";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Add Staff | Milestone Monitor',
+}
 
 const AddStaffContainer = async () => {
   const supabase = createServerComponentClient({ cookies });

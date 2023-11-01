@@ -5,6 +5,11 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { fetchData, fetchRole } from "@/app/api/dbfunctions";
 import MyConference from "./MyConference";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Conferences | Milestone Monitor',
+}
 
 const PageConference = async () => {
   const supabase = createServerComponentClient({ cookies });
