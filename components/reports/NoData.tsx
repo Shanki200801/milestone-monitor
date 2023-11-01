@@ -7,7 +7,7 @@ export default function NoData(props:any){
     return(
       <div className="">
         <table className={`${headerFont.className} m-4 p-5 w-full text-sm text-center text-black border border-teal-500/30 rounded`}>
-                <thead className="text-lg text-emerald-800 uppercase bg-teal-400/50">
+                <thead className="text-lg text-teal-800 uppercase bg-teal-400/50">
                   <tr>
                   {props.columns.map((items:any, index:any)=>{
                     return(

@@ -38,7 +38,7 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
   ]);
 
   return (
-    <div className="col-start-5 col-end-7 bg-light-green-100 flex items-center justify-center">
+    <div className="col-start-5 col-end-7 flex items-center justify-center">
       <div className="p-4 rounded-lg shadow-md shadow-teal-800/20 w-fit bg-teal-400/40">
         <h1 className="text-xl uppercase font-bold tracking-wide my-2 text-center text-teal-700">
           Filters
@@ -68,7 +68,7 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
         </div>
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="tracking-wide block text-sm font-bold text-emerald-700 mb-2">
+            <label className="tracking-wide block text-sm font-bold text-teal-700 mb-2">
               Start Date
             </label>
             <input
@@ -79,7 +79,7 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
             />
           </div>
           <div>
-            <label className="tracking-wide block text-sm font-bold text-emerald-700 mb-2">
+            <label className="tracking-wide block text-sm font-bold text-teal-700 mb-2">
               End Date
             </label>
             <input
@@ -91,7 +91,7 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
           </div>
         </div>
         <div className="mb-4">
-          <label className="tracking-wide block text-sm font-bold text-emerald-700 mb-2">
+          <label className="tracking-wide block text-sm font-bold text-teal-700 mb-2">
             Select Staff
           </label>
           <select
@@ -109,7 +109,7 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
           </select>
         </div>
         <div className="mb-6">
-          <label className="tracking-wide block text-sm font-bold text-emerald-700 mb-2">
+          <label className="tracking-wide block text-sm font-bold text-teal-700 mb-2">
             Select Type
           </label>
           <select
@@ -126,7 +126,7 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
           </select>
         </div>
         <div className="mb-6">
-          <label className="tracking-wide block text-sm font-bold text-emerald-700  mb-2">
+          <label className="tracking-wide block text-sm font-bold text-teal-700  mb-2">
             Select Verification Status
           </label>
           <select

@@ -9,7 +9,7 @@ const GeneralTable = ({ data, staffDetails }:any) => {
   // console.log("data from table component", data);
   // console.log("Staff details ->", staffDetails);
   return (
-    <div className="h-[80vh] overflow-y-auto mb-4">
+    <div className="h-[80vh] overflow-y-auto mb-4 border border-transparent border-r-teal-700/50">
       {data.length == 0 ? (
         <NoData
           columns={[
@@ -41,7 +41,7 @@ const DisplayTable = (props: any, staffDetails: any) => {
     <section id="table-section" className="m-3 p-5 sm:rounded min-h-[25rem]">
       <div className="overflow-x-auto shadow-md shadow-teal-800/10 sm:rounded-lg border border-teal-500/30">
         <table
-          className={`${headerFont.className} text-emerald-800 w-full text-sm text-center`}
+          className={`${headerFont.className} text-teal-800 w-full text-sm text-center`}
         >
           <thead className="text-lg text-center uppercase tracking-wide bg-teal-400/50">
             <tr>
@@ -53,7 +53,7 @@ const DisplayTable = (props: any, staffDetails: any) => {
               <th className="py-2 px-4 whitespace-nowrap border border-teal-500/30">Status</th>
             </tr>
           </thead>
-          <tbody className={`${tableFont.className} text-emerald-800`}>
+          <tbody className={`${tableFont.className} text-teal-700`}>
             {props.map((item: any, index: any) => {
               return (
                 <tr key={index}>

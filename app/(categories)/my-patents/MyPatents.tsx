@@ -1,14 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { Montserrat, Inter } from "next/font/google";
-import { updatePatents, addPatent, uploadPatentMedia } from "@/app/api/dbfunctions";
+import { Urbanist, Inter } from "next/font/google";
+import {
+  updatePatents,
+  addPatent,
+  uploadPatentMedia,
+} from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
 import NoData from "@/components/categories/NoData";
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 
-const tableFont = Montserrat({ weight: "400", subsets: ["latin"] });
+const tableFont = Urbanist({ weight: "400", subsets: ["latin"] });
 const tableBodyFont = Inter({ weight: "400", subsets: ["latin"] });
 
 export const MyPatents = (props: any) => {
@@ -41,7 +45,7 @@ export const MyPatents = (props: any) => {
 
         {/* Button to add a new patent */}
         <AddNewSec name="Patent" data={props.data}>
-          <AddPatentModal facultyData={props.facultyData}/>
+          <AddPatentModal facultyData={props.facultyData} />
         </AddNewSec>
       </section>
     </section>
@@ -50,15 +54,17 @@ export const MyPatents = (props: any) => {
 
 const PatentTable = (props: any) => {
   return (
-    <div className="overflow-x-auto shadow-md sm:rounded">
-      <table
-        className={`${tableFont.className} w-full text-sm text-left text-black`}
-      >
-        <thead className="text-lg text-black uppercase bg-[#60fbdf] tracking-wider">
+    <div className="overflow-x-auto shadow-md shadow-teal-800/50 sm:rounded">
+      <table className={`${tableFont.className} w-full text-sm text-left`}>
+        <thead className="text-lg text-teal-800 uppercase bg-teal-400/50 tracking-wider border border-transparent rounded">
           <tr>
             {props.columns.map((items: any, index: any) => {
               return (
-                <th scope="col" className="px-6 py-3" key={index}>
+                <th
+                  scope="col"
+                  className="px-6 py-3 whitespace-nowrap"
+                  key={index}
+                >
                   {items}
                 </th>
               );
@@ -69,7 +75,7 @@ const PatentTable = (props: any) => {
           {props.data.map((item: any, index: any) => {
             return (
               <tr
-                className={`${tableBodyFont.className} bg-[#29b7a6] border-b hover:bg-gray-50 tracking-normal`}
+                className={`${tableBodyFont.className} tracking-normal bg-teal-50/50 text-teal-900`}
                 key={index}
               >
                 <th
@@ -94,7 +100,7 @@ const PatentTable = (props: any) => {
   );
 };
 
-const AddPatentModal = ({facultyData}:{facultyData:any}) => {
+const AddPatentModal = ({ facultyData }: { facultyData: any }) => {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const propsModal = { openModal, setOpenModal };
   const [facultyID, setFacultyID] = useState(facultyData.faculty_id);
@@ -115,7 +121,7 @@ const AddPatentModal = ({facultyData}:{facultyData:any}) => {
       applicationNo,
       status,
       patentLink,
-      image,
+      image
     );
     window.location.reload();
   };
@@ -132,7 +138,6 @@ const AddPatentModal = ({facultyData}:{facultyData:any}) => {
       uploadPatentMedia(facultyID, formData, patentDate);
     }
   };
-
 
   return (
     <>
@@ -261,7 +266,6 @@ const AddPatentModal = ({facultyData}:{facultyData:any}) => {
                 name="file"
               />
             </div>
-
 
             <div className="flex justify-center">
               <Button onClick={handleAddPatents}>Add Patent</Button>

@@ -1,14 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { Montserrat, Inter } from "next/font/google";
-import { addJournals, updateJournals, uploadJournalMedia } from "@/app/api/dbfunctions";
+import { Urbanist, Inter } from "next/font/google";
+import {
+  addJournals,
+  updateJournals,
+  uploadJournalMedia,
+} from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
 import NoData from "@/components/categories/NoData";
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 
-const tableFont = Montserrat({ weight: "400", subsets: ["latin"] });
+const tableFont = Urbanist({ weight: "400", subsets: ["latin"] });
 const tableBodyFont = Inter({ weight: "400", subsets: ["latin"] });
 
 const MyJournals = (props: any) => {
@@ -36,7 +40,7 @@ const MyJournals = (props: any) => {
           )}
         </section>
         <AddNewSec name="Journal">
-          <AddJournalModal facultyData={props.facultyData}/>
+          <AddJournalModal facultyData={props.facultyData} />
         </AddNewSec>
       </section>
     </section>
@@ -45,15 +49,19 @@ const MyJournals = (props: any) => {
 
 const JournalTable = (props: any) => {
   return (
-    <div className="overflow-x-auto shadow-md sm:rounded">
+    <div className="overflow-x-auto shadow-md shadow-teal-800/50 sm:rounded">
       <table
-        className={`${tableFont.className} w-full text-sm text-left text-black`}
+        className={`${tableFont.className} w-full text-sm text-left`}
       >
-        <thead className="text-lg text-black uppercase bg-[#60fbdf] tracking-wider">
+        <thead className="text-lg text-teal-800 uppercase bg-teal-400/50 tracking-wider border border-transparent rounded">
           <tr>
             {props.columns.map((items: any, index: any) => {
               return (
-                <th scope="col" className="px-6 py-3" key={index}>
+                <th
+                  scope="col"
+                  className="px-6 py-3 whitespace-nowrap"
+                  key={index}
+                >
                   {items}
                 </th>
               );
@@ -64,7 +72,7 @@ const JournalTable = (props: any) => {
           {props.data.map((item: any, index: any) => {
             return (
               <tr
-                className={`${tableBodyFont.className} bg-[#29b7a6] border-b hover:bg-gray-50 tracking-normal`}
+                className={`${tableBodyFont.className} tracking-normal bg-teal-50/50 text-teal-900`}
                 key={index}
               >
                 <th
@@ -91,7 +99,7 @@ const JournalTable = (props: any) => {
   );
 };
 
-const AddJournalModal = ({facultyData}:{facultyData:any}) => {
+const AddJournalModal = ({ facultyData }: { facultyData: any }) => {
   const [openModal, setOpenModal] = useState<string | undefined>();
   const propsModal = { openModal, setOpenModal };
   const [facultyID, setFacultyID] = useState(facultyData.faculty_id);
@@ -118,14 +126,15 @@ const AddJournalModal = ({facultyData}:{facultyData:any}) => {
 
   const handleAddJournals = async () => {
     await addJournals(
-    facultyID, 
-    paperTitle, 
-    journalName, 
-    date, 
-    issn, 
-    indexedIn,
-    link,
-    imageLink);
+      facultyID,
+      paperTitle,
+      journalName,
+      date,
+      issn,
+      indexedIn,
+      link,
+      imageLink
+    );
     window.location.reload();
   };
 
@@ -257,7 +266,6 @@ const AddJournalModal = ({facultyData}:{facultyData:any}) => {
                 name="file"
               />
             </div>
-
 
             <div className="flex justify-center">
               <Button onClick={handleAddJournals}>Add Journal</Button>
