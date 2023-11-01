@@ -51,7 +51,6 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          {/* <span className="absolute right-3 top-2 text-gray-500">🔍</span> */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -122,9 +121,7 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
             <option value="Patents">Patents</option>
             <option value="Workshops">Workshops</option>
             <option value="Journals">Journals</option>
-            <option value="all" selected>
-              All
-            </option>
+            <option value="all" selected>All</option>
             {/* Populate entry type options dynamically */}
           </select>
         </div>
@@ -137,12 +134,10 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
           >
-            <option value="PENDING" selected>
-              Pending
-            </option>
-            <option value="VERIFIED">Verified</option>
-            <option value="UNVERIFIED">Unverfied</option>
-
+            <option value="PENDING">Pending</option>
+            <option value="APPROVED">Verified</option>
+            <option value="REJECTED">Unverified</option>
+            <option value="" selected>All</option>
             {/* Populate entry type options dynamically */}
           </select>
         </div>

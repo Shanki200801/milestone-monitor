@@ -468,7 +468,7 @@ export const getDataForReport = async (
     // console.log("papents", patents);
     // console.log("workshops", workshops);
     // console.log("journals", journals);
-    console.log(conference_smolData, "this is conference_smolData");
+    // console.log(conference_smolData, "this is conference_smolData");
     const smolData = [
       ...(conference_smolData || []),
       ...(patents_smolData || []),
