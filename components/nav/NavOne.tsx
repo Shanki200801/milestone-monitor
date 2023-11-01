@@ -124,9 +124,9 @@ export default function NavOne(props: any) {
           {pathName == "/modify/approvals" ? (
             <div>Approvals</div>
           ) : (
-            <div>
+            <div className="text-teal-950">
               Welcome back,
-              <span className={`${fancyText.className} tracking-tight`}>
+              <span className={`${fancyText.className} tracking-tight text-cyan-500`}>
                 {" "}
                 {props.userData.faculty_name}.
               </span>

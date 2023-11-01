@@ -19,7 +19,7 @@ const bodyText = Urbanist({
 export default function Stats() {
   // getMilestoneNumbers();
   return (
-    <div className="w-[40vw] h-[45vh] p-4 -mt-[1%] bg-teal-500/20 justify-self-end flex items-center justify-around row-start-1 col-start-2 border border-transparent rounded">
+    <div className="w-[40vw] h-[45vh] p-4 -mt-[1%] text-teal-950 bg-teal-500/20 justify-self-end flex items-center justify-around row-start-1 col-start-2 border border-transparent rounded">
       <h2
         className={`${headerText.className} tracking-wide text-center font-bold uppercase lg:text-2xl`}
       >
