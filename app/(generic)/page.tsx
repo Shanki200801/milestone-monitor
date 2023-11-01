@@ -84,9 +84,6 @@ export default async function Index() {
       className={`invisible lg:visible ${bodyText.className} grid grid-cols-2 grid-rows-2 gap-8 md:h-[85vh] lg:h-[90vh] bg-teal-500/40 lg:p-8`}
     >
       <Account userData={userData} imageJpg={imageJpg} imagePng={imagePng}/>
-
-     
-
       <Stats/>
      
  <Events is_hod={hodBool} is_editor={editorBool}/>

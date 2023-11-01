@@ -9,7 +9,6 @@ import {
 } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
-import AddWorkshops from "@/app/(generic)/input-forms/AddWorkshops";
 import NoData from "@/components/categories/NoData";
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 
@@ -43,15 +42,17 @@ const MyWorkshops = (props: any) => {
 
 const WorkshopTable = (props: any) => {
   return (
-    <div className="overflow-x-auto shadow-md sm:rounded">
-      <table
-        className={`${tableFont.className} w-full text-sm text-left text-black`}
-      >
-        <thead className="text-lg text-black uppercase bg-[#60fbdf] tracking-wider">
+    <div className="overflow-x-auto shadow-md shadow-teal-800/50 sm:rounded">
+      <table className={`${tableFont.className} w-full text-sm text-left`}>
+        <thead className="text-lg text-teal-800 uppercase bg-teal-400/50 tracking-wider border border-transparent rounded">
           <tr>
             {props.columns.map((items: any, index: any) => {
               return (
-                <th scope="col" className="px-6 py-3" key={index}>
+                <th
+                  scope="col"
+                  className="px-6 py-3 whitespace-nowrap"
+                  key={index}
+                >
                   {items}
                 </th>
               );
@@ -62,7 +63,7 @@ const WorkshopTable = (props: any) => {
           {props.data.map((item: any, index: any) => {
             return (
               <tr
-                className={`${tableBodyFont.className} bg-[#29b7a6] border-b hover:bg-gray-50 tracking-normal`}
+                className={`${tableBodyFont.className} tracking-normal bg-teal-50/50 text-teal-900`}
                 key={index}
               >
                 <th

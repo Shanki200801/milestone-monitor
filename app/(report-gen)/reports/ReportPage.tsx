@@ -2,11 +2,17 @@
 import React from "react";
 import Filters from "./Filters";
 import GeneralTable from "./GeneralTable";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { getDataForReport } from "@/app/api/dbfunctions";
-import { CSVLink, CSVDownload } from "react-csv";
+import { CSVLink } from "react-csv";
 import { saveAs } from "file-saver";
 import { smolDataHeadersCSV } from "./CSVHeaders";
+import { Urbanist } from "next/font/google";
+
+const generalFont = Urbanist({
+  weight: "400",
+  subsets: ["latin"],
+});
 
 const ReportPage = ({ staff_details }: any) => {
   const [filterState, setFilterState] = useState({
@@ -39,7 +45,6 @@ const ReportPage = ({ staff_details }: any) => {
     return csvRows.join("\n");
   };
   const downloadCSV = (data: any[], filename: string) => {
-    console.log("Loggin full data from download csv fn ", data);
     const csvData = convertToCSV(data);
     const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, filename);
@@ -71,34 +76,28 @@ const ReportPage = ({ staff_details }: any) => {
     }
   };
 
-  // const handleFullDownloadClick = () => {
-  //   console.log("full download is being sent", filterState);
-  //   fullDownload(filterState);
-  // };
-
   return (
-    <div className="flex bg-[#cbfef8] ">
-      <div className="w-4/5">
-        <h1 className="text-3xl font-semibold my-4 text-center">
-          Report Geneartion
-        </h1>
+    <div
+      className={`${generalFont.className} h-[90vh] grid grid-cols-6 bg-[#cbfef8]`}
+    >
+      <div className="col-start-1 col-end-5">
         <GeneralTable data={data} staffDetails={staff_details} />
 
-        <div className="flex place-content-evenly ">
+        <div className={`${generalFont.className} flex place-content-evenly`}>
           <button
             onClick={handleFirstLinkClick}
-            className="text-white px-4 py-2 rounded bg-lime-700"
+            className="tracking-wide text-white px-4 py-2 rounded bg-teal-700 hover:bg-teal-500 hover:font-bold shadow-md shadow-teal-500/50 hover:shadow-lg hover:shadow-teal-500/70"
           >
-            Download full report
+            Download Full Report
           </button>
 
           <CSVLink
             data={data}
             headers={smolDataHeadersCSV}
             filename="light-report.csv"
-            className="text-white px-4 py-2 rounded bg-lime-700"
+            className="tracking-wide text-white px-4 py-2 rounded bg-teal-700 hover:bg-teal-500 hover:font-bold shadow-md shadow-teal-500/50 hover:shadow-lg hover:shadow-teal-500/70"
           >
-            Download light report
+            Download Light Report
           </CSVLink>
         </div>
       </div>
