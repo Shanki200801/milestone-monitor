@@ -8,7 +8,14 @@ import {
   PendingJournal,
   PendingWorkshop,
 } from "./types";
-import { Button, Checkbox, Label, Modal, Table, TextInput } from "flowbite-react";
+import {
+  Button,
+  Checkbox,
+  Label,
+  Modal,
+  Table,
+  TextInput,
+} from "flowbite-react";
 import { approveEntry, rejectEntry } from "@/app/api/dbfunctions";
 import { Urbanist } from "next/font/google";
 
@@ -20,7 +27,13 @@ const bodyText = Urbanist({
 // Example usage:
 // const data: PendingData = /* Your JSON data here */;
 
-const Approval = ({ pending_data, userData }: { pending_data: PendingData, userData:any }) => {
+const Approval = ({
+  pending_data,
+  userData,
+}: {
+  pending_data: PendingData;
+  userData: any;
+}) => {
   //specific data
 
   //modal jsx
@@ -54,50 +67,46 @@ const Approval = ({ pending_data, userData }: { pending_data: PendingData, userD
   //   "testing " + JSON.stringify([...pending_data["pending_conferences"]])
   // );
   return (
-      <div className=" min-h-screen bg-white flex flex-col items-center font-sans">
-        <p className={`${bodyText.className} my-6 text-xl`}>
-          Use the table to approve or disapprove submissions made
-          by staff of the {userData.faculty_department} department
-        </p>
-        <div className="w-full bg-white py-5 px-6">
-          <div className={`bg-[#cbfef8] py-5 px-6 rounded`}>
+    <div className=" min-h-screen bg-white flex flex-col items-center font-sans">
+      <p className={`${bodyText.className} my-6 text-xl`}>
+        Use the table to approve or disapprove submissions made by staff of the{" "}
+        {userData.faculty_department} department
+      </p>
+      <div className="w-full bg-white py-5 px-6">
+        <div className={`bg-[#cbfef8] py-5 px-6 rounded`}>
           <Table className={`${bodyText.className} text-black `} hoverable>
-              <Table.Head className={``}>
-                
-                  <Table.HeadCell className={`bg-[#60fbdf]`}>Time Stamp</Table.HeadCell>
-                  <Table.HeadCell className={`bg-[#60fbdf]`}>Category</Table.HeadCell>
-                  <Table.HeadCell className={`bg-[#60fbdf]`}>Faculty Name</Table.HeadCell>
-                  <Table.HeadCell className={`bg-[#60fbdf]`}>Title</Table.HeadCell>
-                  <Table.HeadCell className={`bg-[#60fbdf] text-center`}>Actions</Table.HeadCell>
-              </Table.Head>
-              <Table.Body className="divide-y">
-                {outer_display_object.map((item, index) => (
-                  <Table.Row
-                  className="bg-[#29b7a6]"
-                    key={index}
-                  >
-                    <Table.Cell>
-                          {item.created_at?.substring(0, 10)}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {item.entry_type}
-                    </Table.Cell>
-                    <Table.Cell>
-                      {item.faculty_id}
-                    </Table.Cell>
-                    <Table.Cell>
-                        {item.title}
-                    </Table.Cell>
-                    <Table.Cell className={`text-center`}>
-                      <ViewModal data={item} />
-                    </Table.Cell>
-                  </Table.Row>
-                ))}
-              </Table.Body>
-            </Table>
-          </div>
-          </div>
+            <Table.Head className={``}>
+              <Table.HeadCell className={`bg-[#60fbdf]`}>
+                Time Stamp
+              </Table.HeadCell>
+              <Table.HeadCell className={`bg-[#60fbdf]`}>
+                Category
+              </Table.HeadCell>
+              <Table.HeadCell className={`bg-[#60fbdf]`}>
+                Faculty Name
+              </Table.HeadCell>
+              <Table.HeadCell className={`bg-[#60fbdf]`}>Title</Table.HeadCell>
+              <Table.HeadCell className={`bg-[#60fbdf] text-center`}>
+                Actions
+              </Table.HeadCell>
+            </Table.Head>
+            <Table.Body className="divide-y">
+              {outer_display_object.map((item, index) => (
+                <Table.Row className="bg-[#29b7a6]" key={index}>
+                  <Table.Cell>{item.created_at?.substring(0, 10)}</Table.Cell>
+                  <Table.Cell>{item.entry_type}</Table.Cell>
+                  <Table.Cell>{item.faculty_id}</Table.Cell>
+                  <Table.Cell>{item.title}</Table.Cell>
+                  <Table.Cell className={`text-center`}>
+                    <ViewModal data={item} />
+                  </Table.Cell>
+                </Table.Row>
+              ))}
+            </Table.Body>
+          </Table>
         </div>
+      </div>
+    </div>
   );
 };
 
@@ -245,6 +254,16 @@ const ConferenceModal = (data: any) => {
             </tr>
           )}
           <tr>
+            <td className="py-2 px-4">Patent image</td>
+            <td className="py-2 px-4">
+              <a
+                target="_blank"
+                href={`https://ifoagbunmhwxznfzppzc.supabase.co/storage/v1/object/public/staff-media/conferenceMedia/${data.faculty_id}/${data.faculty_id}_${data.conf_date}`}
+                rel="noreferrer"
+              ></a>
+            </td>
+          </tr>
+          <tr>
             <td className="py-2 px-4">Faculty ID</td>
             <td className="py-2 px-4">{data.faculty_id}</td>
           </tr>
@@ -261,7 +280,7 @@ const JournalModal = (data: any) => {
     <div className="">
       <h1 className="text-center text-xl font-bold">Journals</h1>
       <table className="w-full my-4 ">
-      <tbody>
+        <tbody>
           <tr className={`font-bold border-b-2 border-black`}>
             <td className="py-2 px-4">Field</td>
             <td className="py-2 px-4">Value</td>
@@ -296,7 +315,15 @@ const JournalModal = (data: any) => {
           </tr>
           <tr>
             <td className="py-2 px-4">Image</td>
-            <td className="py-2 px-4">{data.upload_image}</td>
+            <td className="py-2 px-4">
+              <a
+                target="_blank"
+                href={`https://ifoagbunmhwxznfzppzc.supabase.co/storage/v1/object/public/staff-media/journalMedia/${data.faculty_id}/${data.faculty_id}_${data.month_and_year_of_publication}`}
+              >
+                Click to view
+              </a>
+              {data.upload_image}
+            </td>
           </tr>
           <tr>
             <td className="py-2 px-4">Faculty ID</td>
@@ -315,7 +342,7 @@ const PatentModal = (data: any) => {
     <div className="">
       <h1 className="text-center text-xl font-bold">Patent</h1>
       <table className="w-full my-4">
-      <tbody>
+        <tbody>
           <tr className={`font-bold border-b-2 border-black`}>
             <td className="py-2 px-4">Field</td>
             <td className="py-2 px-4">Value</td>
@@ -350,7 +377,14 @@ const PatentModal = (data: any) => {
           </tr>
           <tr>
             <td className="py-2 px-4">Patent Image</td>
-            <td className="py-2 px-4">{data.image}</td>
+            <td className="py-2 px-4">
+              <a
+                target="_blank"
+                href={`https://ifoagbunmhwxznfzppzc.supabase.co/storage/v1/object/public/staff-media/patentMedia/${data.faculty_id}/${data.faculty_id}_${data.patent_date}`}
+              >
+                Click to view
+              </a>
+            </td>
           </tr>
           <tr>
             <td className="py-2 px-4">Faculty ID</td>
@@ -369,7 +403,7 @@ const WorkshopModal = (data: any) => {
     <div className="">
       <h1 className="text-center text-xl font-bold">Workshop</h1>
       <table className="w-full my-4">
-      <tbody>
+        <tbody>
           <tr className={`font-bold border-b-2 border-black`}>
             <td className="py-2 px-4">Field</td>
             <td className="py-2 px-4">Value</td>
