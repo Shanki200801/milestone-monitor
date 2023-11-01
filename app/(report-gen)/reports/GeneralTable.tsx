@@ -1,6 +1,6 @@
 import React from "react";
 import { Urbanist, Inter } from "next/font/google";
-import NoData from "@/components/categories/NoData";
+import NoData from "@/components/reports/NoData";
 
 const headerFont = Urbanist({ weight: "400", subsets: ["latin"] });
 const tableFont = Inter({weight: "400", subsets: ["latin"]});
