@@ -258,7 +258,7 @@ const ConferenceModal = (data: any) => {
             <td className="py-2 px-4">
               <a
                 target="_blank"
-                href={`https://ifoagbunmhwxznfzppzc.supabase.co/storage/v1/object/public/staff-media/conferenceMedia/${data.faculty_id}/${data.faculty_id}_${data.conf_date}`}
+                href={`https://ifoagbunmhwxznfzppzc.supabase.co/storage/v1/object/public/staff-media/conferenceMedia/${data.faculty_id}/${data.faculty_id}_${data.conf_date}.pdf`}
                 rel="noreferrer"
               ></a>
             </td>
@@ -318,7 +318,7 @@ const JournalModal = (data: any) => {
             <td className="py-2 px-4">
               <a
                 target="_blank"
-                href={`https://ifoagbunmhwxznfzppzc.supabase.co/storage/v1/object/public/staff-media/journalMedia/${data.faculty_id}/${data.faculty_id}_${data.month_and_year_of_publication}`}
+                href={`https://ifoagbunmhwxznfzppzc.supabase.co/storage/v1/object/public/staff-media/journalMedia/${data.faculty_id}/${data.faculty_id}_${data.month_and_year_of_publication}.pdf`}
               >
                 Click to view
               </a>
@@ -380,7 +380,7 @@ const PatentModal = (data: any) => {
             <td className="py-2 px-4">
               <a
                 target="_blank"
-                href={`https://ifoagbunmhwxznfzppzc.supabase.co/storage/v1/object/public/staff-media/patentMedia/${data.faculty_id}/${data.faculty_id}_${data.patent_date}`}
+                href={`https://ifoagbunmhwxznfzppzc.supabase.co/storage/v1/object/public/staff-media/patentMedia/${data.faculty_id}/${data.faculty_id}_${data.patent_date}.pdf`}
               >
                 Click to view
               </a>
