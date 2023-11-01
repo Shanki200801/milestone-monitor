@@ -1026,19 +1026,19 @@ export const getMilestoneNumbers = async () => {
     .select("*", { count: "exact", head: true })
     .eq("faculty_id", userData?.[0]?.faculty_id);
   const {
-    data: d_jpub,
-    count: n_jpub,
-    error: e_jpub,
-  } = await supabase
-    .from("journal_publications")
-    .select("*", { count: "exact", head: true })
-    .eq("faculty_id", userData?.[0]?.faculty_id);
-  const {
     data: d_workshop,
     count: n_workshop,
     error: e_workshop,
   } = await supabase
     .from("fdp_workshop_refresher_course")
+    .select("*", { count: "exact", head: true })
+    .eq("faculty_id", userData?.[0]?.faculty_id);
+  const {
+    data: d_jpub,
+    count: n_jpub,
+    error: e_jpub,
+  } = await supabase
+    .from("journal_publications")
     .select("*", { count: "exact", head: true })
     .eq("faculty_id", userData?.[0]?.faculty_id);
   const {
@@ -1057,7 +1057,7 @@ export const getMilestoneNumbers = async () => {
     console.log(e_workshop);
     console.log(e_patent);
   }
-  return [n_conf, n_jpub, n_workshop, n_patent];
+  return [n_conf, n_workshop, n_jpub, n_patent];
 };
 
 async function uploadFile(path: string, file: File): Promise<string> {
