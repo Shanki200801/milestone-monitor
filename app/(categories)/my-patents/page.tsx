@@ -6,6 +6,11 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { MyPatents } from "./MyPatents";
 import { fetchData, fetchRole } from "@/app/api/dbfunctions";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Patents | Milestone Monitor',
+}
 
 const PagePatent = async () => {
   const supabase = createServerComponentClient({ cookies });

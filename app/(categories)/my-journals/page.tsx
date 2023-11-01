@@ -5,6 +5,11 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { fetchData, fetchRole } from "@/app/api/dbfunctions";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Journals | Milestone Monitor',
+}
 
 const PageJournal = async () => {
   const supabase = createServerComponentClient({ cookies });
