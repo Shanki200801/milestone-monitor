@@ -1,29 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import logoImg from "../../public/logo.webp";
-import { Montserrat, Urbanist, Courgette } from "next/font/google";
+import logoImg from "../../../public/logo.webp";
+import { Urbanist } from "next/font/google";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-const bodyText = Montserrat({
+const bodyText = Urbanist({
   weight: "400",
   subsets: ["latin"],
 });
 
 const headerText = Urbanist({
-  weight: "400",
+  weight: "600",
   subsets: ["latin"],
 });
 
-const fancyText = Courgette({
-  weight: "400",
-  subsets: ["latin"],
-});
-
-export default function NavOne(props: any) {
+export default function NavTest() {
   const router = useRouter();
-  const pathName = usePathname();
 
   // Create a Supabase client configured to use cookies
   const supabase = createClientComponentClient();
@@ -106,9 +100,9 @@ export default function NavOne(props: any) {
             </ul> */}
         <li
           id="small-home-greeting-user-header"
-          className={`${headerText.className} row-start-2 text-center text-2xl w-[100vw] h-fit -mt-16`}
+          className={`${headerText.className} uppercase row-start-2 text-center text-2xl w-[100vw] h-fit -mt-16`}
         >
-          Welcome Back, {props.userData.faculty_name}.
+          Generate Reports
         </li>
       </ul>
 
@@ -119,19 +113,9 @@ export default function NavOne(props: any) {
       >
         <h1
           id="home-greeting-user-header"
-          className={`${headerText.className} text-lg sm:text-xl lg:text-2xl xl:text-3xl text-center row-start-2 col-span-3 sm:col-span-1 sm:col-start-2 sm:row-start-1 -mt-20 lg:-mt-[1rem] sm:m-0`}
+          className={`${headerText.className} uppercase text-lg sm:text-xl lg:text-2xl xl:text-3xl text-center row-start-2 col-span-3 sm:col-span-1 sm:col-start-2 sm:row-start-1 -mt-20 lg:-mt-[1rem] sm:m-0`}
         >
-          {pathName == "/modify/approvals" ? (
-            <div>Approvals</div>
-          ) : (
-            <div className="text-teal-950">
-              Welcome back,
-              <span className={`${fancyText.className} tracking-tight text-cyan-500`}>
-                {" "}
-                {props.userData.faculty_name}.
-              </span>
-            </div>
-          )}
+          Generate Reports
         </h1>
         <ul
           id="home-user-actions-elements"

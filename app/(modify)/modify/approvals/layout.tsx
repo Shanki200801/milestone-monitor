@@ -1,8 +1,8 @@
 import { redirect } from "next/navigation";
-import "../../globals.css";
+import "../../../globals.css";
 import NavOne from "./NavOne";
 import NavTwo from "@/components/nav/NavTwo";
-import { fetchRole } from "../../api/dbfunctions";
+import { fetchRole } from "../../../api/dbfunctions";
 import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { cookies } from "next/headers";
 

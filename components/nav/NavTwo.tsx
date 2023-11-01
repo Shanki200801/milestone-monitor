@@ -13,7 +13,7 @@ export default function NavTwo(props: any) {
   return (
     <section
       id="navbar-2"
-      className={`${bodyText.className} bg-teal-500 row-start-2 w-[10vw] h-full absolute invisible sm:visible top-0`}
+      className={`z-10 ${bodyText.className} bg-teal-500 row-start-2 w-[10vw] h-full fixed invisible sm:visible top-0`}
     >
       {/* Navigation Bar - 2 */}
       <ul
@@ -146,8 +146,8 @@ const ModifySubComp = () => {
   return (
     <li className="relative">
       <button
-        onMouseOver={toggleSubMenu} //choose your demon lol; this one is a little seizurey
-        // onClick={toggleSubMenu} //choose your demon lol; this one is a little annoying but more reliable ig
+        // onMouseOver={toggleSubMenu} //choose your demon lol; this one is a little seizurey
+        onClick={toggleSubMenu} //choose your demon lol; this one is a little annoying but more reliable ig
         className="hover:text-emerald-300 hover:font-bold"
       >
         <a href="/modify"></a>
@@ -174,9 +174,9 @@ const ModifySubComp = () => {
       </button>
 
       {subMenuOpen && (
-        <ul className="z-10 absolute flex flex-col justify-between gap-8 bg-teal-500 left-[95%] p-4 -top-[80%] border border-transparent rounded-r">
+        <ul className="absolute flex flex-col justify-between gap-8 bg-teal-500 left-[95%] p-4 -top-[80%] border border-transparent rounded-r">
           <li className="hover:text-emerald-300 hover:font-bold">
-            <a href="/modify/staff/add-staff">
+            <a href="/modify/add-staff">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -222,7 +222,7 @@ const ModifySubComp = () => {
 const ReportSubComp = () => {
   return (
     <li className="hover:text-emerald-300 hover:font-bold">
-      <a href="/report-gen">
+      <a href="/reports">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

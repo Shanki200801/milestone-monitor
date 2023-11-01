@@ -38,49 +38,65 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
   ]);
 
   return (
-    <div className="bg-light-green-100 min-h-screen flex items-center justify-center bg-white">
-      <div className=" p-4 rounded-lg shadow-lg w-full bg-[#cbfef8] mx-2  max-w-xs">
-        <h1 className="text-xl font-semibold my-2 text-center  ">Filters</h1>
-        <div className="mb-4 relative">
+    <div className="col-start-5 col-end-7 bg-light-green-100 flex items-center justify-center">
+      <div className="p-4 rounded-lg shadow-md shadow-teal-800/20 w-fit bg-teal-400/40">
+        <h1 className="text-xl uppercase font-bold tracking-wide my-2 text-center text-teal-700">
+          Filters
+        </h1>
+        <div className="mb-4 relative flex flex-row items-center">
           <input
             type="text"
             placeholder="Search..."
-            className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
+            className="bg-[#cbfef8]/70 text-gray-500 w-full py-2 px-4 border-2 border-teal-500/30 rounded-lg focus:outline-none focus:border-teal-400 hover:border-teal-400"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <span className="absolute right-3 top-2 text-gray-500">🔍</span>
+          {/* <span className="absolute right-3 top-2 text-gray-500">🔍</span> */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6 text-gray-500 absolute right-3 top-[0.6rem]"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+            />
+          </svg>
         </div>
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
+            <label className="tracking-wide block text-sm font-bold text-emerald-700 mb-2">
               Start Date
             </label>
             <input
               type="date"
-              className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
+              className="bg-[#cbfef8]/70 text-gray-500 w-full py-2 px-4 border-2 border-teal-500/30 rounded-lg focus:outline-none focus:border-teal-400 hover:border-teal-400"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2">
+            <label className="tracking-wide block text-sm font-bold text-emerald-700 mb-2">
               End Date
             </label>
             <input
               type="date"
-              className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
+              className="bg-[#cbfef8]/70 text-gray-500 w-full py-2 px-4 border-2 border-teal-500/30 rounded-lg focus:outline-none focus:border-teal-400 hover:border-teal-400"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
             />
           </div>
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-600 mb-2">
+          <label className="tracking-wide block text-sm font-bold text-emerald-700 mb-2">
             Select Staff
           </label>
           <select
-            className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
+            className="bg-[#cbfef8]/70 text-gray-500 w-full py-2 px-4 border-2 border-teal-500/30 rounded-lg focus:outline-none focus:border-teal-400 hover:border-teal-400"
             value={selectedStaff}
             onChange={(e) => setSelectedStaff(e.target.value)}
           >
@@ -94,11 +110,11 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
           </select>
         </div>
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-600 mb-2">
+          <label className="tracking-wide block text-sm font-bold text-emerald-700 mb-2">
             Select Type
           </label>
           <select
-            className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
+            className="bg-[#cbfef8]/70 text-gray-500 w-full py-2 px-4 border-2 border-teal-500/30 rounded-lg focus:outline-none focus:border-teal-400 hover:border-teal-400"
             value={selectedType}
             onChange={(e) => setSelectedType(e.target.value)}
           >
@@ -113,11 +129,11 @@ const Filters = ({ staffDetails, onFiltersChange }: any) => {
           </select>
         </div>
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-600 mb-2">
-            Select Verification status
+          <label className="tracking-wide block text-sm font-bold text-emerald-700  mb-2">
+            Select Verification Status
           </label>
           <select
-            className="w-full py-2 px-4 border border-gray-300 rounded focus:outline-none focus:border-light-green-500"
+            className="bg-[#cbfef8]/70 text-gray-500 w-full py-2 px-4 border-2 border-teal-500/30 rounded-lg focus:outline-none focus:border-teal-400 hover:border-teal-400"
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
           >
