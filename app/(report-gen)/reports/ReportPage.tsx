@@ -51,6 +51,10 @@ const ReportPage = ({ staff_details }: any) => {
   };
 
   const handleFirstLinkClick = () => {
+    if (fullData.length <= 0) {
+      alert("No data to download");
+      return;
+    }
     const conferenceData = fullData.filter(
       (d: any) => d.entry_type === "conference"
     );
