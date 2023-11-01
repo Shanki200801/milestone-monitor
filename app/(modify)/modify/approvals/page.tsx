@@ -11,6 +11,12 @@ import {
   PendingPatent,
 } from "./types";
 import { fetchRole } from "@/app/api/dbfunctions";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: 'Approvals | Milestone Monitor',
+}
+
 const page = async () => {
   const supabase = createServerComponentClient({ cookies });
   let userData;

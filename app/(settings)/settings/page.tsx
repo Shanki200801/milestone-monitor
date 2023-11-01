@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { Urbanist } from "next/font/google";
 import Settings from "@/components/settings/Settings";
+import { Metadata } from "next";
 
 const bodyText = Urbanist({
   weight: "400",
@@ -17,6 +18,10 @@ const headerText = Urbanist({
 })
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: 'User Settings | Milestone Monitor',
+}
 
 const page = async () => {
   const supabase = createServerComponentClient({ cookies });
