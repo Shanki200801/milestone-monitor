@@ -57,7 +57,7 @@ export default function Account(props: any) {
             <img
               id="pfp-placeholder"  
               src={props.imageJpg}
-              className="w-full h-full aspect-auto object-contain object-center overflow-hidden shadow-md shadow-teal-700/20 border border-teal-700/20 rounded-md"
+              className="w-full h-full min-h-[25vh] aspect-auto object-contain object-center overflow-hidden shadow-md shadow-teal-700/20 border border-teal-700/20 rounded-md"
               alt="[user's profile picture]"
             />
           )}
@@ -65,7 +65,7 @@ export default function Account(props: any) {
             <img
               id="pfp-placeholder"
               src={props.imagePng}
-              className="w-full h-full aspect-auto object-contain object-center overflow-hidden shadow-md shadow-teal-700/20 border border-teal-700/20 rounded-md"
+              className="w-full h-full min-h-[25vh] aspect-auto object-contain object-center overflow-hidden shadow-md shadow-teal-700/20 border border-teal-700/20 rounded-md"
               alt="[user's profile picture]"
             />
           )}
@@ -73,7 +73,7 @@ export default function Account(props: any) {
             <Image
               id="pfp-placeholder"
               src={profileImg}
-              className="w-full h-full aspect-auto object-contain object-center overflow-hidden shadow-md shadow-teal-700/20 border border-teal-700/20 rounded-md"
+              className="w-full h-full min-h-[25vh] aspect-auto object-contain object-center overflow-hidden shadow-md shadow-teal-700/20 border border-teal-700/20 rounded-md"
               alt="[user's profile picture]"
             />
           )}
