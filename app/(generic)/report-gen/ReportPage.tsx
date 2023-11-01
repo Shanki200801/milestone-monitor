@@ -8,7 +8,7 @@ import { CSVLink, CSVDownload } from "react-csv";
 import { saveAs } from "file-saver";
 import { smolDataHeadersCSV } from "./CSVHeaders";
 
-const ReportPage = ({ staff_details }:any) => {
+const ReportPage = ({ staff_details }: any) => {
   const [filterState, setFilterState] = useState({
     searchQuery: "",
     startDate: undefined,
@@ -39,6 +39,7 @@ const ReportPage = ({ staff_details }:any) => {
     return csvRows.join("\n");
   };
   const downloadCSV = (data: any[], filename: string) => {
+    console.log("Loggin full data from download csv fn ", data);
     const csvData = convertToCSV(data);
     const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
     saveAs(blob, filename);
@@ -69,6 +70,11 @@ const ReportPage = ({ staff_details }:any) => {
       downloadCSV(patentData, "patentdata.csv");
     }
   };
+
+  // const handleFullDownloadClick = () => {
+  //   console.log("full download is being sent", filterState);
+  //   fullDownload(filterState);
+  // };
 
   return (
     <div className="flex bg-[#cbfef8] ">

@@ -554,7 +554,7 @@ export const updateConf = async (
         proceedings: proceedings,
         certificate: certificate,
         proceeding_fp: proceeding_fp,
-        is_verified: "Pending",
+        is_verified: "PENDING",
       })
       .eq("id", id);
   }
@@ -594,7 +594,7 @@ export const updateJournals = async (
         month_and_year_of_publication: date_of_publication,
         indexed_in: indexed_in,
         link: link,
-        is_verified: "Pending",
+        is_verified: "PENDING",
       })
       .eq("id", id);
   }
@@ -634,7 +634,7 @@ export const updatePatents = async (
         application_no: application_no,
         status: status,
         patent_link: patent_link,
-        is_verified: "Pending",
+        is_verified: "PENDING",
       })
       .eq("id", id);
   }
@@ -671,7 +671,7 @@ export const updateWorkshops = async (
         title: title,
         number_of_days: number_of_days,
         // organized_by: organized_by,
-        is_verified: "Pending",
+        is_verified: "PENDING",
       })
       .eq("id", id);
   }
@@ -1168,3 +1168,90 @@ export const uploadProfilePicture = async (
   }
   return "";
 };
+
+// export const fullDownload = async (filterState: any) => {
+//   const supabase = createClientComponentClient();
+//   let start_date, end_date;
+//   if (typeof filterState.startDate == "undefined") {
+//     start_date = "2001-01-01";
+//   } else {
+//     start_date = filterState.startDate;
+//   }
+//   if (typeof filterState.endDate == "undefined") {
+//     end_date = new Date().toJSON().slice(0, 10);
+//   } else {
+//     end_date = filterState.endDate;
+//   }
+//   let filterType = filterState.selectedType;
+//   let status = filterState.selectedStatus;
+//   let faculty_id = filterState.selectedStaff;
+//   let title = filterState.searchQuery;
+
+//   const { data: conference, error: e_conf } = await supabase
+//     .from("conferences")
+//     .select(`*`)
+//     .filter("conf_date", "gte", start_date)
+//     .filter("conf_date", "lte", end_date)
+//     .filter("paper_title", "ilike", `%${title}%`)
+//     .filter("is_verified", "ilike", `%${status}%`)
+//     .filter("faculty_id", "ilike", `%${faculty_id}%`)
+//     .csv();
+
+//   if (e_conf) {
+//     console.log("Error from conferences: ", e_conf.message);
+//   }
+
+//   const { data: patents, error: e_pat } = await supabase
+//     .from("patents")
+//     .select(`*`)
+//     .filter("patent_date", "gte", start_date)
+//     .filter("patent_date", "lte", end_date)
+//     .filter("patent_name", "ilike", `%${title}%`)
+//     .filter("is_verified", "ilike", `%${status}%`)
+//     .filter("faculty_id", "ilike", `%${faculty_id}%`)
+//     .csv();
+//   if (e_pat) {
+//     console.log("Pat error ", e_pat);
+//   }
+
+//   const { data: workshops, error: e_work } = await supabase
+//     .from("fdp_workshop_refresher_course")
+//     .select(`*`)
+//     .filter("date", "gte", start_date)
+//     .filter("date", "lte", end_date)
+//     .filter("title", "ilike", `%${title}%`)
+//     .filter("is_verified", "ilike", `%${status}%`)
+//     .filter("faculty_id", "ilike", `%${faculty_id}%`)
+//     .csv();
+//   if (e_work) {
+//     console.log("Work error ", e_work);
+//   }
+
+//   const { data: journals, error: e_journal } = await supabase
+//     .from("journal_publications")
+//     .select(`*`)
+//     .filter("month_and_year_of_publication", "gte", start_date)
+//     .filter("month_and_year_of_publication", "lte", end_date)
+//     .filter("paper_title", "ilike", `%${title}%`)
+//     .filter("is_verified", "ilike", `%${status}%`)
+//     .filter("faculty_id", "ilike", `%${faculty_id}%`)
+//     .csv();
+
+//   if (e_journal) {
+//     console.log("Journal error ", e_journal);
+//   }
+
+//   if (filterType == "all") {
+//     csvdownloader(conference);
+//   }
+// };
+
+// const csvdownloader = (data: string) => {
+//   const csvBuffer = new Uint8Array(Buffer.from(asString(csv)));
+
+//   // Write the csv file to disk
+//   writeFile(filename, csvBuffer, (err) => {
+//     if (err) throw err;
+//     console.log("file saved: ", filename);
+//   });
+// };

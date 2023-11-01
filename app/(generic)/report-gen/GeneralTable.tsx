@@ -4,7 +4,7 @@ import NoData from "@/components/categories/NoData";
 
 const tableFont = Alata({ weight: "400", subsets: ["latin"] });
 
-const GeneralTable = ({ data, staffDetails }:any) => {
+const GeneralTable = ({ data, staffDetails }: any) => {
   // console.log("data from table component", data);
   // console.log("Staff details ->", staffDetails);
   return (
@@ -33,6 +33,7 @@ const DisplayTable = (props: any, staffDetails: any) => {
   props = props.props;
 
   const getfacultyname = (id: string) => {
+    console.log("finding faculty name");
     const faculty = staffDetails.find((f: any) => f.faculty_id == id);
     return faculty ? faculty.faculty_name : "";
   };
