@@ -235,6 +235,20 @@ const AddWorkshopModal = ({ facultyData }: { facultyData: any }) => {
               </div>
             )}
 
+            {heldOrAttended === "Held" && (
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Workshop organized by" />
+                </div>
+                <TextInput
+                  type="text"
+                  value="Self"
+                  required
+                  disabled
+                />
+              </div>
+            )}
+
             <div className="flex justify-center">
               <Button onClick={handleAddWorkshops}>Add Workshop</Button>
             </div>
