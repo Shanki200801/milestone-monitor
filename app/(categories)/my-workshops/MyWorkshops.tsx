@@ -100,7 +100,11 @@ const AddWorkshopModal = ({ facultyData }: { facultyData: any }) => {
   const [organisedBy, setOrganisedBy] = useState("");
 
   const handleAddWorkshops = async () => {
-    await addWorkshops(facultyID, title, date, type, noDays, organisedBy);
+    if(heldOrAttended=="Held"){
+      await addWorkshops(facultyID, title, date, type, noDays, "Self");
+    }else if(heldOrAttended=="Attended"){
+      await addWorkshops(facultyID, title, date, type, noDays, organisedBy);
+    }
     window.location.reload();
   };
 
@@ -244,6 +248,7 @@ const AddWorkshopModal = ({ facultyData }: { facultyData: any }) => {
                   type="text"
                   value="Self"
                   required
+                  readOnly
                   disabled
                 />
               </div>
