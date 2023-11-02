@@ -100,7 +100,11 @@ const AddWorkshopModal = ({ facultyData }: { facultyData: any }) => {
   const [organisedBy, setOrganisedBy] = useState("");
 
   const handleAddWorkshops = async () => {
-    await addWorkshops(facultyID, title, date, type, noDays, organisedBy);
+    if(heldOrAttended=="Held"){
+      await addWorkshops(facultyID, title, date, type, noDays, "Self");
+    }else if(heldOrAttended=="Attended"){
+      await addWorkshops(facultyID, title, date, type, noDays, organisedBy);
+    }
     window.location.reload();
   };
 
@@ -231,6 +235,21 @@ const AddWorkshopModal = ({ facultyData }: { facultyData: any }) => {
                   onChange={(e) => setOrganisedBy(e.target.value)}
                   value={organisedBy}
                   required
+                />
+              </div>
+            )}
+
+            {heldOrAttended === "Held" && (
+              <div>
+                <div className="mb-2 block">
+                  <Label value="Workshop organized by" />
+                </div>
+                <TextInput
+                  type="text"
+                  value="Self"
+                  required
+                  readOnly
+                  disabled
                 />
               </div>
             )}
