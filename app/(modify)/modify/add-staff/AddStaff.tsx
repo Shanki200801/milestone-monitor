@@ -14,7 +14,7 @@ const AddStaff = () => {
   const router = useRouter();
   const [facultyID, setFacultyID] = useState("");
   const [facultyName, setFacultyName] = useState("");
-  const [dept, setDept] = useState("");
+  const [dept, setDept] = useState("Computer Science");
   const [role, setRole] = useState("");
   const [phno, setPhno] = useState("");
   const [email, setEmail] = useState("");
@@ -54,11 +54,13 @@ const AddStaff = () => {
             onChange={(e) => setDept(e.target.value)}
             className="mb-5 rounded p-1 bg-white"
           >
-            <option value="computer science">Computer Science</option>
-            <option value="mathematics">Mathematics</option>
-            <option value="physics">Physics</option>
-            <option value="chemistry">Chemistry</option>
-            <option value="botany">Botany</option>
+            <option value="Computer Science" selected>
+              Computer Science
+            </option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Chemistry">Chemistry</option>
+            <option value="Botany">Botany</option>
             {/* .....lets add more if needed later  */}
           </select>
           <label className="mb-1">Role</label>

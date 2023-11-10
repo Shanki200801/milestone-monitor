@@ -6,11 +6,12 @@ import {
   fetchData,
   updateWorkshops,
   addWorkshops,
+  uploadWorkshopMedia,
 } from "@/app/api/dbfunctions";
 import CategoryHeader from "@/components/categories/CategoryHeader";
 import AddNewSec from "@/components/categories/AddNewSec";
 import NoData from "@/components/categories/NoData";
-import { Button, Label, Modal, TextInput } from "flowbite-react";
+import { Button, FileInput, Label, Modal, TextInput } from "flowbite-react";
 
 const tableFont = Montserrat({ weight: "400", subsets: ["latin"] });
 const tableBodyFont = Inter({ weight: "400", subsets: ["latin"] });
@@ -98,10 +99,24 @@ const AddWorkshopModal = ({ facultyData }: { facultyData: any }) => {
   const [noDays, setNoDays] = useState(0);
   const [heldOrAttended, setHeldorAttended] = useState("Attended");
   const [organisedBy, setOrganisedBy] = useState("");
+  const [certificate, setCertificate] = useState();
 
   const handleAddWorkshops = async () => {
     await addWorkshops(facultyID, title, date, type, noDays, organisedBy);
     window.location.reload();
+  };
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const files = Array.from(e.currentTarget.files ?? []);
+    console.log(files);
+    if (files.length > 0) {
+      const file = files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      console.log("files are ", formData.get("file"));
+      console.log("workshop held on ", date);
+      uploadWorkshopMedia(facultyID, formData, date);
+    }
   };
 
   return (
@@ -234,6 +249,19 @@ const AddWorkshopModal = ({ facultyData }: { facultyData: any }) => {
                 />
               </div>
             )}
+
+            <div>
+              <div className="mb-2 block">
+                <Label value="Certificate (pdf)" />
+              </div>
+              <input
+                onChange={handleFileChange}
+                id="file"
+                name="file"
+                type="file"
+                required
+              />
+            </div>
 
             <div className="flex justify-center">
               <Button onClick={handleAddWorkshops}>Add Workshop</Button>

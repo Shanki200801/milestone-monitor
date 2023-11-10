@@ -83,7 +83,7 @@ const Approval = ({
                 Category
               </Table.HeadCell>
               <Table.HeadCell className={`bg-[#60fbdf]`}>
-                Faculty Name
+                Faculty ID
               </Table.HeadCell>
               <Table.HeadCell className={`bg-[#60fbdf]`}>Title</Table.HeadCell>
               <Table.HeadCell className={`bg-[#60fbdf] text-center`}>
@@ -260,7 +260,9 @@ const ConferenceModal = (data: any) => {
                 target="_blank"
                 href={`https://ifoagbunmhwxznfzppzc.supabase.co/storage/v1/object/public/staff-media/conferenceMedia/${data.faculty_id}/${data.faculty_id}_${data.conf_date}.pdf`}
                 rel="noreferrer"
-              ></a>
+              >
+                Click to view
+              </a>
             </td>
           </tr>
           <tr>
@@ -433,11 +435,19 @@ const WorkshopModal = (data: any) => {
             <td className="py-2 px-4">{data.date}</td>
           </tr>
           {/* will most likely need to add this after modifying types, db */}
-          {/* <tr>
-            <td className="py-2 px-4">Certificate link</td>
-            <td className="py-2 px-4">{data.link}</td>
+          <tr>
+            <td className="py-2 px-4">Workshop certificate</td>
+            <td className="py-2 px-4">
+              <a
+                target="_blank"
+                href={`https://ifoagbunmhwxznfzppzc.supabase.co/storage/v1/object/public/staff-media/workshopMedia/${data.faculty_id}/${data.faculty_id}_${data.date}.pdf`}
+                rel="noreferrer"
+              >
+                Click to view
+              </a>
+            </td>
           </tr>
-          */}
+
           <tr>
             <td className="py-2 px-4">Faculty ID</td>
             <td className="py-2 px-4">{data.faculty_id}</td>
