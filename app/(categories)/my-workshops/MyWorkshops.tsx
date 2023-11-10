@@ -102,7 +102,11 @@ const AddWorkshopModal = ({ facultyData }: { facultyData: any }) => {
   const [certificate, setCertificate] = useState();
 
   const handleAddWorkshops = async () => {
-    await addWorkshops(facultyID, title, date, type, noDays, organisedBy);
+    if (heldOrAttended == "Held") {
+      await addWorkshops(facultyID, title, date, type, noDays, "Self");
+    } else if (heldOrAttended == "Attended") {
+      await addWorkshops(facultyID, title, date, type, noDays, organisedBy);
+    }
     window.location.reload();
   };
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
