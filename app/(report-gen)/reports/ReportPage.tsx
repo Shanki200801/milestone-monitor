@@ -73,10 +73,19 @@ const ReportPage = ({ staff_details }: any) => {
     } else if (filterState.selectedType === "Journals") {
       downloadCSV(journalData, "journaldata.csv");
     } else {
-      downloadCSV(conferenceData, "confdata.csv");
-      downloadCSV(journalData, "journaldata.csv");
-      downloadCSV(workshopData, "workshopdata.csv");
-      downloadCSV(patentData, "patentdata.csv");
+      if (conferenceData.length > 0) {
+        downloadCSV(conferenceData, "confdata.csv");
+      }
+      if (journalData.length > 0) {
+        downloadCSV(journalData, "journaldata.csv");
+      }
+
+      if (workshopData.length > 0) {
+        downloadCSV(workshopData, "workshopdata.csv");
+      }
+      if (patentData.length > 0) {
+        downloadCSV(patentData, "patentdata.csv");
+      }
     }
   };
 

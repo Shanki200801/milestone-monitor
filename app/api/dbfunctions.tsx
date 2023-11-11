@@ -1095,6 +1095,7 @@ export async function uploadWorkshopMedia(
   const path = `workshopMedia/${facultyNo}/${facultyNo}_${event_date}.${
     (file as File).type.split("/")[1]
   }`;
+
   return await uploadFile(path, file as File);
 }
 
